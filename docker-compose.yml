@@ -1,0 +1,132 @@
+version: '3.8'
+services:
+    nginx:
+        image: 'releewz/nginx:1.0'
+        container_name: 'releewz-nginx'
+        build:
+            context: .
+            dockerfile: '.docker/Dockerfile-nginx'
+        ports:
+            - '${DC_APP_PORT:-80}:80'
+        networks:
+            - releewz
+        depends_on:
+            - api
+    api:
+        image: 'releewz/api:1.0'
+        container_name: 'releewz-api'
+        restart: 'on-failure'
+        build:
+            context: .
+            dockerfile: '.docker/Dockerfile'
+            target: dev
+        volumes:
+            - '.:/var/www/html'
+        networks:
+            - releewz
+        depends_on:
+            - mysql
+            - mysql-log
+            - redis
+    horizon:
+        image: 'releewz/api:1.0'
+        container_name: 'releewz-horizon'
+        restart: 'on-failure'
+        build:
+            context: .
+            dockerfile: '.docker/Dockerfile'
+            target: dev
+        volumes:
+            - '.:/var/www/html'
+        command: 'php artisan horizon'
+        networks:
+            - releewz
+        depends_on:
+            - api
+    mysql:
+        image: 'mysql/mysql-server:8.0'
+        container_name: 'releewz-mysql'
+        ports:
+            - '${DC_DB_PORT:-3306}:3306'
+        env_file: '.env'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+            - 'releewz-mysql:/var/lib/mysql'
+        networks:
+            - releewz
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
+    mysql-log:
+        image: 'mysql/mysql-server:8.0'
+        container_name: 'releewz-mysql-log'
+        ports:
+            - '${DC_DB_LOG_PORT:-3307}:3307'
+        env_file: '.env'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${LOG_DB_PASSWORD}'
+            MYSQL_ROOT_HOST: "%"
+            MYSQL_DATABASE: '${LOG_DB_DATABASE}'
+            MYSQL_USER: '${LOG_DB_USERNAME}'
+            MYSQL_PASSWORD: '${LOG_DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+            MYSQL_TCP_PORT: '3307'
+        volumes:
+            - 'releewz-mysql-log:/var/lib/mysql'
+        networks:
+            - releewz
+        healthcheck:
+            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+            retries: 3
+            timeout: 5s
+    redis:
+        image: 'redis:alpine'
+        container_name: 'releewz-redis'
+        ports:
+            - '${DC_REDIS_PORT:-6379}:6379'
+        volumes:
+            - 'releewz-redis:/data'
+        networks:
+            - releewz
+        healthcheck:
+            test: ["CMD", "redis-cli", "ping"]
+            retries: 3
+            timeout: 5s
+    s3:
+        image: 'minio/minio:latest'
+        container_name: 'releewz-s3'
+        restart: 'on-failure'
+        ports:
+            - "${DC_S3_API_PORT:-9000}:9000"
+            - "${DC_S3_CONSOLE_PORT:-9001}:9001"
+        env_file: '.env'
+        environment:
+            MINIO_ROOT_USER: "${AWS_ACCESS_KEY_ID}"
+            MINIO_ROOT_PASSWORD: '${AWS_SECRET_ACCESS_KEY}'
+        command: 'server --address :9000 --console-address :9001 /data'
+        volumes:
+            - './.s3data:/data'
+        networks:
+            - releewz
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://127.0.0.1:9000/minio/health/live"]
+            interval: 30s
+            timeout: 20s
+            retries: 3
+networks:
+    releewz:
+        name: releewz
+volumes:
+    releewz-mysql:
+        driver: local
+    releewz-mysql-log:
+        driver: local
+    releewz-redis:
+        driver: local
