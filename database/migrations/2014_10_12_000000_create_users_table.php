@@ -28,6 +28,7 @@ return new class() extends Migration {
             $table->string('adress_postal')->nullable();
             $table->string('adress_line_one')->nullable();
             $table->string('adress_line_two')->nullable();
+            $table->string('image_path')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
