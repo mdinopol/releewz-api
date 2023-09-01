@@ -6,8 +6,10 @@ namespace App\Models;
 
 use App\Enum\Country;
 use App\Enum\Role;
+use App\Models\Pivots\Entry;
 use App\Models\Traits\BelongsToRoleTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -19,11 +21,6 @@ class User extends Authenticatable
     use HasApiTokens;
     use BelongsToRoleTrait;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'user_name',
         'first_name',
@@ -39,23 +36,14 @@ class User extends Authenticatable
         'adress_postal',
         'adress_line_one',
         'adress_line_two',
+        'image_path',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
         'role'              => Role::class,
@@ -65,5 +53,19 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $password): void
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function games(): BelongsToMany
+    {
+        return $this->belongsToMany(Game::class, 'entries', 'user_id', 'game_id')
+            ->using(Entry::class)
+            ->withPivot([
+                'name',
+                'total_points',
+                'points_history',
+                'contestants',
+                'license_at_creation',
+                'currency_at_creation',
+            ]);
     }
 }

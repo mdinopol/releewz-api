@@ -16,7 +16,7 @@ return new class() extends Migration {
             $table->foreignId('user_id');
             $table->foreignId('game_id')->unique();
             $table->string('name', 50)->unique();
-            $table->float('total_points')->nullable();
+            $table->decimal('total_points')->nullable();
             $table->jsonb('points_history')->nullable();
             $table->jsonb('contestants');
             $table->string('license_at_creation', 50);
