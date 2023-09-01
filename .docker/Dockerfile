@@ -1,5 +1,5 @@
 # Base image
-FROM php:8.1-fpm as base
+FROM php:8.2.1-fpm as base
 
 # Args
 ARG ENV
