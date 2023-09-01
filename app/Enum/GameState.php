@@ -14,4 +14,19 @@ enum GameState: int
     case LIVE              = 3;
     case FINISH            = 4;
     case CANCEL            = 5;
+    case DISCARD           = 6;
+
+    /**
+     * Game is immutable once its state is open to public.
+     */
+    public function isImmutable(): bool
+    {
+        return in_array($this, [
+            self::OPEN_REGISTRATION,
+            self::PRE_LIVE,
+            self::LIVE,
+            self::FINISH,
+            self::CANCEL,
+        ]);
+    }
 }

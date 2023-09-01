@@ -15,9 +15,9 @@ return new class() extends Migration {
         Schema::create('games', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('tournament_id')->nullable();
-            $table->string('name', 255);
+            $table->string('name', 255)->unique();
             $table->string('short', 50)->nullable();
-            $table->string('slug');
+            $table->string('slug')->unique();
             $table->string('description', 255)->nullable();
             $table->string('sport', 100);
             $table->enum('game_state', GameState::values());
@@ -32,12 +32,8 @@ return new class() extends Migration {
             $table->float('current_prize_pool')->nullable();
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
+            $table->jsonb('points_template')->nullable();
             $table->timestamps();
-
-            $table->unique([
-                'name',
-                'slug',
-            ]);
         });
     }
 
