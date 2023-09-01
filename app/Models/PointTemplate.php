@@ -18,8 +18,8 @@ class PointTemplate extends Model
     ];
 
     protected $casts = [
-        'sport' => Sport::class,
+        'sport'     => Sport::class,
         'game_type' => GameType::class,
-        'points' => 'array',
+        'points'    => 'array',
     ];
 }

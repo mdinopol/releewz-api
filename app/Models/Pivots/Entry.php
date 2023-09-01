@@ -11,10 +11,10 @@ class Entry extends Pivot
     public $incrementing = true;
 
     protected $casts = [
-        'total_points' => 'float',
-        'points_history' => 'array',
-        'contestants' => 'array',
-        'license_at_creation' => License::class,
+        'total_points'         => 'float',
+        'points_history'       => 'array',
+        'contestants'          => 'array',
+        'license_at_creation'  => License::class,
         'currency_at_creation' => Currency::class,
     ];
 }

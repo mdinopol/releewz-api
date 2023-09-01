@@ -20,10 +20,10 @@ class Score extends Model
     ];
 
     protected $casts = [
-        'home_score' => 'float',
+        'home_score'  => 'float',
         'home_points' => 'float',
-        'away_score' => 'float',
+        'away_score'  => 'float',
         'away_points' => 'float',
-        'history' => 'array',
+        'history'     => 'array',
     ];
 }

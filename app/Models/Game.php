@@ -38,15 +38,15 @@ class Game extends Model
     ];
 
     protected $casts = [
-        'sport' => Sport::class,
-        'game_state' => GameState::class,
-        'duration_type' => GameDuration::class,
-        'game_type' => GameType::class,
-        'max_entry_value' => 'float',
-        'entry_price' => 'float',
+        'sport'              => Sport::class,
+        'game_state'         => GameState::class,
+        'duration_type'      => GameDuration::class,
+        'game_type'          => GameType::class,
+        'max_entry_value'    => 'float',
+        'entry_price'        => 'float',
         'initial_prize_pool' => 'float',
         'current_prize_pool' => 'float',
-        'points_template' => 'array',
+        'points_template'    => 'array',
     ];
 
     public function users(): BelongsToMany
