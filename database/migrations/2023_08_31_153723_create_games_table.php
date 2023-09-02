@@ -26,10 +26,10 @@ return new class() extends Migration {
             $table->smallInteger('min_entry')->unsigned();
             $table->smallInteger('max_entry')->unsigned();
             $table->tinyInteger('entry_contestants')->unsigned();
-            $table->float('max_entry_value');
-            $table->float('entry_price');
-            $table->float('initial_prize_pool')->nullable();
-            $table->float('current_prize_pool')->nullable();
+            $table->decimal('max_entry_value');
+            $table->decimal('entry_price');
+            $table->decimal('initial_prize_pool')->nullable();
+            $table->decimal('current_prize_pool')->nullable();
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
             $table->jsonb('points_template')->nullable();

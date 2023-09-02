@@ -10,14 +10,14 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::create('achievement_matchup', function (Blueprint $table) {
+        Schema::create('scores', function (Blueprint $table) {
             $table->id();
             $table->foreignId('achievement_id');
             $table->foreignId('matchup_id');
-            $table->float('home_score');
-            $table->float('home_points');
-            $table->float('away_score');
-            $table->float('away_points');
+            $table->decimal('home_score');
+            $table->decimal('home_points');
+            $table->decimal('away_score');
+            $table->decimal('away_points');
             $table->jsonb('history')->nullable();
             $table->timestamps();
 
@@ -30,6 +30,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('achievement_matchup');
+        Schema::dropIfExists('scores');
     }
 };
