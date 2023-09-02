@@ -15,7 +15,7 @@ class OAuthClientSeeder extends Seeder
         DB::table('oauth_clients')->insertOrIgnore([
             'id'                     => 1,
             'name'                   => 'Password Grant App Client',
-            'secret'                 => $this->isLocalOrTesting() ? 'app_secret' : Str::random(40),
+            'secret'                 => is_local_or_testing() ? 'app_secret' : Str::random(40),
             'provider'               => 'users',
             'redirect'               => config('app.url'),
             'personal_access_client' => 0,
@@ -29,7 +29,7 @@ class OAuthClientSeeder extends Seeder
         DB::table('oauth_clients')->insertOrIgnore([
             'id'                     => 2,
             'name'                   => 'Password Grant Admin Client',
-            'secret'                 => $this->isLocalOrTesting() ? 'admin_secret' : Str::random(40),
+            'secret'                 => is_local_or_testing() ? 'admin_secret' : Str::random(40),
             'redirect'               => config('app.url'),
             'provider'               => 'users',
             'personal_access_client' => 0,
@@ -39,10 +39,5 @@ class OAuthClientSeeder extends Seeder
             'created_at'             => Carbon::now(),
             'updated_at'             => Carbon::now(),
         ]);
-    }
-
-    private function isLocalOrTesting(): bool
-    {
-        return app()->isLocal() || app()->runningUnitTests();
     }
 }
