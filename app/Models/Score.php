@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Score extends Model
 {
@@ -26,4 +27,9 @@ class Score extends Model
         'away_points' => 'float',
         'history'     => 'array',
     ];
+
+    public function achievement(): BelongsTo
+    {
+        return $this->belongsTo(Achievement::class);
+    }
 }

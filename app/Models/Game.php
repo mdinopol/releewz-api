@@ -9,7 +9,9 @@ use App\Enum\Sport;
 use App\Models\Pivots\Entry;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Game extends Model
 {
@@ -48,6 +50,16 @@ class Game extends Model
         'current_prize_pool' => 'float',
         'points_template'    => 'array',
     ];
+
+    public function tournament(): BelongsTo
+    {
+        return $this->belongsTo(Tournament::class);
+    }
+
+    public function bouts(): HasMany
+    {
+        return $this->hasMany(Bout::class);
+    }
 
     public function users(): BelongsToMany
     {
