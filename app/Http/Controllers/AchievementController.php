@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\UpsertAchievementRequest;
 use App\Models\Achievement;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 
 class AchievementController extends Controller
 {

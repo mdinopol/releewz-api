@@ -16,7 +16,7 @@ class AchievementControllerTest extends TestCase
     private Achievement $achievement;
 
     private User $user;
-    
+
     private User $admin;
 
     public function setUp(): void
@@ -24,31 +24,31 @@ class AchievementControllerTest extends TestCase
         parent::setUp();
 
         $this->achievement = Achievement::factory()->create([
-            'name' => 'Test Achievement',
-            'alias' => 'TAchievement',
-            'short' => 'TA',
-            'order' => 0,
-            'is_range' => false,
+            'name'        => 'Test Achievement',
+            'alias'       => 'TAchievement',
+            'short'       => 'TA',
+            'order'       => 0,
+            'is_range'    => false,
             'description' => 'A Test Achievement.',
         ]);
 
         $this->user = User::factory()->create([
-            'user_name'    => 'normal_doe',
-            'first_name'   => 'Normal',
-            'last_name'    => 'Doe',
-            'email'        => 'normal_doe@email.com',
-            'role'         => Role::USER,
+            'user_name'  => 'normal_doe',
+            'first_name' => 'Normal',
+            'last_name'  => 'Doe',
+            'email'      => 'normal_doe@email.com',
+            'role'       => Role::USER,
         ]);
 
         $this->admin = User::factory()->create([
-            'user_name'    => 'admin_doe',
-            'first_name'   => 'Admin',
-            'last_name'    => 'Doe',
-            'email'        => 'admin_doe@email.com',
-            'role'         => Role::ADMIN,
+            'user_name'  => 'admin_doe',
+            'first_name' => 'Admin',
+            'last_name'  => 'Doe',
+            'email'      => 'admin_doe@email.com',
+            'role'       => Role::ADMIN,
         ]);
     }
-    
+
     public function testList(): void
     {
         $this->get('/api/achievements')
@@ -68,11 +68,11 @@ class AchievementControllerTest extends TestCase
         $this->get('/api/achievements/'.$this->achievement->id)
             ->assertOk()
             ->assertJson([
-                'name' => $this->achievement->name,
-                'alias' => $this->achievement->alias,
-                'short' => $this->achievement->short,
-                'order' => $this->achievement->order,
-                'is_range' => $this->achievement->is_range,
+                'name'        => $this->achievement->name,
+                'alias'       => $this->achievement->alias,
+                'short'       => $this->achievement->short,
+                'order'       => $this->achievement->order,
+                'is_range'    => $this->achievement->is_range,
                 'description' => $this->achievement->description,
             ]);
     }
@@ -82,7 +82,7 @@ class AchievementControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/achievements', [
-                'name' => fake()->name(),
+                'name'     => fake()->name(),
                 'is_range' => true,
             ])
             ->assertCreated();
@@ -93,11 +93,11 @@ class AchievementControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->post('/api/achievements', [
-                'name' => 'Block Percentage',
-                'alias' => 'Blk Pctg.',
-                'short' => 'Blk%%',
-                'order' => 1,
-                'is_range' => true,
+                'name'        => 'Block Percentage',
+                'alias'       => 'Blk Pctg.',
+                'short'       => 'Blk%%',
+                'order'       => 1,
+                'is_range'    => true,
                 'description' => 'Player block percentage.',
             ])
             ->assertUnauthorized();
@@ -126,7 +126,7 @@ class AchievementControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/achievements', [
-                'name' => $this->achievement->name,
+                'name'     => $this->achievement->name,
                 'is_range' => false,
             ])
             ->assertUnprocessable()

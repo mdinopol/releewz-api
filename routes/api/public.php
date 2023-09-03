@@ -3,7 +3,7 @@
 use App\Http\Controllers\AchievementController;
 use Illuminate\Support\Facades\Route;
 
-/**
+/*
  * Achievements
  */
 Route::prefix('achievements')
