@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,14 +16,12 @@ class RoleAuthorizationMiddleware
      */
     public function handle(Request $request, \Closure $next, string $requiredRoleForAction): Response|RedirectResponse|JsonResponse
     {
-        /*
-         * @var \App\Models\User|null
+        /**
+         * @var User|null $user
          */
-        if (!$user = $request->user()) {
-            abort(HttpResponse::HTTP_UNAUTHORIZED, 'Forbidden');
-        }
+        $user = $request->user();
 
-        if (!$user->hasRoleAuthorization($requiredRoleForAction)) {
+        if (!$user?->hasRoleAuthorization($requiredRoleForAction)) {
             abort(HttpResponse::HTTP_UNAUTHORIZED, 'Forbidden');
         }
 

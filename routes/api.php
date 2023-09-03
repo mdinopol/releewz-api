@@ -12,6 +12,10 @@ Route::middleware([
 
     Route::prefix('oauth')
         ->group(base_path('routes/api/oauth.php'));
+
+    // Public routes
+    Route::prefix('')
+        ->group(base_path('routes/api/public.php'));
 });
 
 Route::middleware([
@@ -19,4 +23,7 @@ Route::middleware([
 ])->group(function () {
     Route::prefix('users')
         ->group(base_path('routes/api/users.php'));
+
+    Route::prefix('achievements')
+        ->group(base_path('routes/api/achievements.php'));
 });
