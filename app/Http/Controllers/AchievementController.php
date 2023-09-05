@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpsertAchievementRequest;
 use App\Models\Achievement;
+use App\Models\Score;
 use Illuminate\Database\Eloquent\Collection;
 
 class AchievementController extends Controller
@@ -36,4 +37,6 @@ class AchievementController extends Controller
 
         return [];
     }
+
+    // TO DO: Destroy should only be executed if it's not in used by at least one game with immutable game state
 }

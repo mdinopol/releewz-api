@@ -21,7 +21,7 @@ return new class() extends Migration {
                 ->nullOnDelete();
             $table->string('name');
             $table->string('alias')->nullable();
-            $table->enum('country_code', Country::values());
+            $table->enum('country_code', Country::values())->nullable();
             $table->enum('contestant_type', ContestantType::values());
             $table->string('sport');
             $table->boolean('active')->default(true);
@@ -30,7 +30,6 @@ return new class() extends Migration {
 
             $table->unique([
                 'name',
-                'country_code',
                 'contestant_type',
                 'sport',
             ]);

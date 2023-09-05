@@ -17,7 +17,7 @@ class AchievementFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'        => fake()->word(),
+            'name'        => fake()->unique()->name(),
             'alias'       => fake()->word(),
             'short'       => \Str::random(5),
             'order'       => 0,

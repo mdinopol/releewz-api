@@ -88,6 +88,29 @@ class AchievementControllerTest extends TestCase
             ->assertCreated();
     }
 
+    public function testUpdate(): void
+    {
+        Passport::actingAs($this->admin);
+
+        $this->put('/api/achievements/'.$this->achievement->id, [
+            'name'        => 'Test Achievement Updated',
+            'alias'       => 'TAchievement Updated',
+            'short'       => 'TA Updated',
+            'order'       => 1,
+            'is_range'    => true,
+            'description' => 'A Test Achievement Updated.',
+        ])
+        ->assertOk()
+        ->assertJson([
+            'name'        => 'Test Achievement Updated',
+            'alias'       => 'TAchievement Updated',
+            'short'       => 'TA Updated',
+            'order'       => 1,
+            'is_range'    => true,
+            'description' => 'A Test Achievement Updated.',
+        ]);
+    }
+
     public function testStoreShouldUnauthorizeNonAdmin(): void
     {
         Passport::actingAs($this->user);
