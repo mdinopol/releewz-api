@@ -18,4 +18,5 @@ enum Sport: string
     case RUGBY             = 'rugby';
     case BASEBALL          = 'baseball';
     case FORMULA_ONE       = 'formula_one';
+    case BOXING            = 'boxing';
 }

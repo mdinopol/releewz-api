@@ -26,4 +26,7 @@ Route::middleware([
 
     Route::prefix('achievements')
         ->group(base_path('routes/api/achievements.php'));
+
+    Route::prefix('contestants')
+        ->group(base_path('routes/api/contestants.php'));
 });

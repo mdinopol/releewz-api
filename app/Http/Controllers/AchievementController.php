@@ -36,4 +36,6 @@ class AchievementController extends Controller
 
         return [];
     }
+
+    // TO DO: Destroy should only be executed if it's not in used by at least one game with immutable game state
 }
