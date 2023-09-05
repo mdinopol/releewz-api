@@ -29,17 +29,17 @@ class ContestantControllerTest extends TestCase
         parent::setUp();
 
         $this->team = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Los Angeles Lakers',
+            'parent_id'       => null,
+            'name'            => 'Los Angeles Lakers',
             'contestant_type' => ContestantType::TEAM,
-            'sport' => Sport::BASKETBALL,
+            'sport'           => Sport::BASKETBALL,
         ]);
 
         $this->member = Contestant::factory()->create([
-            'parent_id' => $this->team->id,
-            'name' => 'Anthony Davis',
+            'parent_id'       => $this->team->id,
+            'name'            => 'Anthony Davis',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::BASKETBALL,
+            'sport'           => Sport::BASKETBALL,
         ]);
 
         $this->admin = User::factory()->create([
@@ -49,7 +49,7 @@ class ContestantControllerTest extends TestCase
             'email'      => 'admin_doe@email.com',
             'role'       => Role::ADMIN,
         ]);
-        
+
         $this->user = User::factory()->create([
             'user_name'  => 'normal_doe',
             'first_name' => 'Normal',
@@ -58,6 +58,7 @@ class ContestantControllerTest extends TestCase
             'role'       => Role::USER,
         ]);
     }
+
     public function testList(): void
     {
         $this->get('/api/contestants')
@@ -77,10 +78,10 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/contestants', [
-            'parent_id' => null,
-            'name' => 'Kobe Byrant',
+            'parent_id'       => null,
+            'name'            => 'Kobe Byrant',
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::BASKETBALL->value,
+            'sport'           => Sport::BASKETBALL->value,
         ])
         ->assertCreated();
     }
@@ -90,11 +91,11 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->post('/api/contestants', [
-            'name' => 'Kobe Byrant',
-            'alias' => 'Black Mamba',
+            'name'            => 'Kobe Byrant',
+            'alias'           => 'Black Mamba',
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::BASKETBALL->value,
-            'active' => true,
+            'sport'           => Sport::BASKETBALL->value,
+            'active'          => true,
         ])->assertUnauthorized();
     }
 
@@ -102,24 +103,24 @@ class ContestantControllerTest extends TestCase
     {
         Passport::actingAs($this->admin);
 
-        $name = 'Kobe Bryant';
+        $name           = 'Kobe Bryant';
         $contestantType = ContestantType::TEAM_MEMBER;
-        $sport = Sport::BASKETBALL;
+        $sport          = Sport::BASKETBALL;
 
         Contestant::factory()->create([
-            'name' => $name,
-            'alias' => 'Black Mamba',
+            'name'            => $name,
+            'alias'           => 'Black Mamba',
             'contestant_type' => $contestantType,
-            'sport' => $sport,
-            'active' => true,
+            'sport'           => $sport,
+            'active'          => true,
         ]);
 
         $this->post('/api/contestants', [
-            'name' => $name,
-            'alias' => 'Bean',
+            'name'            => $name,
+            'alias'           => 'Bean',
             'contestant_type' => $contestantType->value,
-            'sport' => $sport->value,
-            'active' => false,
+            'sport'           => $sport->value,
+            'active'          => false,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);
@@ -128,7 +129,7 @@ class ContestantControllerTest extends TestCase
             ->where('contestant_type', $contestantType)
             ->where('sport', $sport)
             ->get();
-        
+
         $this->assertCount(1, $contestants);
     }
 
@@ -137,26 +138,26 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $team = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Espanya Smashers',
+            'parent_id'       => null,
+            'name'            => 'Espanya Smashers',
             'contestant_type' => ContestantType::TEAM,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         $this->post('/api/contestants', [
-            'parent_id' => $team->id,
-            'name' => 'Novak Djokovic',
+            'parent_id'       => $team->id,
+            'name'            => 'Novak Djokovic',
             'contestant_type' => ContestantType::INDIVIDUAL->value,
-            'sport' => Sport::TENNIS->value,
+            'sport'           => Sport::TENNIS->value,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['parent_id']);
 
         $this->post('/api/contestants', [
-            'parent_id' => $team->id,
-            'name' => 'Test Team 1',
+            'parent_id'       => $team->id,
+            'name'            => 'Test Team 1',
             'contestant_type' => ContestantType::TEAM->value,
-            'sport' => Sport::SOCCER->value,
+            'sport'           => Sport::SOCCER->value,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['parent_id']);
@@ -167,10 +168,10 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/contestants', [
-            'parent_id' => $this->team->id,
-            'name' => 'Novak Djokovic',
+            'parent_id'       => $this->team->id,
+            'name'            => 'Novak Djokovic',
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::TENNIS->value,
+            'sport'           => Sport::TENNIS->value,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['parent_id']);
@@ -180,13 +181,13 @@ class ContestantControllerTest extends TestCase
     {
         Passport::actingAs($this->admin);
 
-        $this->post('/api/contestants',[
-            'parent_id' => $this->member->id,
-            'name' => 'Isaih Thomas',
-            'alias' => 'Zeke',
+        $this->post('/api/contestants', [
+            'parent_id'       => $this->member->id,
+            'name'            => 'Isaih Thomas',
+            'alias'           => 'Zeke',
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::BASKETBALL->value,
-            'active' => true,
+            'sport'           => Sport::BASKETBALL->value,
+            'active'          => true,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['parent_id']);
@@ -197,13 +198,13 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $contestant = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Larry Bird',
-            'alias' => 'Kodak',
-            'country_code' => Country::US->value,
+            'parent_id'       => null,
+            'name'            => 'Larry Bird',
+            'alias'           => 'Kodak',
+            'country_code'    => Country::US->value,
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::BASKETBALL->value,
-            'active' => true,
+            'sport'           => Sport::BASKETBALL->value,
+            'active'          => true,
         ]);
 
         $this->put('/api/contestants/'.$contestant->id, [
@@ -211,13 +212,13 @@ class ContestantControllerTest extends TestCase
         ])
         ->assertOk()
         ->assertJson([
-            'parent_id' => null,
-            'name' => 'Larietta Birdy',
-            'alias' => 'Kodak',
-            'country_code' => Country::US->value,
+            'parent_id'       => null,
+            'name'            => 'Larietta Birdy',
+            'alias'           => 'Kodak',
+            'country_code'    => Country::US->value,
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
-            'sport' => Sport::BASKETBALL->value,
-            'active' => true,
+            'sport'           => Sport::BASKETBALL->value,
+            'active'          => true,
         ]);
     }
 
@@ -235,24 +236,24 @@ class ContestantControllerTest extends TestCase
     {
         Passport::actingAs($this->admin);
 
-        $name = 'Kobe Bryant';
+        $name           = 'Kobe Bryant';
         $contestantType = ContestantType::TEAM_MEMBER;
-        $sport = Sport::BASKETBALL;
+        $sport          = Sport::BASKETBALL;
 
         Contestant::factory()->create([
-            'name' => $name,
-            'alias' => 'Black Mamba',
+            'name'            => $name,
+            'alias'           => 'Black Mamba',
             'contestant_type' => $contestantType,
-            'sport' => $sport,
-            'active' => true,
+            'sport'           => $sport,
+            'active'          => true,
         ]);
 
         $this->post('/api/contestants', [
-            'name' => $name,
-            'alias' => 'Bean',
+            'name'            => $name,
+            'alias'           => 'Bean',
             'contestant_type' => $contestantType->value,
-            'sport' => $sport->value,
-            'active' => false,
+            'sport'           => $sport->value,
+            'active'          => false,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);
@@ -261,7 +262,7 @@ class ContestantControllerTest extends TestCase
             ->where('contestant_type', $contestantType)
             ->where('sport', $sport)
             ->get();
-        
+
         $this->assertCount(1, $contestants);
     }
 
@@ -271,26 +272,26 @@ class ContestantControllerTest extends TestCase
 
         // Master team to assign contestants
         $masterTeam = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Assign - Master Team 1',
+            'parent_id'       => null,
+            'name'            => 'Assign - Master Team 1',
             'contestant_type' => ContestantType::TEAM,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         // Team type contestant to assign to master team
         $team = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Assign - Team To Assign 1',
+            'parent_id'       => null,
+            'name'            => 'Assign - Team To Assign 1',
             'contestant_type' => ContestantType::TEAM,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         // Individual type contestant to assign to master team
         $individual = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Assign - Individual To Assign 1',
+            'parent_id'       => null,
+            'name'            => 'Assign - Individual To Assign 1',
             'contestant_type' => ContestantType::INDIVIDUAL,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         $this->put('/api/contestants/'.$team->id, [
@@ -311,17 +312,17 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $individual = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Individual To Assign 1',
+            'parent_id'       => null,
+            'name'            => 'Individual To Assign 1',
             'contestant_type' => ContestantType::INDIVIDUAL,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         $member = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Member To Assign 1',
+            'parent_id'       => null,
+            'name'            => 'Member To Assign 1',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         $this->put('/api/contestants/'.$member->id, [
@@ -336,10 +337,10 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $contestant = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Contestant to Delete 1',
+            'parent_id'       => null,
+            'name'            => 'Contestant to Delete 1',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         $this->delete('/api/contestants/'.$contestant->id)
@@ -347,9 +348,9 @@ class ContestantControllerTest extends TestCase
             ->assertJson([]);
 
         $this->assertDatabaseMissing('contestants', [
-            'name' => 'Contestant to Delete 1',
+            'name'            => 'Contestant to Delete 1',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
     }
 
@@ -366,26 +367,26 @@ class ContestantControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $team = Contestant::factory()->create([
-            'parent_id' => null,
-            'name' => 'Master Team 1',
+            'parent_id'       => null,
+            'name'            => 'Master Team 1',
             'contestant_type' => ContestantType::TEAM,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
         Contestant::factory()->create([
-            'parent_id' => $team->id,
-            'name' => 'Member of Master Team 1',
+            'parent_id'       => $team->id,
+            'name'            => 'Member of Master Team 1',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
         Contestant::factory()->create([
-            'parent_id' => $team->id,
-            'name' => 'Member of Master Team 2',
+            'parent_id'       => $team->id,
+            'name'            => 'Member of Master Team 2',
             'contestant_type' => ContestantType::TEAM_MEMBER,
-            'sport' => Sport::TENNIS,
+            'sport'           => Sport::TENNIS,
         ]);
 
-        $teamMembers = $team->members()->get();
+        $teamMembers    = $team->members()->get();
         $hasStrayMember = false;
 
         foreach ($teamMembers as $member) {
@@ -402,7 +403,7 @@ class ContestantControllerTest extends TestCase
         $this->delete('/api/contestants/'.$team->id);
 
         // Assert that all members are unbinded to the deleted team
-        $orphanMembers = Contestant::whereIn('id', $teamMembers->pluck('id')->all())->get();
+        $orphanMembers     = Contestant::whereIn('id', $teamMembers->pluck('id')->all())->get();
         $hasUnbindedMember = false;
 
         foreach ($orphanMembers as $member) {

@@ -14,7 +14,7 @@ Route::prefix('achievements')
         Route::get('/{achievement}', 'show')->where('achievement', '[0-9]+');
     });
 
-/**
+/*
  * Contestants
  */
 Route::prefix('contestants')
