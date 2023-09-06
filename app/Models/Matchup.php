@@ -19,6 +19,11 @@ class Matchup extends Model
         'end_date',
     ];
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date'   => 'datetime',
+    ];
+
     public function bout(): BelongsTo
     {
         return $this->belongsTo(Bout::class);

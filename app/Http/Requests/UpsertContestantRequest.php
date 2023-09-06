@@ -6,7 +6,6 @@ use App\Enum\ContestantType;
 use App\Enum\Country;
 use App\Enum\Sport;
 use App\Http\Requests\Traits\SetSometimesOnPut;
-use App\Models\Contestant;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;

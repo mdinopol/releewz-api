@@ -18,6 +18,11 @@ class Bout extends Model
         'end_date',
     ];
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date'   => 'datetime',
+    ];
+
     public function game(): BelongsTo
     {
         return $this->belongsTo(Game::class);

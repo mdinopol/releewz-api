@@ -83,7 +83,20 @@ class ContestantControllerTest extends TestCase
             'contestant_type' => ContestantType::TEAM_MEMBER->value,
             'sport'           => Sport::BASKETBALL->value,
         ])
-        ->assertCreated();
+        ->assertCreated()
+        ->assertJson([
+            'parent_id'       => null,
+            'name'            => 'Kobe Byrant',
+            'contestant_type' => ContestantType::TEAM_MEMBER->value,
+            'sport'           => Sport::BASKETBALL->value,
+        ]);
+
+        $this->assertDatabaseHas('contestants', [
+            'parent_id'       => null,
+            'name'            => 'Kobe Byrant',
+            'contestant_type' => ContestantType::TEAM_MEMBER->value,
+            'sport'           => Sport::BASKETBALL->value,
+        ]);
     }
 
     public function testCreateUnauthorizeNonAdmin(): void
@@ -212,6 +225,16 @@ class ContestantControllerTest extends TestCase
         ])
         ->assertOk()
         ->assertJson([
+            'parent_id'       => null,
+            'name'            => 'Larietta Birdy',
+            'alias'           => 'Kodak',
+            'country_code'    => Country::US->value,
+            'contestant_type' => ContestantType::TEAM_MEMBER->value,
+            'sport'           => Sport::BASKETBALL->value,
+            'active'          => true,
+        ]);
+
+        $this->assertDatabaseHas('contestants', [
             'parent_id'       => null,
             'name'            => 'Larietta Birdy',
             'alias'           => 'Kodak',
@@ -396,11 +419,18 @@ class ContestantControllerTest extends TestCase
             }
         }
 
-        // Assert that all members belongs to Master Team 1
+        // Assert that all members do belong to Master Team 1
         $this->assertFalse($hasStrayMember);
 
         // Delete team
         $this->delete('/api/contestants/'.$team->id);
+
+        $this->assertDatabaseMissing('contestants', [
+            'parent_id'       => null,
+            'name'            => 'Master Team 1',
+            'contestant_type' => ContestantType::TEAM,
+            'sport'           => Sport::TENNIS,
+        ]);
 
         // Assert that all members are unbinded to the deleted team
         $orphanMembers     = Contestant::whereIn('id', $teamMembers->pluck('id')->all())->get();

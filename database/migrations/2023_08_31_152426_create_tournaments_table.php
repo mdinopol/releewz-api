@@ -21,7 +21,6 @@ return new class() extends Migration {
             $table->unique([
                 'name',
                 'start_date',
-                'end_date',
             ]);
         });
     }

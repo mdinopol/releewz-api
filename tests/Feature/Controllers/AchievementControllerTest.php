@@ -82,10 +82,31 @@ class AchievementControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/achievements', [
-                'name'     => fake()->name(),
-                'is_range' => true,
+                'name'        => 'Test create achievement',
+                'alias'       => 'TestCA',
+                'short'       => 'TCA',
+                'order'       => 1,
+                'is_range'    => true,
+                'description' => 'A test created achievement.',
             ])
-            ->assertCreated();
+            ->assertCreated()
+            ->assertJson([
+                'name'        => 'Test create achievement',
+                'alias'       => 'TestCA',
+                'short'       => 'TCA',
+                'order'       => 1,
+                'is_range'    => true,
+                'description' => 'A test created achievement.',
+            ]);
+
+        $this->assertDatabaseHas('achievements', [
+            'name'        => 'Test create achievement',
+            'alias'       => 'TestCA',
+            'short'       => 'TCA',
+            'order'       => 1,
+            'is_range'    => true,
+            'description' => 'A test created achievement.',
+        ]);
     }
 
     public function testUpdate(): void
@@ -102,6 +123,15 @@ class AchievementControllerTest extends TestCase
         ])
         ->assertOk()
         ->assertJson([
+            'name'        => 'Test Achievement Updated',
+            'alias'       => 'TAchievement Updated',
+            'short'       => 'TA Updated',
+            'order'       => 1,
+            'is_range'    => true,
+            'description' => 'A Test Achievement Updated.',
+        ]);
+
+        $this->assertDatabaseHas('achievements', [
             'name'        => 'Test Achievement Updated',
             'alias'       => 'TAchievement Updated',
             'short'       => 'TA Updated',
