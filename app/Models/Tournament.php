@@ -17,6 +17,11 @@ class Tournament extends Model
         'start_date',
         'end_date',
     ];
+    
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
 
     public function games(): HasMany
     {

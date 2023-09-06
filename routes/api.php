@@ -29,4 +29,7 @@ Route::middleware([
 
     Route::prefix('contestants')
         ->group(base_path('routes/api/contestants.php'));
+
+    Route::prefix('tournaments')
+        ->group(base_path('routes/api/tournaments.php'));
 });

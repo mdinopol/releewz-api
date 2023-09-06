@@ -49,6 +49,8 @@ class Game extends Model
         'initial_prize_pool' => 'float',
         'current_prize_pool' => 'float',
         'points_template'    => 'array',
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
     ];
 
     public function tournament(): BelongsTo

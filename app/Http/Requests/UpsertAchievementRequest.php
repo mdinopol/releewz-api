@@ -18,7 +18,7 @@ class UpsertAchievementRequest extends FormRequest
             $userId = $this->user()->id;
         }
 
-        $rules['name']        = ['required', 'string', 'unique:achievements,name,'.($userId ?? 0), 'min:1', 'max:50'];
+        $rules['name']        = ['required', 'string', 'unique:achievements,name', 'min:1', 'max:50'];
         $rules['alias']       = ['nullable', 'string', 'min:1', 'max:50'];
         $rules['short']       = ['nullable', 'string', 'min:1', 'max:10'];
         $rules['order']       = ['nullable', 'integer'];
