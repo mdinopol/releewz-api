@@ -43,7 +43,7 @@ class TournamentControllerTest extends TestCase
         ]);
 
         $this->startDate = Carbon::tomorrow();
-        $this->endDate = Carbon::tomorrow()->addYear();
+        $this->endDate   = Carbon::tomorrow()->addYear();
     }
 
     // test list
@@ -60,24 +60,24 @@ class TournamentControllerTest extends TestCase
                 'end_date',
             ]]);
     }
-    
+
     // test show
     public function testShow(): void
     {
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Show Tournament',
+            'name'        => 'Test Show Tournament',
             'description' => 'Test description',
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ]);
 
         $this->get('/api/tournaments/'.$tournament->id)
             ->assertOk()
             ->assertJson([
-                'name' => 'Test Show Tournament',
+                'name'        => 'Test Show Tournament',
                 'description' => 'Test description',
-                'start_date' => $this->startDate->jsonSerialize(),
-                'end_date' => $this->endDate->jsonSerialize(),
+                'start_date'  => $this->startDate->jsonSerialize(),
+                'end_date'    => $this->endDate->jsonSerialize(),
             ]);
     }
 
@@ -85,26 +85,26 @@ class TournamentControllerTest extends TestCase
     public function testCreate(): void
     {
         Passport::actingAs($this->admin);
-        
+
         $this->post('/api/tournaments', [
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ])
         ->assertCreated()
         ->assertJson([
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
-            'start_date' => $this->startDate->jsonSerialize(),
-            'end_date' => $this->endDate->jsonSerialize(),
+            'start_date'  => $this->startDate->jsonSerialize(),
+            'end_date'    => $this->endDate->jsonSerialize(),
         ]);
 
         $this->assertDatabaseHas('tournaments', [
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ]);
     }
 
@@ -114,10 +114,10 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->post('/api/tournaments', [
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ])
         ->assertUnauthorized();
     }
@@ -133,17 +133,17 @@ class TournamentControllerTest extends TestCase
         // $secondStart = Carbon::tomorrow()->addDays(10); // Dummy days
 
         Tournament::factory()->create([
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament',
-            'start_date' => $this->startDate,
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ]);
 
         $this->post('/api/tournaments', [
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament',
-            'start_date' => $this->startDate->addWeek(),
-            'end_date' => $this->endDate,
+            'start_date'  => $this->startDate->addWeek(),
+            'end_date'    => $this->endDate,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);
@@ -154,10 +154,10 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/tournaments', [
-            'name' => 'Test Create Tournament For Past',
+            'name'        => 'Test Create Tournament For Past',
             'description' => 'Test create tournament for past description.',
-            'start_date' => Carbon::yesterday(),
-            'end_date' => Carbon::today()->addYear(),
+            'start_date'  => Carbon::yesterday(),
+            'end_date'    => Carbon::today()->addYear(),
         ])
         ->assertUnprocessable()
         ->assertInvalid(['start_date']);
@@ -168,10 +168,10 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/tournaments', [
-            'name' => 'Test Create Tournament For Past',
+            'name'        => 'Test Create Tournament For Past',
             'description' => 'Test create tournament for past description.',
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::yesterday(),
+            'start_date'  => Carbon::now(),
+            'end_date'    => Carbon::yesterday(),
         ])
         ->assertUnprocessable()
         ->assertInvalid(['end_date']);
@@ -183,22 +183,22 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
         ]);
 
         $this->put('/api/tournaments/'.$tournament->id, [
-            'name' => 'Test Updated Tournament 1',
+            'name'        => 'Test Updated Tournament 1',
             'description' => 'Test updated tournament description.',
         ])
         ->assertOk()
         ->assertJson([
-            'name' => 'Test Updated Tournament 1',
+            'name'        => 'Test Updated Tournament 1',
             'description' => 'Test updated tournament description.',
         ]);
 
         $this->assertDatabaseHas('tournaments', [
-            'name' => 'Test Updated Tournament 1',
+            'name'        => 'Test Updated Tournament 1',
             'description' => 'Test updated tournament description.',
         ]);
     }
@@ -209,12 +209,12 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Create Tournament',
+            'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
         ]);
 
         $this->put('/api/tournaments/'.$tournament->id, [
-            'name' => 'Test Updated Tournament 1',
+            'name'        => 'Test Updated Tournament 1',
             'description' => 'Test updated tournament description.',
         ])
         ->assertUnauthorized();
@@ -226,22 +226,22 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         // Don't use fixed/specific date since it will fail from validation (Yesterday not allowed)
-        $start = Carbon::tomorrow();
-        $end = Carbon::tomorrow()->addYear();
+        $start       = Carbon::tomorrow();
+        $end         = Carbon::tomorrow()->addYear();
         $secondStart = Carbon::tomorrow()->addDays(10); // Dummy days
 
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Create Tournament 1',
+            'name'        => 'Test Create Tournament 1',
             'description' => 'Test create tournament 1 description.',
-            'start_date' => $start,
-            'end_date' => $end,
+            'start_date'  => $start,
+            'end_date'    => $end,
         ]);
 
         $this->put('/api/tournaments/'.$tournament->id, [
-            'name' => 'Test Create Tournament 1',
+            'name'        => 'Test Create Tournament 1',
             'description' => 'Test create tournament 1 description.',
-            'start_date' => $secondStart,
-            'end_date' => $end,
+            'start_date'  => $secondStart,
+            'end_date'    => $end,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);
@@ -253,13 +253,13 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $start = Carbon::tomorrow();
-        $end = $start->addYear();
+        $end   = $start->addYear();
 
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Tournament Delete 1',
+            'name'        => 'Test Tournament Delete 1',
             'description' => 'The tournament to delete 1.',
-            'start_date' => $start,
-            'end_date' => $end,
+            'start_date'  => $start,
+            'end_date'    => $end,
         ]);
 
         $this->delete('/api/tournaments/'.$tournament->id)
@@ -267,10 +267,10 @@ class TournamentControllerTest extends TestCase
             ->assertJson([]);
 
         $this->assertDatabaseMissing('tournaments', [
-            'name' => 'Test Tournament Delete 1',
+            'name'        => 'Test Tournament Delete 1',
             'description' => 'The tournament to delete 1.',
-            'start_date' => $start,
-            'end_date' => $end,
+            'start_date'  => $start,
+            'end_date'    => $end,
         ]);
     }
 
@@ -280,7 +280,7 @@ class TournamentControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $tournament = Tournament::factory()->create([
-            'name' => 'Test Tournament Delete 1',
+            'name'        => 'Test Tournament Delete 1',
             'description' => 'The tournament to delete 1.',
         ]);
 

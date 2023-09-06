@@ -18,10 +18,10 @@ class TournamentFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->title(),
+            'name'        => fake()->unique()->title(),
             'description' => fake()->sentence(),
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addYear(),
+            'start_date'  => Carbon::now(),
+            'end_date'    => Carbon::now()->addYear(),
         ];
     }
 }

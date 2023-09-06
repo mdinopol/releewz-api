@@ -29,7 +29,7 @@ Route::prefix('contestants')
         Route::get('/{contestant}', 'show')->where('contestant', '[0-9]+');
     });
 
-/**
+/*
  * --------------------------------
  * Tournaments
  * --------------------------------
