@@ -127,11 +127,6 @@ class TournamentControllerTest extends TestCase
     {
         Passport::actingAs($this->admin);
 
-        // Don't use fixed/specific date since it will fail from validation (Yesterday not allowed)
-        // $start = Carbon::tomorrow();
-        // $end = Carbon::tomorrow()->addYear();
-        // $secondStart = Carbon::tomorrow()->addDays(10); // Dummy days
-
         Tournament::factory()->create([
             'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament',
