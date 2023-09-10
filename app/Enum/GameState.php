@@ -14,7 +14,6 @@ enum GameState: int
     case LIVE              = 3;
     case FINISH            = 4;
     case CANCEL            = 5;
-    case DISCARD           = 6;
 
     /**
      * Game is immutable once its state is open to public.
@@ -28,5 +27,17 @@ enum GameState: int
             self::FINISH,
             self::CANCEL,
         ]);
+    }
+
+    public function level(): int
+    {
+        return match ($this) {
+            self::IN_SETUP          => 10,
+            self::OPEN_REGISTRATION => 20,
+            self::PRE_LIVE          => 30,
+            self::LIVE              => 40,
+            self::FINISH            => 50,
+            self::CANCEL            => 60,
+        };
     }
 }

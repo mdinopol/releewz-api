@@ -38,4 +38,5 @@ class AchievementController extends Controller
     }
 
     // TO DO: Destroy should only be executed if it's not in used by at least one game with immutable game state
+    // TO DO: Update should only be allowed if it's not used in any games of all state
 }

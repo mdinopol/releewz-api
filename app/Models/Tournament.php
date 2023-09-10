@@ -7,6 +7,35 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\Tournament.
+ *
+ * @property int                                                                   $id
+ * @property string                                                                $name
+ * @property string|null                                                           $description
+ * @property \Illuminate\Support\Carbon                                            $start_date
+ * @property \Illuminate\Support\Carbon                                            $end_date
+ * @property \Illuminate\Support\Carbon|null                                       $created_at
+ * @property \Illuminate\Support\Carbon|null                                       $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contestant> $contestants
+ * @property int|null                                                              $contestants_count
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game>       $games
+ * @property int|null                                                              $games_count
+ *
+ * @method static \Database\Factories\TournamentFactory            factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereUpdatedAt($value)
+ *
+ * @mixin \Eloquent
+ */
 class Tournament extends Model
 {
     use HasFactory;
