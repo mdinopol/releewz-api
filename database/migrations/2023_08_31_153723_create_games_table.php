@@ -20,19 +20,19 @@ return new class() extends Migration {
             $table->string('slug')->unique();
             $table->string('description', 255)->nullable();
             $table->string('sport', 100);
-            $table->enum('game_state', GameState::values());
+            $table->smallInteger('game_state');
             $table->enum('duration_type', GameDuration::values());
             $table->string('game_type', 100);
             $table->smallInteger('min_entry')->unsigned();
             $table->smallInteger('max_entry')->unsigned();
             $table->tinyInteger('entry_contestants')->unsigned();
-            $table->decimal('max_entry_value');
-            $table->decimal('entry_price');
-            $table->decimal('initial_prize_pool')->nullable();
-            $table->decimal('current_prize_pool')->nullable();
+            $table->decimal('max_entry_value', 19);
+            $table->decimal('entry_price', 19);
+            $table->decimal('initial_prize_pool', 19)->nullable();
+            $table->decimal('current_prize_pool', 19)->nullable();
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
-            $table->jsonb('points_template')->nullable();
+            $table->jsonb('point_template')->nullable();
             $table->timestamps();
         });
     }

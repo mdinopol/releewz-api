@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ContestantController;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
@@ -39,4 +40,16 @@ Route::prefix('tournaments')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{tournament}', 'show')->where('tournament', '[0-9]+');
+    });
+
+/*
+ * --------------------------------
+ * Games
+ * --------------------------------
+ */
+Route::prefix('games')
+    ->controller(GameController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{game}', 'show')->where('game', '[0-9]+');
     });

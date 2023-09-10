@@ -32,4 +32,7 @@ Route::middleware([
 
     Route::prefix('tournaments')
         ->group(base_path('routes/api/tournaments.php'));
+
+    Route::prefix('games')
+        ->group(base_path('routes/api/games.php'));
 });
