@@ -12,25 +12,26 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\Contestant
+ * App\Models\Contestant.
  *
- * @property int $id
- * @property int|null $parent_id
- * @property string $name
- * @property string|null $alias
- * @property Country $country_code
- * @property ContestantType $contestant_type
- * @property Sport $sport
- * @property bool $active
- * @property string|null $image_path
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, Contestant> $members
- * @property-read int|null $members_count
- * @property-read Contestant|null $team
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tournament> $tournaments
- * @property-read int|null $tournaments_count
- * @method static \Database\Factories\ContestantFactory factory($count = null, $state = [])
+ * @property int                                                                   $id
+ * @property int|null                                                              $parent_id
+ * @property string                                                                $name
+ * @property string|null                                                           $alias
+ * @property Country                                                               $country_code
+ * @property ContestantType                                                        $contestant_type
+ * @property Sport                                                                 $sport
+ * @property bool                                                                  $active
+ * @property string|null                                                           $image_path
+ * @property \Illuminate\Support\Carbon|null                                       $created_at
+ * @property \Illuminate\Support\Carbon|null                                       $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, Contestant>             $members
+ * @property int|null                                                              $members_count
+ * @property Contestant|null                                                       $team
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tournament> $tournaments
+ * @property int|null                                                              $tournaments_count
+ *
+ * @method static \Database\Factories\ContestantFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant query()
@@ -45,6 +46,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereSport($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Contestant extends Model

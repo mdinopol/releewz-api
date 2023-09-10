@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\Response;
 class GamePolicy
 {
     use HandlesAuthorization;
+
     /**
      * Perform pre-authorization checks.
      *
@@ -35,12 +36,12 @@ class GamePolicy
 
         if ($currentGameState->isImmutable()) {
             if (request()->hasAny($this->immutableFields())) {
-                return Response::deny("Cannot perform an update. Game is already public.");
+                return Response::deny('Cannot perform an update. Game is already public.');
             }
 
             if (
-                request()->has('game_state') &&
-                ($toGameState = GameState::tryFrom(request()->get('game_state')))
+                request()->has('game_state')
+                && ($toGameState = GameState::tryFrom(request()->get('game_state')))
             ) {
                 return $toGameState->level() < $currentGameState->level()
                     ? Response::deny("Can't revert game to its previous state.")

@@ -7,13 +7,15 @@ use App\Enum\License;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 
 /**
- * App\Models\Pivots\Entry
+ * App\Models\Pivots\Entry.
  *
- * @property License $license_at_creation
+ * @property License  $license_at_creation
  * @property Currency $currency_at_creation
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Entry newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Entry query()
+ *
  * @mixin \Eloquent
  */
 class Entry extends Pivot

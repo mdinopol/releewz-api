@@ -24,7 +24,6 @@ class GameControllerTest extends TestCase
 
     private Game $liveGame;
 
-
     public function setUp(): void
     {
         parent::setUp();
@@ -46,50 +45,50 @@ class GameControllerTest extends TestCase
         ]);
 
         $this->liveGame = Game::factory()->create([
-            'tournament_id' => null,
-            'name' => 'Test Game 1',
-            'short' => 'TG1',
-            'slug' => 'test-game-1',
-            'description' => 'A test game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::LIVE->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Game 1',
+            'short'              => 'TG1',
+            'slug'               => 'test-game-1',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::LIVE->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addYear(),
-            'point_template' => null,
+            'start_date'         => Carbon::now(),
+            'end_date'           => Carbon::now()->addYear(),
+            'point_template'     => null,
         ]);
     }
-    
+
     public function testList(): void
     {
         Game::factory()->create([
-            'tournament_id' => null,
-            'name' => 'Test Open Registration Game 1',
-            'short' => 'TORG1',
-            'slug' => 'test-open-registration-game-1',
-            'description' => 'A test open registration game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Open Registration Game 1',
+            'short'              => 'TORG1',
+            'slug'               => 'test-open-registration-game-1',
+            'description'        => 'A test open registration game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::tomorrow()->addYear(),
-            'point_template' => null,
+            'start_date'         => Carbon::now(),
+            'end_date'           => Carbon::tomorrow()->addYear(),
+            'point_template'     => null,
         ]);
 
         $this->get('/api/games')
@@ -108,67 +107,67 @@ class GameControllerTest extends TestCase
                 ['users_count']
             ));
     }
-    
+
     public function testCreate(): void
     {
         Passport::actingAs($this->admin);
 
         $start = Carbon::now();
-        $end = Carbon::now()->addYear();
+        $end   = Carbon::now()->addYear();
 
         $this->post('/api/games', [
-            'name' => 'Test Game Create 1',
-            'short' => 'TG1C',
-            'slug' => 'test-game-create-1',
-            'description' => 'A test game create 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 10,
+            'name'               => 'Test Game Create 1',
+            'short'              => 'TG1C',
+            'slug'               => 'test-game-create-1',
+            'description'        => 'A test game create 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 10,
             'initial_prize_pool' => 200.50,
             'current_prize_pool' => 200.50,
-            'start_date' => $start,
-            'end_date' => $end,
-            'point_template' => null,
+            'start_date'         => $start,
+            'end_date'           => $end,
+            'point_template'     => null,
         ])
         ->assertCreated()
         ->assertJson([
-            'name' => 'Test Game Create 1',
-            'short' => 'TG1C',
-            'slug' => 'test-game-create-1',
-            'description' => 'A test game create 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 10,
+            'name'               => 'Test Game Create 1',
+            'short'              => 'TG1C',
+            'slug'               => 'test-game-create-1',
+            'description'        => 'A test game create 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 10,
             'initial_prize_pool' => 200.50,
             'current_prize_pool' => 200.50,
         ]);
 
         $this->assertDatabaseHas('games', [
-            'name' => 'Test Game Create 1',
-            'short' => 'TG1C',
-            'slug' => 'test-game-create-1',
-            'description' => 'A test game create 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 10,
+            'name'               => 'Test Game Create 1',
+            'short'              => 'TG1C',
+            'slug'               => 'test-game-create-1',
+            'description'        => 'A test game create 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 10,
             'initial_prize_pool' => 200.50,
             'current_prize_pool' => 200.50,
         ]);
@@ -179,20 +178,20 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->post('/api/games', [
-            'name' => 'Test Game Create 1',
-            'short' => 'TGC1',
-            'slug' => 'test-game-create-1',
-            'description' => 'A test game create 1',
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'name'               => 'Test Game Create 1',
+            'short'              => 'TGC1',
+            'slug'               => 'test-game-create-1',
+            'description'        => 'A test game create 1',
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
-            'start_date' => Carbon::tomorrow(),
-            'end_date' => Carbon::tomorrow()->addYear(),
-            'point_template' => null,
+            'start_date'         => Carbon::tomorrow(),
+            'end_date'           => Carbon::tomorrow()->addYear(),
+            'point_template'     => null,
         ])
         ->assertUnauthorized();
     }
@@ -202,53 +201,53 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $preOpenGame = Game::factory()->create([
-            'tournament_id' => null,
-            'name' => 'Test Game Update 1',
-            'short' => 'TGU1',
-            'slug' => 'test-game-update-1',
-            'description' => 'A test game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Game Update 1',
+            'short'              => 'TGU1',
+            'slug'               => 'test-game-update-1',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
         ]);
 
         $this->put('/api/games/'.$preOpenGame->id, [
-            'name' => 'Test Game Updated V2.0',
-            'slug' => 'test-game-upgated-v2',
+            'name'       => 'Test Game Updated V2.0',
+            'slug'       => 'test-game-upgated-v2',
             'game_state' => GameState::OPEN_REGISTRATION->value,
-            'game_type' => GameType::REGULAR_SEASON->value,
+            'game_type'  => GameType::REGULAR_SEASON->value,
         ])
         ->assertOk()
         ->assertJson([
-            'name' => 'Test Game Updated V2.0',
-            'slug' => 'test-game-upgated-v2',
+            'name'       => 'Test Game Updated V2.0',
+            'slug'       => 'test-game-upgated-v2',
             'game_state' => GameState::OPEN_REGISTRATION->value,
-            'game_type' => GameType::REGULAR_SEASON->value,
+            'game_type'  => GameType::REGULAR_SEASON->value,
         ]);
 
         $this->assertDatabaseHas('games', [
-            'tournament_id' => null,
-            'name' => 'Test Game Updated V2.0',
-            'short' => 'TGU1',
-            'slug' => 'test-game-upgated-v2',
-            'description' => 'A test game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::REGULAR_SEASON->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Game Updated V2.0',
+            'short'              => 'TGU1',
+            'slug'               => 'test-game-upgated-v2',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::REGULAR_SEASON->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
         ]);
@@ -259,29 +258,29 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $preOpenGame = Game::factory()->create([
-            'name' => 'Test Game Update 1',
-            'short' => 'TGU1',
-            'slug' => 'test-game-update-1',
-            'description' => 'A test update game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'name'               => 'Test Game Update 1',
+            'short'              => 'TGU1',
+            'slug'               => 'test-game-update-1',
+            'description'        => 'A test update game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::tomorrow()->addYear(),
-            'point_template' => null,
+            'start_date'         => Carbon::now(),
+            'end_date'           => Carbon::tomorrow()->addYear(),
+            'point_template'     => null,
         ]);
 
         $this->put('/api/games/'.$preOpenGame->id, [
-            'name' => 'Test Game Updated V2.0',
-            'slug' => 'test-game-upgated-v2',
+            'name'      => 'Test Game Updated V2.0',
+            'slug'      => 'test-game-upgated-v2',
             'game_type' => GameType::REGULAR_SEASON->value,
         ])
         ->assertUnauthorized();
@@ -301,7 +300,7 @@ class GameControllerTest extends TestCase
     public function testRevertGameStateShouldFail(): void
     {
         Passport::actingAs($this->admin);
-        
+
         $this->put('/api/games/'.$this->liveGame->id, [
             'game_state' => GameState::OPEN_REGISTRATION->value,
         ])
@@ -313,20 +312,20 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $game = Game::factory()->create([
-            'tournament_id' => null,
-            'name' => 'Test Game Update 1',
-            'short' => 'TGU1',
-            'slug' => 'test-game-update-1',
-            'description' => 'A test game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Game Update 1',
+            'short'              => 'TGU1',
+            'slug'               => 'test-game-update-1',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
         ]);
@@ -334,22 +333,22 @@ class GameControllerTest extends TestCase
         $this->delete('/api/games/'.$game->id)
             ->assertOk()
             ->assertJson([]);
-        
+
         $this->assertDatabaseMissing('games', [
-            'tournament_id' => null,
-            'name' => 'Test Game Update 1',
-            'short' => 'TGU1',
-            'slug' => 'test-game-update-1',
-            'description' => 'A test game 1',
-            'sport' => Sport::BASKETBALL->value,
-            'game_state' => GameState::IN_SETUP->value,
-            'duration_type' => GameDuration::SPAN->value,
-            'game_type' => GameType::FINALS->value,
-            'min_entry' => 5,
-            'max_entry' => 20,
-            'entry_contestants' => 8,
-            'max_entry_value' => 105.5,
-            'entry_price' => 2.00,
+            'tournament_id'      => null,
+            'name'               => 'Test Game Update 1',
+            'short'              => 'TGU1',
+            'slug'               => 'test-game-update-1',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::IN_SETUP->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
             'initial_prize_pool' => 10000.00,
             'current_prize_pool' => null,
         ]);

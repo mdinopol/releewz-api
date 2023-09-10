@@ -15,36 +15,37 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
 /**
- * App\Models\User
+ * App\Models\User.
  *
- * @property int $id
- * @property string $user_name
- * @property string $first_name
- * @property string|null $middle_name
- * @property string $last_name
- * @property string $email
- * @property \Illuminate\Support\Carbon|null $email_verified_at
- * @property string $password
- * @property Role $role
- * @property string|null $phone
- * @property string|null $date_of_birth
- * @property Country $country_code
- * @property string|null $adress_city
- * @property string|null $adress_postal
- * @property string|null $adress_line_one
- * @property string|null $adress_line_two
- * @property string|null $remember_token
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Client> $clients
- * @property-read int|null $clients_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game> $games
- * @property-read int|null $games_count
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
- * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token> $tokens
- * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @property int                                                                                                           $id
+ * @property string                                                                                                        $user_name
+ * @property string                                                                                                        $first_name
+ * @property string|null                                                                                                   $middle_name
+ * @property string                                                                                                        $last_name
+ * @property string                                                                                                        $email
+ * @property \Illuminate\Support\Carbon|null                                                                               $email_verified_at
+ * @property string                                                                                                        $password
+ * @property Role                                                                                                          $role
+ * @property string|null                                                                                                   $phone
+ * @property string|null                                                                                                   $date_of_birth
+ * @property Country                                                                                                       $country_code
+ * @property string|null                                                                                                   $adress_city
+ * @property string|null                                                                                                   $adress_postal
+ * @property string|null                                                                                                   $adress_line_one
+ * @property string|null                                                                                                   $adress_line_two
+ * @property string|null                                                                                                   $remember_token
+ * @property \Illuminate\Support\Carbon|null                                                                               $created_at
+ * @property \Illuminate\Support\Carbon|null                                                                               $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Client>                                       $clients
+ * @property int|null                                                                                                      $clients_count
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game>                                               $games
+ * @property int|null                                                                                                      $games_count
+ * @property \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property int|null                                                                                                      $notifications_count
+ * @property \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token>                                        $tokens
+ * @property int|null                                                                                                      $tokens_count
+ *
+ * @method static \Database\Factories\UserFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User query()
@@ -67,6 +68,7 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUserName($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable

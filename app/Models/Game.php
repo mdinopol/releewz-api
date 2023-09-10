@@ -15,63 +15,65 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\Game
+ * App\Models\Game.
  *
- * @property int $id
- * @property int|null $tournament_id
- * @property string $name
- * @property string|null $short
- * @property string $slug
- * @property string|null $description
- * @property Sport $sport
- * @property GameState $game_state
- * @property GameDuration $duration_type
- * @property GameType $game_type
- * @property int $min_entry
- * @property int $max_entry
- * @property int $entry_contestants
- * @property float $max_entry_value
- * @property float $entry_price
- * @property float|null $initial_prize_pool
- * @property float|null $current_prize_pool
- * @property \Illuminate\Support\Carbon $start_date
- * @property \Illuminate\Support\Carbon $end_date
- * @property mixed|null $points_template
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Bout> $bouts
- * @property-read int|null $bouts_count
- * @property-read \App\Models\Tournament|null $tournament
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
- * @property-read int|null $users_count
+ * @property int                                                             $id
+ * @property int|null                                                        $tournament_id
+ * @property string                                                          $name
+ * @property string|null                                                     $short
+ * @property string                                                          $slug
+ * @property string|null                                                     $description
+ * @property Sport                                                           $sport
+ * @property GameState                                                       $game_state
+ * @property GameDuration                                                    $duration_type
+ * @property GameType                                                        $game_type
+ * @property int                                                             $min_entry
+ * @property int                                                             $max_entry
+ * @property int                                                             $entry_contestants
+ * @property float                                                           $max_entry_value
+ * @property float                                                           $entry_price
+ * @property float|null                                                      $initial_prize_pool
+ * @property float|null                                                      $current_prize_pool
+ * @property \Illuminate\Support\Carbon                                      $start_date
+ * @property \Illuminate\Support\Carbon                                      $end_date
+ * @property mixed|null                                                      $points_template
+ * @property \Illuminate\Support\Carbon|null                                 $created_at
+ * @property \Illuminate\Support\Carbon|null                                 $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Bout> $bouts
+ * @property int|null                                                        $bouts_count
+ * @property \App\Models\Tournament|null                                     $tournament
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
+ * @property int|null                                                        $users_count
+ *
  * @method static \Database\Factories\GameFactory factory($count = null, $state = [])
- * @method static Builder|Game inRegistration()
- * @method static Builder|Game live()
- * @method static Builder|Game newModelQuery()
- * @method static Builder|Game newQuery()
- * @method static Builder|Game query()
- * @method static Builder|Game whereCreatedAt($value)
- * @method static Builder|Game whereCurrentPrizePool($value)
- * @method static Builder|Game whereDescription($value)
- * @method static Builder|Game whereDurationType($value)
- * @method static Builder|Game whereEndDate($value)
- * @method static Builder|Game whereEntryContestants($value)
- * @method static Builder|Game whereEntryPrice($value)
- * @method static Builder|Game whereGameState($value)
- * @method static Builder|Game whereGameType($value)
- * @method static Builder|Game whereId($value)
- * @method static Builder|Game whereInitialPrizePool($value)
- * @method static Builder|Game whereMaxEntry($value)
- * @method static Builder|Game whereMaxEntryValue($value)
- * @method static Builder|Game whereMinEntry($value)
- * @method static Builder|Game whereName($value)
- * @method static Builder|Game wherePointsTemplate($value)
- * @method static Builder|Game whereShort($value)
- * @method static Builder|Game whereSlug($value)
- * @method static Builder|Game whereSport($value)
- * @method static Builder|Game whereStartDate($value)
- * @method static Builder|Game whereTournamentId($value)
- * @method static Builder|Game whereUpdatedAt($value)
+ * @method static Builder|Game                    inRegistration()
+ * @method static Builder|Game                    live()
+ * @method static Builder|Game                    newModelQuery()
+ * @method static Builder|Game                    newQuery()
+ * @method static Builder|Game                    query()
+ * @method static Builder|Game                    whereCreatedAt($value)
+ * @method static Builder|Game                    whereCurrentPrizePool($value)
+ * @method static Builder|Game                    whereDescription($value)
+ * @method static Builder|Game                    whereDurationType($value)
+ * @method static Builder|Game                    whereEndDate($value)
+ * @method static Builder|Game                    whereEntryContestants($value)
+ * @method static Builder|Game                    whereEntryPrice($value)
+ * @method static Builder|Game                    whereGameState($value)
+ * @method static Builder|Game                    whereGameType($value)
+ * @method static Builder|Game                    whereId($value)
+ * @method static Builder|Game                    whereInitialPrizePool($value)
+ * @method static Builder|Game                    whereMaxEntry($value)
+ * @method static Builder|Game                    whereMaxEntryValue($value)
+ * @method static Builder|Game                    whereMinEntry($value)
+ * @method static Builder|Game                    whereName($value)
+ * @method static Builder|Game                    wherePointsTemplate($value)
+ * @method static Builder|Game                    whereShort($value)
+ * @method static Builder|Game                    whereSlug($value)
+ * @method static Builder|Game                    whereSport($value)
+ * @method static Builder|Game                    whereStartDate($value)
+ * @method static Builder|Game                    whereTournamentId($value)
+ * @method static Builder|Game                    whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Game extends Model

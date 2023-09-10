@@ -7,20 +7,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\Achievement
+ * App\Models\Achievement.
  *
- * @property int $id
- * @property string $name
- * @property string|null $alias
- * @property string|null $short
- * @property int $order
- * @property bool $is_range
- * @property string|null $description
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
- * @property-read int|null $scores_count
- * @method static \Database\Factories\AchievementFactory factory($count = null, $state = [])
+ * @property int                                                              $id
+ * @property string                                                           $name
+ * @property string|null                                                      $alias
+ * @property string|null                                                      $short
+ * @property int                                                              $order
+ * @property bool                                                             $is_range
+ * @property string|null                                                      $description
+ * @property \Illuminate\Support\Carbon|null                                  $created_at
+ * @property \Illuminate\Support\Carbon|null                                  $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
+ * @property int|null                                                         $scores_count
+ *
+ * @method static \Database\Factories\AchievementFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement query()
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement whereOrder($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement whereShort($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Achievement whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Achievement extends Model

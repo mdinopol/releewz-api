@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\PointTemplate
+ * App\Models\PointTemplate.
  *
- * @property int $id
- * @property Sport $sport
- * @property GameType $game_type
- * @property array $points
+ * @property int                             $id
+ * @property Sport                           $sport
+ * @property GameType                        $game_type
+ * @property array                           $points
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate query()
@@ -25,6 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate wherePoints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate whereSport($value)
  * @method static \Illuminate\Database\Eloquent\Builder|PointTemplate whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class PointTemplate extends Model
