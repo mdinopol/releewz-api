@@ -20,10 +20,11 @@ class GameController extends Controller
             ->paginate(10);
     }
 
-    public function mine(Request $request): Collection
-    {
-        return $request->user()->games->live()->get();
-    }
+    // TO DO
+    // public function mine(Request $request): Collection
+    // {
+    //     return $request->user()->games->live()->get();
+    // }
 
     public function store(UpsertGameRequest $request): Game
     {
