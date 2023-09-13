@@ -12,12 +12,14 @@ enum Achievement
     case SCORE;
     case WIN;
     case DRAW;
+
     // Player-specific/Extra predictions (Applicable for SPAN Duration Typed games)
     case CHAMPION;
     case MOST_VALUABLE_PLAYER;
     case ROOKIE_OF_THE_YEAR;
     case DEFENSIVE_PLAYER_OF_THE_YEAR;
     case MOST_IMPROVED_PLAYER_OF_THE_YEAR;
+
     // Game-specific
     /*
     | -----------------------------
@@ -36,6 +38,7 @@ enum Achievement
     case TURNOVER;
     case BLOCK;
     case FOUL;
+
     /*
     | -----------------------------
     | Soccer
@@ -51,6 +54,7 @@ enum Achievement
     case PENALTY_SAVE;
     case RED_CARD;
     case YELLOW_CARD;
+
     /*
     | -----------------------------
     | Tennis
