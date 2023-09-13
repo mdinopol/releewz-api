@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\Achievement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +11,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * App\Models\Score.
  *
  * @property int                             $id
- * @property int                             $achievement_id
  * @property int                             $matchup_id
  * @property float                           $home_score
  * @property float                           $home_points
@@ -42,8 +42,8 @@ class Score extends Model
     use HasFactory;
 
     protected $fillable = [
-        'achievement_id',
         'matchup_id',
+        'achievement',
         'home_score',
         'home_points',
         'away_score',
@@ -52,6 +52,7 @@ class Score extends Model
     ];
 
     protected $casts = [
+        'achievement' => Achievement::class,
         'home_score'  => 'float',
         'home_points' => 'float',
         'away_score'  => 'float',

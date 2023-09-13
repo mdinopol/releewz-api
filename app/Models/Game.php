@@ -149,4 +149,9 @@ class Game extends Model
                 'currency_at_creation',
             ]);
     }
+
+    public function getTemplate(): array
+    {
+        return config('scoretemplates.'.$this->sport->value);
+    }
 }

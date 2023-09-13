@@ -1,22 +1,9 @@
 <?php
 
-use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
-
-/*
- * --------------------------------
- * Achievements
- * --------------------------------
- */
-Route::prefix('achievements')
-    ->controller(AchievementController::class)
-    ->group(function () {
-        Route::get('/', 'index');
-        Route::get('/{achievement}', 'show')->where('achievement', '[0-9]+');
-    });
 
 /*
  * --------------------------------
