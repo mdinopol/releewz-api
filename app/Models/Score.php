@@ -8,23 +8,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\Score.
+ * App\Models\Score
  *
- * @property int                             $id
- * @property int                             $matchup_id
- * @property float                           $home_score
- * @property float                           $home_points
- * @property float                           $away_score
- * @property float                           $away_points
- * @property array|null                      $history
+ * @property int $id
+ * @property int $matchup_id
+ * @property Achievement $achievement
+ * @property float $home_score
+ * @property float $home_points
+ * @property float $away_score
+ * @property float $away_points
+ * @property array|null $history
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Models\Matchup|null        $matchup
- *
+ * @property-read \App\Models\Matchup|null $matchup
  * @method static \Illuminate\Database\Eloquent\Builder|Score newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Score newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Score query()
- * @method static \Illuminate\Database\Eloquent\Builder|Score whereAchievementId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Score whereAchievement($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereAwayPoints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereAwayScore($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereCreatedAt($value)
@@ -34,7 +34,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereMatchupId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Score extends Model
