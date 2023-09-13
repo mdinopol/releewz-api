@@ -44,6 +44,7 @@ use Laravel\Passport\HasApiTokens;
  * @property int|null                                                                                                      $notifications_count
  * @property \Illuminate\Database\Eloquent\Collection<int, \Laravel\Passport\Token>                                        $tokens
  * @property int|null                                                                                                      $tokens_count
+ *
  * @method static \Database\Factories\UserFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
@@ -67,6 +68,7 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRole($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUserName($value)
+ *
  * @mixin \Eloquent
  */
 class User extends Authenticatable

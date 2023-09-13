@@ -23,6 +23,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \App\Models\Contestant|null                                      $home
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
  * @property int|null                                                         $scores_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup query()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Matchup whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Matchup extends Model

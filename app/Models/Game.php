@@ -44,6 +44,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \App\Models\Tournament|null                                     $tournament
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property int|null                                                        $users_count
+ *
  * @method static \Database\Factories\GameFactory factory($count = null, $state = [])
  * @method static Builder|Game                    inRegistration()
  * @method static Builder|Game                    live()
@@ -72,6 +73,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|Game                    whereStartDate($value)
  * @method static Builder|Game                    whereTournamentId($value)
  * @method static Builder|Game                    whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Game extends Model

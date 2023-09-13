@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \App\Models\Game                                                   $game
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Matchup> $matchups
  * @property int|null                                                           $matchups_count
+ *
  * @method static \Illuminate\Database\Eloquent\Builder|Bout newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bout newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Bout query()
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Bout whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bout whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Bout whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Bout extends Model
