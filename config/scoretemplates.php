@@ -24,35 +24,35 @@ return [
     */
     Sport::BASKETBALL->value => [
         'decisions' => [
-            Achievement::WIN->name,
+            Achievement::WIN->value,
         ],
         'fillables' => [
             'basic' => [
-                Achievement::SCORE->name => [
-                    Achievement::FIELD_GOAL->name => [
-                        Achievement::TWO_POINT->name,
-                        Achievement::THREE_POINT->name,
+                Achievement::SCORE->value => [
+                    Achievement::FIELD_GOAL->value => [
+                        Achievement::TWO_POINT->value,
+                        Achievement::THREE_POINT->value,
                     ],
-                    Achievement::FREE_THROW->name,
+                    Achievement::FREE_THROW->value,
                 ],
-                Achievement::REBOUND->name => [
-                    Achievement::OFFENSIVE_REBOUND->name,
-                    Achievement::DEFFENSIVE_REBOUND->name,
+                Achievement::REBOUND->value => [
+                    Achievement::OFFENSIVE_REBOUND->value,
+                    Achievement::DEFFENSIVE_REBOUND->value,
                 ],
-                Achievement::ASSIST->name,
-                Achievement::STEAL->name,
-                Achievement::BLOCK->name,
-                Achievement::TURNOVER->name,
-                Achievement::FOUL->name,
+                Achievement::ASSIST->value,
+                Achievement::STEAL->value,
+                Achievement::BLOCK->value,
+                Achievement::TURNOVER->value,
+                Achievement::FOUL->value,
             ],
             'range' => [],
         ],
         'extras' => [
-            Achievement::CHAMPION->name,
-            Achievement::MOST_VALUABLE_PLAYER->name,
-            Achievement::ROOKIE_OF_THE_YEAR->name,
-            Achievement::DEFENSIVE_PLAYER_OF_THE_YEAR->name,
-            Achievement::MOST_IMPROVED_PLAYER_OF_THE_YEAR->name,
+            Achievement::CHAMPION->value,
+            Achievement::MOST_VALUABLE_PLAYER->value,
+            Achievement::ROOKIE_OF_THE_YEAR->value,
+            Achievement::DEFENSIVE_PLAYER_OF_THE_YEAR->value,
+            Achievement::MOST_IMPROVED_PLAYER_OF_THE_YEAR->value,
         ],
     ],
 
@@ -61,30 +61,30 @@ return [
     | Soccer
     |--------------------------------------------------------------------------
     */
-    Sport::SOCCER->name => [
+    Sport::SOCCER->value => [
         'decisions' => [
-            Achievement::WIN->name,
-            Achievement::DRAW->name,
-            Achievement::CLEAN_SHEET->name,
+            Achievement::WIN->value,
+            Achievement::DRAW->value,
+            Achievement::CLEAN_SHEET->value,
         ],
         'fillables' => [
             'basic' => [
-                Achievement::GOAL->name,
-                Achievement::GOAL_ATTEMPT->name,
-                Achievement::CORNER_KICK->name,
-                Achievement::SAVE->name => [
-                    Achievement::GOAL_SAVE->name,
-                    Achievement::PENALTY_SAVE->name,
+                Achievement::GOAL->value,
+                Achievement::GOAL_ATTEMPT->value,
+                Achievement::CORNER_KICK->value,
+                Achievement::SAVE->value => [
+                    Achievement::GOAL_SAVE->value,
+                    Achievement::PENALTY_SAVE->value,
                 ],
-                Achievement::RED_CARD->name,
-                Achievement::YELLOW_CARD->name,
+                Achievement::RED_CARD->value,
+                Achievement::YELLOW_CARD->value,
             ],
             'range' => [
-                Achievement::BALL_POSSESSION->name,
+                Achievement::BALL_POSSESSION->value,
             ],
         ],
         'extras' => [
-            Achievement::CHAMPION->name,
+            Achievement::CHAMPION->value,
         ],
     ],
 
@@ -95,25 +95,25 @@ return [
     */
     Sport::TENNIS->value => [
         'decisions' => [
-            Achievement::WIN->name,
-            Achievement::SET_DIFFERENCE->name,
+            Achievement::WIN->value,
+            Achievement::SET_DIFFERENCE->value,
         ],
         'fillables' => [
             'basic' => [
-                Achievement::GAME_WON->name,
-                Achievement::ACES->name,
-                Achievement::DOUBLE_FAULT->name,
-                Achievement::TIE_BREAKER_WON->name,
+                Achievement::GAME_WON->value,
+                Achievement::ACES->value,
+                Achievement::DOUBLE_FAULT->value,
+                Achievement::TIE_BREAKER_WON->value,
             ],
             'range' => [
-                Achievement::FIRST_SERVE->name,
-                Achievement::RECEIVING_POINT->name,
-                Achievement::BREAK_POINT->name,
-                Achievement::POINTS_IN_ROW->name,
+                Achievement::FIRST_SERVE->value,
+                Achievement::RECEIVING_POINT->value,
+                Achievement::BREAK_POINT->value,
+                Achievement::POINTS_IN_ROW->value,
             ],
         ],
         'extras' => [
-            Achievement::CHAMPION->name,
+            Achievement::CHAMPION->value,
         ],
     ],
 ];

@@ -19,4 +19,9 @@ enum Sport: string
     case BASEBALL          = 'baseball';
     case FORMULA_ONE       = 'formula_one';
     case BOXING            = 'boxing';
+
+    public function template(): array
+    {
+        return config('scoretemplates.'.$this->value) ?? [];
+    }
 }
