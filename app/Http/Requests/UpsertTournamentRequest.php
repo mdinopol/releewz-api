@@ -13,9 +13,6 @@ class UpsertTournamentRequest extends FormRequest
 
     public function rules(): array
     {
-        $name      = $this->request->get('name') ?? $this->tournament->name;
-        $startDate = $this->request->get('start_date') ?? $this->tournament->start_date;
-
         $rules['name']        = ['required', 'string', 'unique:tournaments,name', 'min:1', 'max:50'];
         $rules['description'] = ['nullable', 'string', 'min:1', 'max:250'];
         $rules['start_date']  = ['required', 'date'];

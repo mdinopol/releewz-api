@@ -28,12 +28,13 @@ class UpsertContestantRequest extends FormRequest
             // A Team member should only be assignable to an existing TEAM from the same SPORT
             Rule::exists('contestants', 'id')
                 ->where(
-                    fn (Builder $query) => $query->where('contestant_type', ContestantType::TEAM)
-                        ->where('sport', Sport::tryFrom($sport))
+                    fn (Builder $query) => $query
+                        ->where('contestant_type', ContestantType::TEAM->value)
+                        ->where('sport', Sport::tryFrom($sport)->value)
                 ),
             // // A Contestant should be prohibited for team assignment if the contenstant is not of type TEAM_MEMBER
             Rule::prohibitedIf(
-                $contestantType !== ContestantType::TEAM_MEMBER
+                $contestantType !== ContestantType::TEAM_MEMBER->value
             ),
         ];
 
@@ -51,8 +52,8 @@ class UpsertContestantRequest extends FormRequest
             Rule::unique('contestants', 'name')
                 ->where(
                     fn (Builder $query) => $query
-                        ->where('sport', Sport::tryFrom($sport))
-                        ->where('contestant_type', ContestantType::tryFrom($contestantType))
+                        ->where('sport', Sport::tryFrom($sport)->value)
+                        ->where('contestant_type', ContestantType::tryFrom($contestantType)->value)
                 ),
             'min:1',
         ];
@@ -65,11 +66,9 @@ class UpsertContestantRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.unique' => 'Contestant is already added for this sport.',
-            'parent_id'   => [
-                'exists'        => 'Cannot assign to a team from other sport.',
-                'prohibited_if' => 'Cannot assign a non team-member to a team.',
-            ],
+            'name.unique'          => 'Contestant is already added for this sport.',
+            'parent_id.exists'     => 'Cannot assign to a non-existing team or a team from other sport.',
+            'parent_id.prohibited' => 'Cannot assign a non team-member to a team.',
         ];
     }
 }
