@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Traits\SetSometimesOnPut;
 use Carbon\Carbon;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 class UpsertTournamentRequest extends FormRequest
@@ -18,7 +16,7 @@ class UpsertTournamentRequest extends FormRequest
         $name      = $this->request->get('name') ?? $this->tournament->name;
         $startDate = $this->request->get('start_date') ?? $this->tournament->start_date;
 
-        $rules['name'] = ['required', 'string', 'unique:tournaments,name', 'min:1', 'max:50'];
+        $rules['name']        = ['required', 'string', 'unique:tournaments,name', 'min:1', 'max:50'];
         $rules['description'] = ['nullable', 'string', 'min:1', 'max:250'];
         $rules['start_date']  = ['required', 'date'];
         $rules['end_date']    = ['required', 'date'];
@@ -32,10 +30,10 @@ class UpsertTournamentRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                $input = $validator->safe(['start_date', 'end_date']);
+                $input     = $validator->safe(['start_date', 'end_date']);
                 $startDate = Carbon::parse($input['start_date'] ?? $this->tournament->start_date);
-                $endDate = Carbon::parse($input['end_date'] ?? $this->tournament->start_date);
-                
+                $endDate   = Carbon::parse($input['end_date'] ?? $this->tournament->start_date);
+
                 if ($startDate->isYesterday()) {
                     $validator->errors()->add(
                         'start_date',
@@ -49,7 +47,7 @@ class UpsertTournamentRequest extends FormRequest
                         'End date should be equal or after the starting date.'
                     );
                 }
-            }
+            },
         ];
     }
 }
