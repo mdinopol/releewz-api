@@ -11,6 +11,7 @@ use App\Models\Game;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Laravel\Passport\Passport;
 use Tests\TestCase;
 
@@ -48,7 +49,6 @@ class GameControllerTest extends TestCase
             'tournament_id'      => null,
             'name'               => 'Test Game 1',
             'short'              => 'TG1',
-            'slug'               => 'test-game-1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::LIVE->value,
@@ -73,7 +73,6 @@ class GameControllerTest extends TestCase
             'tournament_id'      => null,
             'name'               => 'Test Open Registration Game 1',
             'short'              => 'TORG1',
-            'slug'               => 'test-open-registration-game-1',
             'description'        => 'A test open registration game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::OPEN_REGISTRATION->value,
@@ -118,7 +117,6 @@ class GameControllerTest extends TestCase
         $this->post('/api/games', [
             'name'               => 'Test Game Create 1',
             'short'              => 'TG1C',
-            'slug'               => 'test-game-create-1',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
@@ -139,7 +137,6 @@ class GameControllerTest extends TestCase
         ->assertJson([
             'name'               => 'Test Game Create 1',
             'short'              => 'TG1C',
-            'slug'               => 'test-game-create-1',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
@@ -157,7 +154,6 @@ class GameControllerTest extends TestCase
         $this->assertDatabaseHas('games', [
             'name'               => 'Test Game Create 1',
             'short'              => 'TG1C',
-            'slug'               => 'test-game-create-1',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
@@ -180,7 +176,6 @@ class GameControllerTest extends TestCase
         $this->post('/api/games', [
             'name'               => 'Test Game Create 1',
             'short'              => 'TGC1',
-            'slug'               => 'test-game-create-1',
             'description'        => 'A test game create 1',
             'min_entry'          => 5,
             'max_entry'          => 20,
@@ -204,7 +199,6 @@ class GameControllerTest extends TestCase
             'tournament_id'      => null,
             'name'               => 'Test Game Update 1',
             'short'              => 'TGU1',
-            'slug'               => 'test-game-update-1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
@@ -221,14 +215,14 @@ class GameControllerTest extends TestCase
 
         $this->put('/api/games/'.$preOpenGame->id, [
             'name'       => 'Test Game Updated V2.0',
-            'slug'       => 'test-game-upgated-v2',
+            'slug'       => Str::slug('Test Game Updated V2.0'),
             'game_state' => GameState::OPEN_REGISTRATION->value,
             'game_type'  => GameType::REGULAR_SEASON->value,
         ])
         ->assertOk()
         ->assertJson([
             'name'       => 'Test Game Updated V2.0',
-            'slug'       => 'test-game-upgated-v2',
+            'slug'       => Str::slug('Test Game Updated V2.0'),
             'game_state' => GameState::OPEN_REGISTRATION->value,
             'game_type'  => GameType::REGULAR_SEASON->value,
         ]);
@@ -236,8 +230,8 @@ class GameControllerTest extends TestCase
         $this->assertDatabaseHas('games', [
             'tournament_id'      => null,
             'name'               => 'Test Game Updated V2.0',
+            'slug'               => Str::slug('Test Game Updated V2.0'),
             'short'              => 'TGU1',
-            'slug'               => 'test-game-upgated-v2',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::OPEN_REGISTRATION->value,
@@ -260,7 +254,6 @@ class GameControllerTest extends TestCase
         $preOpenGame = Game::factory()->create([
             'name'               => 'Test Game Update 1',
             'short'              => 'TGU1',
-            'slug'               => 'test-game-update-1',
             'description'        => 'A test update game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::OPEN_REGISTRATION->value,
@@ -315,7 +308,6 @@ class GameControllerTest extends TestCase
             'tournament_id'      => null,
             'name'               => 'Test Game Update 1',
             'short'              => 'TGU1',
-            'slug'               => 'test-game-update-1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
@@ -338,7 +330,7 @@ class GameControllerTest extends TestCase
             'tournament_id'      => null,
             'name'               => 'Test Game Update 1',
             'short'              => 'TGU1',
-            'slug'               => 'test-game-update-1',
+            'slug'               => $game->slug,
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
             'game_state'         => GameState::IN_SETUP->value,
