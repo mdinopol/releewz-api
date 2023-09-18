@@ -12,16 +12,11 @@ return new class() extends Migration {
     {
         Schema::create('tournaments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->string('description', 255)->nullable();
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
             $table->timestamps();
-
-            $table->unique([
-                'name',
-                'start_date',
-            ]);
         });
     }
 

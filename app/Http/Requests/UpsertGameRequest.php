@@ -8,6 +8,7 @@ use App\Enum\GameType;
 use App\Enum\Sport;
 use App\Http\Requests\Traits\SetSometimesOnPut;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Enum;
 
 class UpsertGameRequest extends FormRequest
@@ -19,7 +20,7 @@ class UpsertGameRequest extends FormRequest
         $rules['tournament_id']      = ['nullable', 'integer', 'exists:tournaments,id'];
         $rules['name']               = ['required', 'string', 'unique:games,name', 'min:1', 'max:100'];
         $rules['short']              = ['nullable', 'string', 'min:1', 'max:50'];
-        $rules['slug']               = ['required', 'string', 'unique:games,slug', 'min:1', 'max:150'];
+        $rules['slug']               = ['string', 'unique:games,slug', 'min:1', 'max:150'];
         $rules['description']        = ['nullable', 'string', 'min:1', 'max:255'];
         $rules['sport']              = ['required', new Enum(Sport::class)];
         $rules['game_state']         = ['required', new Enum(GameState::class)];
@@ -39,5 +40,12 @@ class UpsertGameRequest extends FormRequest
         $this->setSometimeOnPut($rules);
 
         return $rules;
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'slug' => Str::slug($this->name),
+        ]);
     }
 }

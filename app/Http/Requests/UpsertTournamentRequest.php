@@ -3,9 +3,9 @@
 namespace App\Http\Requests;
 
 use App\Http\Requests\Traits\SetSometimesOnPut;
-use Illuminate\Database\Query\Builder;
+use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
+use Illuminate\Validation\Validator;
 
 class UpsertTournamentRequest extends FormRequest
 {
@@ -13,33 +13,38 @@ class UpsertTournamentRequest extends FormRequest
 
     public function rules(): array
     {
-        $name      = $this->request->get('name') ?? $this->tournament->name;
-        $startDate = $this->request->get('start_date') ?? $this->tournament->start_date;
-
-        $rules['name'] = [
-            'required',
-            'string',
-            Rule::unique('tournaments')->where(
-                fn (Builder $query) => $query
-                        ->where('name', $name)
-                        ->where('start_date', '<=', $startDate)
-            ),
-            'min:1',
-            'max:50',
-        ];
+        $rules['name']        = ['required', 'string', 'unique:tournaments,name', 'min:1', 'max:50'];
         $rules['description'] = ['nullable', 'string', 'min:1', 'max:250'];
-        $rules['start_date']  = ['required', 'date', 'after_or_equal:today'];
-        $rules['end_date']    = ['required', 'date', 'after:start_date'];
+        $rules['start_date']  = ['required', 'date'];
+        $rules['end_date']    = ['required', 'date'];
 
         $this->setSometimeOnPut($rules);
 
         return $rules;
     }
 
-    public function messages(): array
+    public function after(): array
     {
         return [
-            'name.unique' => 'Tournament name already exists and overlaps with its starting date.',
+            function (Validator $validator) {
+                $input     = $validator->safe(['start_date', 'end_date']);
+                $startDate = Carbon::parse($input['start_date'] ?? $this->tournament->start_date);
+                $endDate   = Carbon::parse($input['end_date'] ?? $this->tournament->start_date);
+
+                if ($startDate->isYesterday()) {
+                    $validator->errors()->add(
+                        'start_date',
+                        'Starting date cannot be of yesterday.'
+                    );
+                }
+
+                if ($endDate->lessThan($startDate)) {
+                    $validator->errors()->add(
+                        'end_date',
+                        'End date should be equal or after the starting date.'
+                    );
+                }
+            },
         ];
     }
 }

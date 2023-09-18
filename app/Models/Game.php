@@ -116,6 +116,10 @@ class Game extends Model
         'point_template'     => 'array',
     ];
 
+    protected $appends = [
+        'achievement_template',
+    ];
+
     public function scopeInRegistration(Builder $query): Builder
     {
         return $query->where('game_state', GameState::OPEN_REGISTRATION);
@@ -148,5 +152,10 @@ class Game extends Model
                 'license_at_creation',
                 'currency_at_creation',
             ]);
+    }
+
+    public function getAchievementTemplateAttribute(): array
+    {
+        return $this->sport->template();
     }
 }

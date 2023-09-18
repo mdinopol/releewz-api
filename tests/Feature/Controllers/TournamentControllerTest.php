@@ -42,8 +42,8 @@ class TournamentControllerTest extends TestCase
             'role'       => Role::USER,
         ]);
 
-        $this->startDate = Carbon::tomorrow();
-        $this->endDate   = Carbon::tomorrow()->addYear();
+        $this->startDate = Carbon::today();
+        $this->endDate   = Carbon::today()->addYear();
     }
 
     // test list
@@ -123,7 +123,7 @@ class TournamentControllerTest extends TestCase
     }
 
     // test create should fail if existing for specified date range
-    public function testCreateShouldFailIfItExistAndOverlapsWithAnEarlierTournament(): void
+    public function testCreateShouldFailIfItExist(): void
     {
         Passport::actingAs($this->admin);
 
@@ -180,6 +180,8 @@ class TournamentControllerTest extends TestCase
         $tournament = Tournament::factory()->create([
             'name'        => 'Test Create Tournament',
             'description' => 'Test create tournament description.',
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ]);
 
         $this->put('/api/tournaments/'.$tournament->id, [
@@ -216,27 +218,22 @@ class TournamentControllerTest extends TestCase
     }
 
     // test update should fail if existing for specified date
-    public function testUpdateShouldFailIfItExistAndOverlapsWithAnEarlierTournament(): void
+    public function testUpdateShouldFailIfItExist(): void
     {
         Passport::actingAs($this->admin);
-
-        // Don't use fixed/specific date since it will fail from validation (Yesterday not allowed)
-        $start       = Carbon::tomorrow();
-        $end         = Carbon::tomorrow()->addYear();
-        $secondStart = Carbon::tomorrow()->addDays(10); // Dummy days
 
         $tournament = Tournament::factory()->create([
             'name'        => 'Test Create Tournament 1',
             'description' => 'Test create tournament 1 description.',
-            'start_date'  => $start,
-            'end_date'    => $end,
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ]);
 
         $this->put('/api/tournaments/'.$tournament->id, [
             'name'        => 'Test Create Tournament 1',
-            'description' => 'Test create tournament 1 description.',
-            'start_date'  => $secondStart,
-            'end_date'    => $end,
+            'description' => 'Test create tournament 1 description new.',
+            'start_date'  => $this->startDate,
+            'end_date'    => $this->endDate,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);

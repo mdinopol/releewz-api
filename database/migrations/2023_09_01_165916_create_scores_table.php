@@ -12,8 +12,8 @@ return new class() extends Migration {
     {
         Schema::create('scores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('achievement_id');
             $table->foreignId('matchup_id');
+            $table->string('achievement');
             $table->decimal('home_score');
             $table->decimal('home_points');
             $table->decimal('away_score');
@@ -21,7 +21,7 @@ return new class() extends Migration {
             $table->jsonb('history')->nullable();
             $table->timestamps();
 
-            $table->unique(['achievement_id', 'matchup_id']);
+            $table->unique(['matchup_id', 'achievement']);
         });
     }
 
