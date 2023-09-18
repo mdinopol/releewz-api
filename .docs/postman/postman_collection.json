@@ -68,7 +68,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"grant_type\": \"password\",\n    \"client_id\": {{client_id_user}},\n    \"client_secret\": \"{{client_secret_user}}\",\n    \"username\": \"user@gmail.com\",\n    \"password\": \"123456\"\n}",
+							"raw": "{\n    \"grant_type\": \"password\",\n    \"client_id\": {{client_id_user}},\n    \"client_secret\": \"{{client_secret_user}}\",\n    \"username\": \"johndoe@email.com\",\n    \"password\": \"123456\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -752,6 +752,158 @@
 							"path": [
 								"api",
 								"tournaments",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Bouts",
+			"item": [
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bouts/",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bouts",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Show",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/bouts/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"bouts",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n{\n    \"game_id\": 1,\n    \"name\": \"Test Bout\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bouts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"bouts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test Bout 1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/bouts/3",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"bouts",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/bouts/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"bouts",
 								"1"
 							]
 						}

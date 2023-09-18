@@ -14,14 +14,11 @@ return new class() extends Migration {
             $table->id();
             $table->foreignId('game_id')->constrained()->cascadeOnDelete();
             $table->string('name', 255);
-            $table->dateTimeTz('start_date');
-            $table->dateTimeTz('end_date');
             $table->timestamps();
 
             $table->unique([
+                'game_id',
                 'name',
-                'start_date',
-                'end_date',
             ]);
         });
     }
