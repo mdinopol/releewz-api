@@ -46,7 +46,6 @@ class TournamentControllerTest extends TestCase
         $this->endDate   = Carbon::today()->addYear();
     }
 
-    // test list
     public function testList(): void
     {
         Tournament::factory(2)->create();
@@ -61,7 +60,6 @@ class TournamentControllerTest extends TestCase
             ]]);
     }
 
-    // test show
     public function testShow(): void
     {
         $tournament = Tournament::factory()->create([
@@ -81,7 +79,6 @@ class TournamentControllerTest extends TestCase
             ]);
     }
 
-    // test create
     public function testCreate(): void
     {
         Passport::actingAs($this->admin);
@@ -108,7 +105,6 @@ class TournamentControllerTest extends TestCase
         ]);
     }
 
-    // test create should unauthorize non admin
     public function testCreateShouldUnauthorizeNonAdmin(): void
     {
         Passport::actingAs($this->user);
@@ -122,7 +118,6 @@ class TournamentControllerTest extends TestCase
         ->assertUnauthorized();
     }
 
-    // test create should fail if existing for specified date range
     public function testCreateShouldFailIfItExist(): void
     {
         Passport::actingAs($this->admin);
@@ -172,7 +167,6 @@ class TournamentControllerTest extends TestCase
         ->assertInvalid(['end_date']);
     }
 
-    // test update
     public function testUpdate(): void
     {
         Passport::actingAs($this->admin);
@@ -200,7 +194,6 @@ class TournamentControllerTest extends TestCase
         ]);
     }
 
-    // test update should unauthorize non admin
     public function testUpdateShouldUnauthorizeNonAdmin(): void
     {
         Passport::actingAs($this->user);
@@ -217,7 +210,6 @@ class TournamentControllerTest extends TestCase
         ->assertUnauthorized();
     }
 
-    // test update should fail if existing for specified date
     public function testUpdateShouldFailIfItExist(): void
     {
         Passport::actingAs($this->admin);
@@ -239,7 +231,6 @@ class TournamentControllerTest extends TestCase
         ->assertInvalid(['name']);
     }
 
-    // test delete
     public function testDelete(): void
     {
         Passport::actingAs($this->admin);
@@ -266,7 +257,6 @@ class TournamentControllerTest extends TestCase
         ]);
     }
 
-    // test delete should unauthorize non admin
     public function testDeleteShouldUnauthorizeNonAdmin(): void
     {
         Passport::actingAs($this->user);

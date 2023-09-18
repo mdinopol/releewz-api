@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BoutController;
 use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\TournamentController;
@@ -39,4 +40,16 @@ Route::prefix('games')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{game}', 'show')->where('game', '[0-9]+');
+    });
+
+/*
+ * --------------------------------
+ * Bouts
+ * --------------------------------
+ */
+Route::prefix('bouts')
+    ->controller(BoutController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{bout}', 'show')->where('bout', '[0-9]+');
     });

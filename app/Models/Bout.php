@@ -41,13 +41,6 @@ class Bout extends Model
     protected $fillable = [
         'game_id',
         'name',
-        'start_date',
-        'end_date',
-    ];
-
-    protected $casts = [
-        'start_date' => 'datetime',
-        'end_date'   => 'datetime',
     ];
 
     public function game(): BelongsTo
