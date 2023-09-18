@@ -23,7 +23,7 @@ class BoutController extends Controller
         return $bout;
     }
 
-    public function update(UpsertBoutRequest $request, Bout $bout)
+    public function update(UpsertBoutRequest $request, Bout $bout): Bout
     {
         $bout->update($request->validated());
 
