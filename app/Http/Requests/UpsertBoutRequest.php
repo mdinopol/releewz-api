@@ -13,10 +13,10 @@ class UpsertBoutRequest extends FormRequest
     public function rules(): array
     {
         $rules['game_id'] = ['required', 'integer', 'exists:games,id'];
-        $rules['name'] = [
+        $rules['name']    = [
             'required',
             'string',
-            Rule::unique('bouts', 'name')->where('game_id', $this->request->get('game_id') ?? $this->bout->game_id)
+            Rule::unique('bouts', 'name')->where('game_id', $this->request->get('game_id') ?? $this->bout->game_id),
         ];
 
         $this->setSometimeOnPut($rules);

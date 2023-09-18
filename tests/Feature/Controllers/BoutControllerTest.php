@@ -30,7 +30,7 @@ class BoutControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->admin = User::factory()->create([
             'user_name'  => 'admin_doe',
             'first_name' => 'Admin',
@@ -168,7 +168,7 @@ class BoutControllerTest extends TestCase
         ]);
 
         $this->put('/api/bouts/'.$bout->id, [
-            'name'    => $this->bout->name,
+            'name' => $this->bout->name,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['name']);
@@ -179,7 +179,7 @@ class BoutControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->put('/api/bouts/'.$this->bout->id, [
-            'name'    => 'Test update by User',
+            'name' => 'Test update by User',
         ])
         ->assertUnauthorized();
     }
@@ -189,7 +189,7 @@ class BoutControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $gameId = $this->bout->game_id;
-        $name = $this->bout->name;
+        $name   = $this->bout->name;
 
         $this->delete('/api/bouts/'.$this->bout->id)
             ->assertOk()
@@ -206,11 +206,11 @@ class BoutControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $gameId = $this->bout->game_id;
-        $name = $this->bout->name;
+        $name   = $this->bout->name;
 
         $this->delete('/api/bouts/'.$this->bout->id)
             ->assertUnauthorized();
-            
+
         $this->assertDatabaseHas('bouts', [
             'game_id' => $gameId,
             'name'    => $name,
