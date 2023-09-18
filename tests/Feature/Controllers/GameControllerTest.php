@@ -19,6 +19,8 @@ class GameControllerTest extends TestCase
 {
     use RefreshDatabase;
 
+    private User $superAdmin;
+
     private User $admin;
 
     private User $user;
@@ -28,6 +30,14 @@ class GameControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+
+        $this->superAdmin = User::factory()->create([
+            'user_name'  => 'super_admin_doe',
+            'first_name' => 'Super Admin',
+            'last_name'  => 'Doe',
+            'email'      => 'super_admin_doe@email.com',
+            'role'       => Role::SUPER_ADMIN,
+        ]);
 
         $this->admin = User::factory()->create([
             'user_name'  => 'admin_doe',
@@ -300,6 +310,32 @@ class GameControllerTest extends TestCase
         ->assertForbidden();
     }
 
+    public function testUpdateImmutableGameShouldOnlyWorkForSuperAdmin(): void
+    {
+        // Should fail for admin level
+        Passport::actingAs($this->admin);
+
+        $game = Game::factory()->create([
+            'name'       => 'Immutagle Game 2023',
+            'game_state' => GameState::OPEN_REGISTRATION->value,
+        ]);
+
+        $this->put('/api/games/'.$game->id, [
+            'name' => 'Immutable Game Updated 2023',
+        ])
+        ->assertForbidden();
+
+        Passport::actingAs($this->superAdmin);
+
+        $this->put('/api/games/'.$game->id, [
+            'name' => 'Immutable Game Updated 2023',
+        ])
+        ->assertOk()
+        ->assertJson([
+            'name' => 'Immutable Game Updated 2023',
+        ]);
+    }
+
     public function testDelete(): void
     {
         Passport::actingAs($this->admin);
@@ -364,6 +400,25 @@ class GameControllerTest extends TestCase
 
         $this->delete('/api/games/'.$this->liveGame->id)
             ->assertForbidden();
+    }
+
+    public function testDeleteImmutableGameShouldOnlyWorkForSuperAdmin(): void
+    {
+        // Should fail for admin level
+        Passport::actingAs($this->admin);
+
+        $game = Game::factory()->create([
+            'game_state' => GameState::OPEN_REGISTRATION->value,
+        ]);
+
+        $this->delete('/api/games/'.$game->id)
+            ->assertForbidden();
+
+        Passport::actingAs($this->superAdmin);
+
+        $this->delete('/api/games/'.$game->id)
+            ->assertOk()
+            ->assertJson([]);
     }
 
     private function getAssertableJsonStructure(): array
