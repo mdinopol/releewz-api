@@ -22,7 +22,7 @@ class ContestantFactory extends Factory
         return [
             'parent_id'       => null,
             'name'            => fake()->unique()->name(),
-            'alias'           => fake()->name(),
+            'alias'           => fake()->lastName(),
             'country_code'    => Country::random(),
             'contestant_type' => ContestantType::random(),
             'sport'           => Sport::random(),

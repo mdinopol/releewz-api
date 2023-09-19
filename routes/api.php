@@ -35,4 +35,7 @@ Route::middleware([
 
     Route::prefix('bouts')
         ->group(base_path('routes/api/bouts.php'));
+
+    Route::prefix('matchups')
+        ->group(base_path('routes/api/matchups.php'));
 });
