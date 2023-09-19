@@ -4,9 +4,7 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Traits\SetSometimesOnPut;
 use App\Models\Matchup;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\Validator;
 
 class UpsertMatchupRequest extends FormRequest
@@ -22,18 +20,6 @@ class UpsertMatchupRequest extends FormRequest
         $rules['away_id']    = ['required', 'integer', 'exists:contestants,id'];
         $rules['start_date'] = ['required', 'date', 'after_or_equal:today'];
         $rules['end_date']   = ['required', 'date', 'after_or_equal:start_date'];
-
-        // $rules['bout_id'] = [
-        //     'required',
-        //     'integer',
-        //     'exists:bouts,id',
-        //     Rule::unique('matchups')->where(
-        //         fn (Builder $query) => $query
-        //             ->where('bout_id', $this->input('bout_id') ?? $this->matchup->bout_id)
-        //             ->where('home_id', $this->input('home_id') ?? $this->matchup->home_id)
-        //             ->where('away_id', $this->input('away_id') ?? $this->matchup->away_id)
-        //     )
-        // ];
 
         $this->setSometimeOnPut($rules);
 
