@@ -90,11 +90,11 @@ class MatchupControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->post('/api/matchups', [
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addHour(),
+            'end_date'   => Carbon::now()->addHour(),
         ])
         ->assertCreated()
         ->assertJson([
@@ -115,19 +115,19 @@ class MatchupControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         Matchup::factory()->create([
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addHour(),
+            'end_date'   => Carbon::now()->addHour(),
         ]);
 
         $this->post('/api/matchups', [
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now()->addHours(2),
-            'end_date' => Carbon::now()->addHours(3),
+            'end_date'   => Carbon::now()->addHours(3),
         ])
         ->assertUnprocessable()
         ->assertInvalid(['bout_id']);
@@ -146,11 +146,11 @@ class MatchupControllerTest extends TestCase
         Passport::actingAs($this->user);
 
         $this->post('/api/matchups', [
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now()->addHours(2),
-            'end_date' => Carbon::now()->addHours(3),
+            'end_date'   => Carbon::now()->addHours(3),
         ])
         ->assertUnauthorized();
     }
@@ -162,11 +162,11 @@ class MatchupControllerTest extends TestCase
         $newBout = Bout::factory()->create();
 
         $matchup = Matchup::factory()->create([
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addHour(),
+            'end_date'   => Carbon::now()->addHour(),
         ]);
 
         $this->put('/api/matchups/'.$matchup->id, [
@@ -202,22 +202,20 @@ class MatchupControllerTest extends TestCase
 
         // Existing matchup
         Matchup::factory()->create([
-            'bout_id' => $this->bout->id,
-            'home_id' => $home->id,
-            'away_id' => $away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $home->id,
+            'away_id'    => $away->id,
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addHour(),
+            'end_date'   => Carbon::now()->addHour(),
         ]);
 
         $matchup = Matchup::factory()->create([
-            'bout_id' => $this->bout->id,
-            'home_id' => $this->home->id,
-            'away_id' => $this->away->id,
+            'bout_id'    => $this->bout->id,
+            'home_id'    => $this->home->id,
+            'away_id'    => $this->away->id,
             'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addHour(),
+            'end_date'   => Carbon::now()->addHour(),
         ]);
-
-
 
         $this->put('/api/matchups/'.$matchup->id, [
             'home_id' => $home->id,
