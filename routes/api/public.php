@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoutController;
 use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\MatchupController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,4 +53,16 @@ Route::prefix('bouts')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{bout}', 'show')->where('bout', '[0-9]+');
+    });
+
+/*
+ * --------------------------------
+ * Matchups
+ * --------------------------------
+ */
+Route::prefix('matchups')
+    ->controller(MatchupController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+        Route::get('/{matchup}', 'show')->where('matchup', '[0-9]+');
     });
