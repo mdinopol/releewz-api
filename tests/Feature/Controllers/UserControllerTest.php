@@ -149,7 +149,7 @@ class UserControllerTest extends TestCase
                 'user_name'  => 'jane_doe',
                 'first_name' => 'Jane',
                 'last_name'  => 'Doe',
-                'email' => 'jane.doe@email.com',
+                'email'      => 'jane.doe@email.com',
             ])
             ->assertUnprocessable();
     }
@@ -191,21 +191,21 @@ class UserControllerTest extends TestCase
                 'user_name'  => 'john_james_doe',
                 'first_name' => 'John James',
                 'last_name'  => 'Doe',
-                'email' => 'john.doe@email.com',
+                'email'      => 'john.doe@email.com',
             ])
             ->assertOk()
             ->assertJson([
                 'user_name'  => 'john_james_doe',
                 'first_name' => 'John James',
                 'last_name'  => 'Doe',
-                'email' => 'john.doe@email.com',
+                'email'      => 'john.doe@email.com',
             ]);
 
         $this->assertDatabaseHas('users', [
             'user_name'  => 'john_james_doe',
             'first_name' => 'John James',
             'last_name'  => 'Doe',
-            'email' => 'john.doe@email.com',
+            'email'      => 'john.doe@email.com',
         ]);
 
         $this->assertDatabaseMissing('users', [
@@ -223,15 +223,15 @@ class UserControllerTest extends TestCase
             'user_name'  => 'juan_doe',
             'first_name' => 'Juan',
             'last_name'  => 'Doe',
-            'email' => 'juan.doe@email.com',
-            'role'  => Role::SUPER_ADMIN,
+            'email'      => 'juan.doe@email.com',
+            'role'       => Role::SUPER_ADMIN,
         ]);
 
         $this->put('/api/users/'.$this->superAdmin->id, [
                 'user_name'  => 'juan_james_doe',
                 'first_name' => 'Juan James',
                 'last_name'  => 'Doe',
-                'email' => 'juan.doe@email.com',
+                'email'      => 'juan.doe@email.com',
             ])
             ->assertUnprocessable();
     }
@@ -244,28 +244,28 @@ class UserControllerTest extends TestCase
                 'user_name'  => 'jose_doe',
                 'first_name' => 'Jose',
                 'last_name'  => 'Doe',
-                'email' => 'jose.doe@email.com',
+                'email'      => 'jose.doe@email.com',
             ])
             ->assertOk()
             ->assertJson([
                 'user_name'  => 'jose_doe',
                 'first_name' => 'Jose',
                 'last_name'  => 'Doe',
-                'email' => 'jose.doe@email.com',
+                'email'      => 'jose.doe@email.com',
             ]);
 
         $this->assertDatabaseHas('users', [
             'user_name'  => 'jose_doe',
             'first_name' => 'Jose',
             'last_name'  => 'Doe',
-            'email' => 'jose.doe@email.com',
+            'email'      => 'jose.doe@email.com',
         ]);
 
         $this->assertDatabaseMissing('users', [
             'user_name'  => 'john_doe',
             'first_name' => 'John',
             'last_name'  => 'Doe',
-            'email' => 'john.doe@email.com',
+            'email'      => 'john.doe@email.com',
         ]);
     }
 
@@ -281,7 +281,7 @@ class UserControllerTest extends TestCase
             'user_name'  => 'john_doe',
             'first_name' => 'John',
             'last_name'  => 'Doe',
-            'email' => 'john.doe@email.com',
+            'email'      => 'john.doe@email.com',
         ]);
     }
 
@@ -295,7 +295,7 @@ class UserControllerTest extends TestCase
                 'user_name'  => 'john_doe',
                 'first_name' => 'John',
                 'last_name'  => 'Doe',
-                'email' => 'john.doe@email.com',
+                'email'      => 'john.doe@email.com',
             ]);
     }
 
@@ -305,8 +305,8 @@ class UserControllerTest extends TestCase
             'user_name'  => 'mr_manager',
             'first_name' => 'Mister',
             'last_name'  => 'Manager',
-            'email' => 'mr.manager@email.com',
-            'role'  => Role::ADMIN,
+            'email'      => 'mr.manager@email.com',
+            'role'       => Role::ADMIN,
         ]);
 
         Passport::actingAs($admin);
@@ -315,9 +315,9 @@ class UserControllerTest extends TestCase
                 'user_name'  => 'jane_doe',
                 'first_name' => 'Jane',
                 'last_name'  => 'Doe',
-                'email'    => 'jane.doe@email.com',
-                'password' => 'password',
-                'role'     => Role::ADMIN->value,
+                'email'      => 'jane.doe@email.com',
+                'password'   => 'password',
+                'role'       => Role::ADMIN->value,
             ])
             ->assertUnauthorized();
     }
@@ -325,18 +325,18 @@ class UserControllerTest extends TestCase
     public function testRegister(): void
     {
         $this->post('/api/oauth/register', [
-                'user_name'  => 'jane_doe',
-                'first_name' => 'Jane',
-                'last_name'  => 'Doe',
+                'user_name'    => 'jane_doe',
+                'first_name'   => 'Jane',
+                'last_name'    => 'Doe',
                 'email'        => 'jane.doe@email.com',
                 'password'     => 'password',
                 'country_code' => 'ph',
             ])
             ->assertCreated()
             ->assertJson([
-                'user_name'  => 'jane_doe',
-                'first_name' => 'Jane',
-                'last_name'  => 'Doe',
+                'user_name'    => 'jane_doe',
+                'first_name'   => 'Jane',
+                'last_name'    => 'Doe',
                 'email'        => 'jane.doe@email.com',
                 'country_code' => 'ph',
 
@@ -346,12 +346,12 @@ class UserControllerTest extends TestCase
 
         // Should create a user default player role
         $this->assertDatabaseHas('users', [
-            'user_name'  => 'jane_doe',
-            'first_name' => 'Jane',
-            'last_name'  => 'Doe',
+            'user_name'    => 'jane_doe',
+            'first_name'   => 'Jane',
+            'last_name'    => 'Doe',
             'email'        => 'jane.doe@email.com',
             'country_code' => 'ph',
-            'role'  => Role::USER->value,
+            'role'         => Role::USER->value,
         ]);
     }
 
@@ -361,8 +361,8 @@ class UserControllerTest extends TestCase
             'user_name'  => 'john_james_doe',
             'first_name' => 'John James',
             'last_name'  => 'Doe',
-            'email'    => 'john.doe@email.com',
-            'password' => 'password',
+            'email'      => 'john.doe@email.com',
+            'password'   => 'password',
         ])
         ->assertUnprocessable();
     }
