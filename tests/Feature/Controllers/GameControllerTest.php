@@ -55,8 +55,8 @@ class GameControllerTest extends TestCase
             'role'       => Role::USER,
         ]);
 
-        $this->liveGame = Game::withoutEvents(fn () =>
-            Game::factory()->create([
+        $this->liveGame = Game::withoutEvents(
+            fn () => Game::factory()->create([
                 'tournament_id'      => null,
                 'name'               => 'Test Game 1',
                 'short'              => 'TG1',
@@ -81,8 +81,8 @@ class GameControllerTest extends TestCase
 
     public function testList(): void
     {
-        Game::withoutEvents(fn () => 
-            Game::factory()->create([
+        Game::withoutEvents(
+            fn () => Game::factory()->create([
                 'tournament_id'      => null,
                 'name'               => 'Test Open Registration Game 1',
                 'short'              => 'TORG1',
@@ -129,13 +129,13 @@ class GameControllerTest extends TestCase
         $end   = Carbon::now()->addYear();
 
         $this->post('/api/games', [
-            'name'               => 'Test Game Create 1',
-            'short'              => 'TG1C',
-            'description'        => 'A test game create 1',
-            'sport'              => Sport::BASKETBALL->value,
-            
+            'name'        => 'Test Game Create 1',
+            'short'       => 'TG1C',
+            'description' => 'A test game create 1',
+            'sport'       => Sport::BASKETBALL->value,
+
             // Should be default game state
-            'game_state'         => GameState::getDefault()->value,
+            'game_state' => GameState::getDefault()->value,
 
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
@@ -322,8 +322,8 @@ class GameControllerTest extends TestCase
         // Should fail for admin level
         Passport::actingAs($this->admin);
 
-        $game = Game::withoutEvents(fn () =>
-            Game::factory()->create([
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
                 'name'       => 'Immutagle Game 2023',
                 'game_state' => GameState::OPEN_REGISTRATION->value,
             ])
@@ -416,8 +416,8 @@ class GameControllerTest extends TestCase
         // Should fail for admin level
         Passport::actingAs($this->admin);
 
-        $game = Game::withoutEvents(fn () =>
-            Game::factory()->create([
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
                 'game_state' => GameState::OPEN_REGISTRATION->value,
             ])
         );

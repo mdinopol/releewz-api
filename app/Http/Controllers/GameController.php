@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Data\GameEntryData;
 use App\Http\Requests\CreateEntryRequest;
 use App\Http\Requests\UpsertGameRequest;
 use App\Models\Game;
