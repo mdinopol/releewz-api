@@ -26,6 +26,7 @@ class Entry extends Pivot
         'total_points'         => 'float',
         'points_history'       => 'array',
         'contestants'          => 'array',
+        'extra_predictions'    => 'array',
         'license_at_creation'  => License::class,
         'currency_at_creation' => Currency::class,
     ];

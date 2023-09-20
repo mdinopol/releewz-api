@@ -55,50 +55,54 @@ class GameControllerTest extends TestCase
             'role'       => Role::USER,
         ]);
 
-        $this->liveGame = Game::factory()->create([
-            'tournament_id'      => null,
-            'name'               => 'Test Game 1',
-            'short'              => 'TG1',
-            'description'        => 'A test game 1',
-            'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::LIVE->value,
-            'duration_type'      => GameDuration::SPAN->value,
-            'game_type'          => GameType::FINALS->value,
-            'min_entry'          => 5,
-            'max_entry'          => 20,
-            'entry_contestants'  => 8,
-            'max_entry_value'    => 105.5,
-            'entry_price'        => 2.00,
-            'initial_prize_pool' => 10000.00,
-            'current_prize_pool' => null,
-            'start_date'         => Carbon::now(),
-            'end_date'           => Carbon::now()->addYear(),
-            'point_template'     => null,
-        ]);
+        $this->liveGame = Game::withoutEvents(fn () =>
+            Game::factory()->create([
+                'tournament_id'      => null,
+                'name'               => 'Test Game 1',
+                'short'              => 'TG1',
+                'description'        => 'A test game 1',
+                'sport'              => Sport::BASKETBALL->value,
+                'game_state'         => GameState::LIVE->value,
+                'duration_type'      => GameDuration::SPAN->value,
+                'game_type'          => GameType::FINALS->value,
+                'min_entry'          => 5,
+                'max_entry'          => 20,
+                'entry_contestants'  => 8,
+                'max_entry_value'    => 105.5,
+                'entry_price'        => 2.00,
+                'initial_prize_pool' => 10000.00,
+                'current_prize_pool' => null,
+                'start_date'         => Carbon::now(),
+                'end_date'           => Carbon::now()->addYear(),
+                'point_template'     => null,
+            ])
+        );
     }
 
     public function testList(): void
     {
-        Game::factory()->create([
-            'tournament_id'      => null,
-            'name'               => 'Test Open Registration Game 1',
-            'short'              => 'TORG1',
-            'description'        => 'A test open registration game 1',
-            'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::OPEN_REGISTRATION->value,
-            'duration_type'      => GameDuration::SPAN->value,
-            'game_type'          => GameType::FINALS->value,
-            'min_entry'          => 5,
-            'max_entry'          => 20,
-            'entry_contestants'  => 8,
-            'max_entry_value'    => 105.5,
-            'entry_price'        => 2.00,
-            'initial_prize_pool' => 10000.00,
-            'current_prize_pool' => null,
-            'start_date'         => Carbon::now(),
-            'end_date'           => Carbon::tomorrow()->addYear(),
-            'point_template'     => null,
-        ]);
+        Game::withoutEvents(fn () => 
+            Game::factory()->create([
+                'tournament_id'      => null,
+                'name'               => 'Test Open Registration Game 1',
+                'short'              => 'TORG1',
+                'description'        => 'A test open registration game 1',
+                'sport'              => Sport::BASKETBALL->value,
+                'game_state'         => GameState::OPEN_REGISTRATION->value,
+                'duration_type'      => GameDuration::SPAN->value,
+                'game_type'          => GameType::FINALS->value,
+                'min_entry'          => 5,
+                'max_entry'          => 20,
+                'entry_contestants'  => 8,
+                'max_entry_value'    => 105.5,
+                'entry_price'        => 2.00,
+                'initial_prize_pool' => 10000.00,
+                'current_prize_pool' => null,
+                'start_date'         => Carbon::now(),
+                'end_date'           => Carbon::tomorrow()->addYear(),
+                'point_template'     => null,
+            ])
+        );
 
         $this->get('/api/games')
             ->assertOk()
@@ -129,7 +133,10 @@ class GameControllerTest extends TestCase
             'short'              => 'TG1C',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
+            
+            // Should be default game state
+            'game_state'         => GameState::getDefault()->value,
+
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -315,10 +322,12 @@ class GameControllerTest extends TestCase
         // Should fail for admin level
         Passport::actingAs($this->admin);
 
-        $game = Game::factory()->create([
-            'name'       => 'Immutagle Game 2023',
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-        ]);
+        $game = Game::withoutEvents(fn () =>
+            Game::factory()->create([
+                'name'       => 'Immutagle Game 2023',
+                'game_state' => GameState::OPEN_REGISTRATION->value,
+            ])
+        );
 
         $this->put('/api/games/'.$game->id, [
             'name' => 'Immutable Game Updated 2023',
@@ -407,9 +416,11 @@ class GameControllerTest extends TestCase
         // Should fail for admin level
         Passport::actingAs($this->admin);
 
-        $game = Game::factory()->create([
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-        ]);
+        $game = Game::withoutEvents(fn () =>
+            Game::factory()->create([
+                'game_state' => GameState::OPEN_REGISTRATION->value,
+            ])
+        );
 
         $this->delete('/api/games/'.$game->id)
             ->assertForbidden();

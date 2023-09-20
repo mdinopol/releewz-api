@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\GameEntryData;
+use App\Http\Requests\CreateEntryRequest;
 use App\Http\Requests\UpsertGameRequest;
 use App\Models\Game;
+use App\Services\GameService;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
@@ -61,5 +65,14 @@ class GameController extends Controller
         $game->delete();
 
         return [];
+    }
+
+    public function createEntry(CreateEntryRequest $request, Game $game, GameService $gameService): void
+    {
+        $gameService->createUserEntryForGame(
+            $request->user(),
+            $game,
+            Arr::except($request->validated(), ['user_id', 'game_id'])
+        );
     }
 }

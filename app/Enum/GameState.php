@@ -40,4 +40,9 @@ enum GameState: int
             self::CANCEL            => 60,
         };
     }
+
+    public static function getDefault(): self
+    {
+        return self::IN_SETUP;
+    }
 }
