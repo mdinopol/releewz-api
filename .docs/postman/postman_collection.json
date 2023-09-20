@@ -468,14 +468,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/games/2",
+									"raw": "{{base_url}}/api/games/1",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"games",
-										"2"
+										"1"
 									]
 								}
 							},
@@ -519,7 +519,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Regular Season 2023-2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"game_state\": 0,\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
+							"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Finals 2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"game_state\": 0,\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -592,6 +592,44 @@
 						},
 						"method": "DELETE",
 						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/games/1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"games",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update State",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"game_state\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
 							"raw": "{{base_url}}/api/games/1",
 							"host": [
@@ -905,6 +943,50 @@
 								"api",
 								"bouts",
 								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Entry - game_user",
+			"item": [
+				{
+					"name": "Create User Entry For Game",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Entry 1\",\n    \"contestants\": [1,2,3,4,5,6,7,8],\n    \"license_at_creation\": \"malta_eur\",\n    \"currency_at_creation\": \"eur\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/games/1/entries",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"games",
+								"1",
+								"entries"
 							]
 						}
 					},
