@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use App\Enum\Currency;
 use App\Enum\License;
 use App\Models\Pivots\Entry;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
@@ -16,7 +15,7 @@ class CreateEntryRequest extends FormRequest
     public function rules(): array
     {
         $rules = [];
-        
+
         $rules['name'] = [
             'required',
             'string',
@@ -42,7 +41,7 @@ class CreateEntryRequest extends FormRequest
     //             $name = $input['name'];
 
     //             $entry = Entry::where([
-    //                 'game_id' => 
+    //                 'game_id' =>
     //             ])
     //             if ()
     //         }
