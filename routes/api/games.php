@@ -11,4 +11,8 @@ Route::controller(GameController::class)->group(function () {
         Route::put('/{game}', 'update')->where('game', '[0-9]+');
         Route::delete('/{game}', 'destroy')->where('game', '[0-9]+');
     });
+
+    Route::prefix('{game}/entries')->group(function () {
+        Route::post('/', 'createUserEntry');
+    });
 });
