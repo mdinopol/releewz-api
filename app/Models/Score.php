@@ -60,14 +60,4 @@ class Score extends Model
         'away_points' => 'float',
         'history'     => 'array',
     ];
-
-    public function matchup(): BelongsTo
-    {
-        return $this->belongsTo(Matchup::class);
-    }
-
-    public function setHistoryAttribute(array $value): void
-    {
-        $this->attributes['history'] = json_encode($value);
-    }
 }
