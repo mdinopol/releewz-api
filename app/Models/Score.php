@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enum\Achievement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Score.
