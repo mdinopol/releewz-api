@@ -35,7 +35,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $observers = [
-        Game::class => [GameObserver::class],
+        Game::class  => [GameObserver::class],
         Score::class => [ScoreObserver::class],
     ];
 

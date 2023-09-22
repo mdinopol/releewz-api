@@ -16,7 +16,7 @@ class UpsertScoreRequest extends FormRequest
     {
         $rules = [];
 
-        $rules['matchup_id'] = ['required', 'exists:matchups,id'];
+        $rules['matchup_id']  = ['required', 'exists:matchups,id'];
         $rules['achievement'] = [
             'required', new Enum(Achievement::class),
             Rule::unique('scores', 'achievement')
