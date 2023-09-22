@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enum\Achievement;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * App\Models\Score.
@@ -60,9 +59,4 @@ class Score extends Model
         'away_points' => 'float',
         'history'     => 'array',
     ];
-
-    public function matchup(): BelongsTo
-    {
-        return $this->belongsTo(Matchup::class);
-    }
 }

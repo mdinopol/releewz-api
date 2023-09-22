@@ -4,11 +4,12 @@ namespace App\Providers;
 
 use App\Listeners\RevokeUserExistingToken;
 use App\Models\Game;
+use App\Models\Score;
 use App\Observers\GameObserver;
+use App\Observers\ScoreObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 use Laravel\Passport\Events\AccessTokenCreated;
 
 class EventServiceProvider extends ServiceProvider
@@ -34,7 +35,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $observers = [
-        Game::class => [GameObserver::class],
+        Game::class  => [GameObserver::class],
+        Score::class => [ScoreObserver::class],
     ];
 
     /**

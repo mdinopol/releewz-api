@@ -14,10 +14,10 @@ return new class() extends Migration {
             $table->id();
             $table->foreignId('matchup_id');
             $table->string('achievement');
-            $table->decimal('home_score');
-            $table->decimal('home_points');
-            $table->decimal('away_score');
-            $table->decimal('away_points');
+            $table->decimal('home_score')->nullable();
+            $table->decimal('home_points')->nullable();
+            $table->decimal('away_score')->nullable();
+            $table->decimal('away_points')->nullable();
             $table->jsonb('history')->nullable();
             $table->timestamps();
 
