@@ -65,4 +65,9 @@ class Score extends Model
     {
         return $this->belongsTo(Matchup::class);
     }
+
+    public function setHistoryAttribute(array $value): void
+    {
+        $this->attributes['history'] = json_encode($value);
+    }
 }

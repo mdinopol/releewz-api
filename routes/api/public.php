@@ -4,6 +4,7 @@ use App\Http\Controllers\BoutController;
 use App\Http\Controllers\ContestantController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\MatchupController;
+use App\Http\Controllers\ScoreController;
 use App\Http\Controllers\TournamentController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,4 +66,15 @@ Route::prefix('matchups')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{matchup}', 'show')->where('matchup', '[0-9]+');
+    });
+
+/*
+ * --------------------------------
+ * Scores
+ * --------------------------------
+ */
+Route::prefix('scores')
+    ->controller(ScoreController::class)
+    ->group(function () {
+        Route::get('/{score}', 'show')->where('score', '[0-9]+');
     });

@@ -38,4 +38,7 @@ Route::middleware([
 
     Route::prefix('matchups')
         ->group(base_path('routes/api/matchups.php'));
+
+    Route::prefix('scores')
+        ->group(base_path('routes/api/scores.php'));
 });
