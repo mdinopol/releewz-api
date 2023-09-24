@@ -19,8 +19,6 @@ class GameControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    private User $superAdmin;
-
     private User $admin;
 
     private User $user;
@@ -30,14 +28,6 @@ class GameControllerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-
-        $this->superAdmin = User::factory()->create([
-            'user_name'  => 'super_admin_doe',
-            'first_name' => 'Super Admin',
-            'last_name'  => 'Doe',
-            'email'      => 'super_admin_doe@email.com',
-            'role'       => Role::SUPER_ADMIN,
-        ]);
 
         $this->admin = User::factory()->create([
             'user_name'  => 'admin_doe',
