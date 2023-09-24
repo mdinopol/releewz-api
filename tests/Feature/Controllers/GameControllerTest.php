@@ -129,10 +129,10 @@ class GameControllerTest extends TestCase
         $end   = Carbon::now()->addYear();
 
         $this->post('/api/games', [
-            'name'        => 'Test Game Create 1',
-            'short'       => 'TG1C',
-            'description' => 'A test game create 1',
-            'sport'       => Sport::BASKETBALL->value,
+            'name'               => 'Test Game Create 1',
+            'short'              => 'TG1C',
+            'description'        => 'A test game create 1',
+            'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -148,13 +148,13 @@ class GameControllerTest extends TestCase
         ])
         ->assertCreated()
         ->assertJson([
-            'name'               => 'Test Game Create 1',
-            'short'              => 'TG1C',
-            'description'        => 'A test game create 1',
-            'sport'              => Sport::BASKETBALL->value,
-            
+            'name'        => 'Test Game Create 1',
+            'short'       => 'TG1C',
+            'description' => 'A test game create 1',
+            'sport'       => Sport::BASKETBALL->value,
+
             // Should be default game state
-            'game_state'         => GameState::getDefault()->value,
+            'game_state' => GameState::getDefault()->value,
 
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
@@ -168,13 +168,13 @@ class GameControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('games', [
-            'name'               => 'Test Game Create 1',
-            'short'              => 'TG1C',
-            'description'        => 'A test game create 1',
-            'sport'              => Sport::BASKETBALL->value,
-            
+            'name'        => 'Test Game Create 1',
+            'short'       => 'TG1C',
+            'description' => 'A test game create 1',
+            'sport'       => Sport::BASKETBALL->value,
+
             // Should be default game state
-            'game_state'         => GameState::getDefault()->value,
+            'game_state' => GameState::getDefault()->value,
 
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
@@ -232,9 +232,9 @@ class GameControllerTest extends TestCase
         ]);
 
         $this->put('/api/games/'.$preOpenGame->id, [
-            'name'       => 'Test Game Updated V2.0',
-            'slug'       => Str::slug('Test Game Updated V2.0'),
-            'game_type'  => GameType::REGULAR_SEASON->value,
+            'name'      => 'Test Game Updated V2.0',
+            'slug'      => Str::slug('Test Game Updated V2.0'),
+            'game_type' => GameType::REGULAR_SEASON->value,
         ])
         ->assertOk()
         ->assertJson([
