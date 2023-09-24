@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use App\Enum\GameDuration;
-use App\Enum\GameState;
 use App\Enum\GameType;
 use App\Enum\Sport;
 use App\Http\Requests\Traits\SetSometimesOnPut;
@@ -23,7 +22,6 @@ class UpsertGameRequest extends FormRequest
         $rules['slug']               = ['string', 'unique:games,slug', 'min:1', 'max:150'];
         $rules['description']        = ['nullable', 'string', 'min:1', 'max:255'];
         $rules['sport']              = ['required', new Enum(Sport::class)];
-        $rules['game_state']         = ['required', new Enum(GameState::class)];
         $rules['duration_type']      = ['required', new Enum(GameDuration::class)];
         $rules['game_type']          = ['required', new Enum(GameType::class)];
         $rules['min_entry']          = ['required', 'integer'];

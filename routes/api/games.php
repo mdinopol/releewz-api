@@ -10,6 +10,8 @@ Route::controller(GameController::class)->group(function () {
         Route::post('/', 'store');
         Route::put('/{game}', 'update')->where('game', '[0-9]+');
         Route::delete('/{game}', 'destroy')->where('game', '[0-9]+');
+
+        Route::put('/{game}/state/{gameState}', 'updateGameState');
     });
 
     Route::prefix('{game}/entries')->group(function () {
