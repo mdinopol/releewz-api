@@ -133,10 +133,6 @@ class GameControllerTest extends TestCase
             'short'       => 'TG1C',
             'description' => 'A test game create 1',
             'sport'       => Sport::BASKETBALL->value,
-
-            // Should be default game state
-            'game_state' => GameState::getDefault()->value,
-
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -156,7 +152,10 @@ class GameControllerTest extends TestCase
             'short'              => 'TG1C',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
+            
+            // Should be default game state
+            'game_state'         => GameState::getDefault()->value,
+
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -173,7 +172,10 @@ class GameControllerTest extends TestCase
             'short'              => 'TG1C',
             'description'        => 'A test game create 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
+            
+            // Should be default game state
+            'game_state'         => GameState::getDefault()->value,
+
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -218,7 +220,6 @@ class GameControllerTest extends TestCase
             'short'              => 'TGU1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -233,14 +234,13 @@ class GameControllerTest extends TestCase
         $this->put('/api/games/'.$preOpenGame->id, [
             'name'       => 'Test Game Updated V2.0',
             'slug'       => Str::slug('Test Game Updated V2.0'),
-            'game_state' => GameState::OPEN_REGISTRATION->value,
             'game_type'  => GameType::REGULAR_SEASON->value,
         ])
         ->assertOk()
         ->assertJson([
             'name'       => 'Test Game Updated V2.0',
             'slug'       => Str::slug('Test Game Updated V2.0'),
-            'game_state' => GameState::OPEN_REGISTRATION->value,
+            'game_state' => GameState::getDefault()->value,
             'game_type'  => GameType::REGULAR_SEASON->value,
         ]);
 
@@ -251,7 +251,7 @@ class GameControllerTest extends TestCase
             'short'              => 'TGU1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'game_state'         => GameState::getDefault()->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::REGULAR_SEASON->value,
             'min_entry'          => 5,
@@ -273,7 +273,6 @@ class GameControllerTest extends TestCase
             'short'              => 'TGU1',
             'description'        => 'A test update game 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::OPEN_REGISTRATION->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -296,7 +295,7 @@ class GameControllerTest extends TestCase
         ->assertUnauthorized();
     }
 
-    public function testUpdateInfoOfPublicGameShouldFail(): void
+    public function testUpdateImmutableGameShouldFail(): void
     {
         Passport::actingAs($this->admin);
 
@@ -307,42 +306,94 @@ class GameControllerTest extends TestCase
         ->assertForbidden();
     }
 
+    public function testUpdateGameState(): void
+    {
+        Passport::actingAs($this->admin);
+
+        Carbon::setTestNow(Carbon::now());
+
+        $preOpenGame = Game::factory()->create([
+            'name'               => 'Best Game of The Year',
+            'short'              => 'BGY',
+            'description'        => 'The best game of the year',
+            'sport'              => Sport::BASKETBALL->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
+            'initial_prize_pool' => 10000.00,
+            'current_prize_pool' => null,
+            'start_date'         => Carbon::now(),
+            'end_date'           => Carbon::tomorrow()->addYear(),
+            'point_template'     => null,
+        ]);
+
+        $this->put('/api/games/'.$preOpenGame->id.'/state/'.GameState::OPEN_REGISTRATION->value)
+        ->assertOk()
+        ->assertJson([
+            'name'               => 'Best Game of The Year',
+            'short'              => 'BGY',
+            'description'        => 'The best game of the year',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
+            'initial_prize_pool' => 10000.00,
+            'current_prize_pool' => null,
+            'point_template'     => null,
+        ]);
+
+        $this->assertDatabaseMissing('games', [
+            'name'               => 'Best Game of The Year',
+            'short'              => 'BGY',
+            'description'        => 'The best game of the year',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::getDefault()->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
+            'initial_prize_pool' => 10000.00,
+            'current_prize_pool' => null,
+            'point_template'     => null,
+        ]);
+
+        $this->assertDatabaseHas('games', [
+            'name'               => 'Best Game of The Year',
+            'short'              => 'BGY',
+            'description'        => 'The best game of the year',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::OPEN_REGISTRATION->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::FINALS->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
+            'initial_prize_pool' => 10000.00,
+            'current_prize_pool' => null,
+            'point_template'     => null,
+        ]);
+    }
+
     public function testRevertGameStateShouldFail(): void
     {
         Passport::actingAs($this->admin);
 
-        $this->put('/api/games/'.$this->liveGame->id, [
-            'game_state' => GameState::OPEN_REGISTRATION->value,
-        ])
+        $this->put('/api/games/'.$this->liveGame->id.'/state/'.GameState::OPEN_REGISTRATION->value)
         ->assertForbidden();
-    }
-
-    public function testUpdateImmutableGameShouldOnlyWorkForSuperAdmin(): void
-    {
-        // Should fail for admin level
-        Passport::actingAs($this->admin);
-
-        $game = Game::withoutEvents(
-            fn () => Game::factory()->create([
-                'name'       => 'Immutagle Game 2023',
-                'game_state' => GameState::OPEN_REGISTRATION->value,
-            ])
-        );
-
-        $this->put('/api/games/'.$game->id, [
-            'name' => 'Immutable Game Updated 2023',
-        ])
-        ->assertForbidden();
-
-        Passport::actingAs($this->superAdmin);
-
-        $this->put('/api/games/'.$game->id, [
-            'name' => 'Immutable Game Updated 2023',
-        ])
-        ->assertOk()
-        ->assertJson([
-            'name' => 'Immutable Game Updated 2023',
-        ]);
     }
 
     public function testDelete(): void
@@ -355,7 +406,6 @@ class GameControllerTest extends TestCase
             'short'              => 'TGU1',
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -378,7 +428,7 @@ class GameControllerTest extends TestCase
             'slug'               => $game->slug,
             'description'        => 'A test game 1',
             'sport'              => Sport::BASKETBALL->value,
-            'game_state'         => GameState::IN_SETUP->value,
+            'game_state'         => GameState::getDefault()->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
             'min_entry'          => 5,
@@ -395,9 +445,7 @@ class GameControllerTest extends TestCase
     {
         Passport::actingAs($this->user);
 
-        $game = Game::factory()->create([
-            'game_state' => GameState::IN_SETUP->value,
-        ]);
+        $game = Game::factory()->create();
 
         $this->delete('/api/games/'.$game->id)
             ->assertUnauthorized();
@@ -409,27 +457,6 @@ class GameControllerTest extends TestCase
 
         $this->delete('/api/games/'.$this->liveGame->id)
             ->assertForbidden();
-    }
-
-    public function testDeleteImmutableGameShouldOnlyWorkForSuperAdmin(): void
-    {
-        // Should fail for admin level
-        Passport::actingAs($this->admin);
-
-        $game = Game::withoutEvents(
-            fn () => Game::factory()->create([
-                'game_state' => GameState::OPEN_REGISTRATION->value,
-            ])
-        );
-
-        $this->delete('/api/games/'.$game->id)
-            ->assertForbidden();
-
-        Passport::actingAs($this->superAdmin);
-
-        $this->delete('/api/games/'.$game->id)
-            ->assertOk()
-            ->assertJson([]);
     }
 
     private function getAssertableJsonStructure(): array

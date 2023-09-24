@@ -158,4 +158,9 @@ class Game extends Model
     {
         return $this->sport->template();
     }
+
+    public function isImmutable(): bool
+    {
+        return $this->game_state->isImmutable();
+    }
 }
