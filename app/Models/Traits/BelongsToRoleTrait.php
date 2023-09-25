@@ -19,8 +19,8 @@ trait BelongsToRoleTrait
         throw new \UnexpectedValueException('Role name not found.');
     }
 
-    public function isSuperAdmin(): bool
-    {
-        return $this->role->level() >= config('releewz.super_admin_min_level');
-    }
+    // public function isSuperAdmin(): bool
+    // {
+    //     return $this->role->level() >= config('releewz.super_admin_min_level');
+    // }
 }

@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Enum\GameState;
 use App\Http\Requests\CreateEntryRequest;
+use App\Http\Requests\SyncStartlistRequest;
 use App\Http\Requests\UpsertGameRequest;
 use App\Models\Game;
 use App\Services\GameService;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class GameController extends Controller
 {
@@ -23,11 +24,10 @@ class GameController extends Controller
             ->paginate(10);
     }
 
-    // TO DO
-    // public function mine(Request $request): Collection
-    // {
-    //     return $request->user()->games->live()->get();
-    // }
+    public function live(): LengthAwarePaginator
+    {
+        return Game::live()->paginate(10);
+    }
 
     public function store(UpsertGameRequest $request): Game
     {
@@ -41,6 +41,7 @@ class GameController extends Controller
         ])->load([
             'tournament',
             'bouts',
+            'contestants',
         ]);
     }
 
@@ -49,9 +50,7 @@ class GameController extends Controller
      */
     public function update(UpsertGameRequest $request, Game $game): Game
     {
-        if ($game->isImmutable()) {
-            abort(HttpResponse::HTTP_FORBIDDEN, 'Cannot perform an update. Game is already public.');
-        }
+        $this->authorize('modify', $game);
 
         $game->update($request->validated());
 
@@ -63,25 +62,43 @@ class GameController extends Controller
      */
     public function destroy(Game $game): array
     {
-        if ($game->isImmutable()) {
-            abort(HttpResponse::HTTP_FORBIDDEN, "Can't delete a game that is already or had been opened to public.");
-        }
+        $this->authorize('modify', $game);
 
         $game->delete();
 
         return [];
     }
 
+    /**
+     * @throws AuthorizationException
+     */
     public function createUserEntry(CreateEntryRequest $request, Game $game): void
     {
+        $this->authorize('createEntry', $game);
+
         $game->users()->attach(
             $request->user(),
             Arr::except($request->validated(), ['user_id', 'game_id'])
         );
     }
 
+    public function myEntries(Request $request): LengthAwarePaginator
+    {
+        return $request->user()->games()->live()->paginate(10);
+    }
+
     public function updateGameState(GameService $gameService, Game $game, GameState $gameState): Game
     {
         return $gameService->updateGameState($game, $gameState);
+    }
+
+    /**
+     * @throws AuthorizationException
+     */
+    public function syncStartlist(SyncStartlistRequest $request, Game $game): void
+    {
+        $this->authorize('modify', $game);
+
+        $game->contestants()->sync($request->validated()['contestants']);
     }
 }

@@ -116,6 +116,7 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Game::class, 'entries', 'user_id', 'game_id')
             ->using(Entry::class)
+            ->as('entries')
             ->withPivot([
                 'name',
                 'total_points',

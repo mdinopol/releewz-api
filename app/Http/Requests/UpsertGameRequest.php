@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enum\ContestantType;
 use App\Enum\GameDuration;
 use App\Enum\GameType;
 use App\Enum\Sport;
@@ -24,6 +25,7 @@ class UpsertGameRequest extends FormRequest
         $rules['sport']              = ['required', new Enum(Sport::class)];
         $rules['duration_type']      = ['required', new Enum(GameDuration::class)];
         $rules['game_type']          = ['required', new Enum(GameType::class)];
+        $rules['contestant_type']    = ['required', new Enum(ContestantType::class)];
         $rules['min_entry']          = ['required', 'integer'];
         $rules['max_entry']          = ['required', 'integer'];
         $rules['entry_contestants']  = ['required', 'integer'];

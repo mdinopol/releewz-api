@@ -42,6 +42,7 @@ Route::prefix('games')
     ->group(function () {
         Route::get('/', 'index');
         Route::get('/{game}', 'show')->where('game', '[0-9]+');
+        Route::get('/live', 'live');
     });
 
 /*
