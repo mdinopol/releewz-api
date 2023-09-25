@@ -565,7 +565,7 @@ class GameControllerTest extends TestCase
         $this->assertCount($memberCount, $game->contestants);
     }
 
-    public function testCreateUserEntry()
+    public function testCreateUserEntry(): void
     {
         Passport::actingAs($this->user);
 
@@ -612,7 +612,7 @@ class GameControllerTest extends TestCase
         ]);
     }
 
-    public function testCreateUserEntryForPublicGameShouldFail()
+    public function testCreateUserEntryForPublicGameShouldFail(): void
     {
         Passport::actingAs($this->user);
 
