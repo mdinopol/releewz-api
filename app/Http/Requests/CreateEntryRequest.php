@@ -32,21 +32,6 @@ class CreateEntryRequest extends FormRequest
         return $rules;
     }
 
-    // protected function after(): void
-    // {
-    //     return [
-    //         function (Validator $validator) {
-    //             $input = $validator->safe(['name']);
-    //             $name = $input['name'];
-
-    //             $entry = Entry::where([
-    //                 'game_id' =>
-    //             ])
-    //             if ()
-    //         }
-    //     ]
-    // }
-
     protected function prepareForValidation(): void
     {
         $this->merge([
