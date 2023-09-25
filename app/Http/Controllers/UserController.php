@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enum\Role;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UpsertUserRequest;
-use App\Models\Game;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;

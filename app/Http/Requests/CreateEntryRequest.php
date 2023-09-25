@@ -4,7 +4,6 @@ namespace App\Http\Requests;
 
 use App\Enum\Currency;
 use App\Enum\License;
-use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
@@ -22,7 +21,7 @@ class CreateEntryRequest extends FormRequest
             'max:10',
             Rule::unique('entries', 'name')->where('game_id', $this->game->id),
         ];
-        $rules['contestants']          = [
+        $rules['contestants'] = [
             'array',
             Rule::exists('contestant_game', 'contestant_id')->where('game_id', $this->game->id),
         ];

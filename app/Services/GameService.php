@@ -15,7 +15,7 @@ class GameService
         }
 
         if (!$game->tournament) {
-            abort(HttpResponse::HTTP_FORBIDDEN, "Assign game to a tournament first, and try again.");
+            abort(HttpResponse::HTTP_FORBIDDEN, 'Assign game to a tournament first, and try again.');
         }
 
         $game->game_state = $toGameState;
