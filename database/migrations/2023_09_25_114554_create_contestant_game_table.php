@@ -10,14 +10,12 @@ return new class() extends Migration {
      */
     public function up(): void
     {
-        Schema::create('contestant_tournament', function (Blueprint $table) {
+        Schema::create('contestant_game', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('contestant_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('tournament_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('contestant_id');
+            $table->foreignId('game_id')->constrained()->cascadeOnDelete();
             $table->boolean('abandoned')->default(false);
             $table->timestamps();
-
-            $table->unique(['contestant_id', 'tournament_id']);
         });
     }
 
@@ -26,6 +24,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('contestant_tournament');
+        Schema::dropIfExists('contestant_game');
     }
 };

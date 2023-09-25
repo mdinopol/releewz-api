@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\ContestantType;
 use App\Enum\GameDuration;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,6 +23,7 @@ return new class() extends Migration {
             $table->smallInteger('game_state');
             $table->enum('duration_type', GameDuration::values());
             $table->string('game_type', 100);
+            $table->enum('contestant_type', ContestantType::values());
             $table->smallInteger('min_entry')->unsigned();
             $table->smallInteger('max_entry')->unsigned();
             $table->tinyInteger('entry_contestants')->unsigned();

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enum\ContestantType;
 use App\Enum\GameDuration;
 use App\Enum\GameState;
 use App\Enum\GameType;
@@ -88,6 +89,7 @@ class Game extends Model
         'description',
         'sport',
         'game_state',
+        'contestant_type',
         'duration_type',
         'game_type',
         'min_entry',
@@ -107,6 +109,7 @@ class Game extends Model
         'game_state'         => GameState::class,
         'duration_type'      => GameDuration::class,
         'game_type'          => GameType::class,
+        'contestant_type'    => ContestantType::class,
         'max_entry_value'    => 'float',
         'entry_price'        => 'float',
         'initial_prize_pool' => 'float',
@@ -152,6 +155,13 @@ class Game extends Model
                 'license_at_creation',
                 'currency_at_creation',
             ]);
+    }
+
+    public function contestants(): BelongsToMany
+    {
+        return $this->belongsToMany(Contestant::class)
+            ->withTimestamps()
+            ->withPivot('abandoned');
     }
 
     public function getAchievementTemplateAttribute(): array

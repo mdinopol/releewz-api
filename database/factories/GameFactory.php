@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enum\ContestantType;
 use App\Enum\GameDuration;
 use App\Enum\GameState;
 use App\Enum\GameType;
@@ -31,6 +32,7 @@ class GameFactory extends Factory
             'game_state'         => GameState::random(),
             'duration_type'      => GameDuration::random(),
             'game_type'          => GameType::random(),
+            'contestant_type'    => ContestantType::random(),
             'min_entry'          => rand(5, 10),
             'max_entry'          => fake()->numberBetween(15, 500),
             'entry_contestants'  => fake()->numberBetween(5, 20),

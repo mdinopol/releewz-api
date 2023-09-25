@@ -14,6 +14,10 @@ class GameService
             abort(HttpResponse::HTTP_FORBIDDEN, "Can't revert game to its previous state");
         }
 
+        if (!$game->tournament) {
+            abort(HttpResponse::HTTP_FORBIDDEN, 'Assign game to a tournament first, and try again.');
+        }
+
         $game->game_state = $toGameState;
         $game->save();
 

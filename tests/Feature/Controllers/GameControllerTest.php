@@ -2,12 +2,17 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Enum\ContestantType;
+use App\Enum\Currency;
 use App\Enum\GameDuration;
 use App\Enum\GameState;
 use App\Enum\GameType;
+use App\Enum\License;
 use App\Enum\Role;
 use App\Enum\Sport;
+use App\Models\Contestant;
 use App\Models\Game;
+use App\Models\Tournament;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -55,6 +60,7 @@ class GameControllerTest extends TestCase
                 'game_state'         => GameState::LIVE->value,
                 'duration_type'      => GameDuration::SPAN->value,
                 'game_type'          => GameType::FINALS->value,
+                'contestant_type'    => ContestantType::TEAM_MEMBER->value,
                 'min_entry'          => 5,
                 'max_entry'          => 20,
                 'entry_contestants'  => 8,
@@ -81,6 +87,7 @@ class GameControllerTest extends TestCase
                 'game_state'         => GameState::OPEN_REGISTRATION->value,
                 'duration_type'      => GameDuration::SPAN->value,
                 'game_type'          => GameType::FINALS->value,
+                'contestant_type'    => ContestantType::TEAM_MEMBER->value,
                 'min_entry'          => 5,
                 'max_entry'          => 20,
                 'entry_contestants'  => 8,
@@ -95,6 +102,39 @@ class GameControllerTest extends TestCase
         );
 
         $this->get('/api/games')
+            ->assertOk()
+            ->assertJsonStructure($this->paginatedStructure(
+                $this->getAssertableJsonStructure()
+            ));
+    }
+
+    public function testListLive(): void
+    {
+        Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id'      => null,
+                'name'               => 'Test Open Registration Game 1',
+                'short'              => 'TORG1',
+                'description'        => 'A test open registration game 1',
+                'sport'              => Sport::BASKETBALL->value,
+                'game_state'         => GameState::LIVE->value,
+                'duration_type'      => GameDuration::SPAN->value,
+                'game_type'          => GameType::FINALS->value,
+                'contestant_type'    => ContestantType::TEAM_MEMBER->value,
+                'min_entry'          => 5,
+                'max_entry'          => 20,
+                'entry_contestants'  => 8,
+                'max_entry_value'    => 105.5,
+                'entry_price'        => 2.00,
+                'initial_prize_pool' => 10000.00,
+                'current_prize_pool' => null,
+                'start_date'         => Carbon::now(),
+                'end_date'           => Carbon::tomorrow()->addYear(),
+                'point_template'     => null,
+            ])
+        );
+
+        $this->get('/api/games/live')
             ->assertOk()
             ->assertJsonStructure($this->paginatedStructure(
                 $this->getAssertableJsonStructure()
@@ -125,6 +165,7 @@ class GameControllerTest extends TestCase
             'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -148,6 +189,7 @@ class GameControllerTest extends TestCase
 
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -168,6 +210,7 @@ class GameControllerTest extends TestCase
 
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -212,6 +255,7 @@ class GameControllerTest extends TestCase
             'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -228,10 +272,23 @@ class GameControllerTest extends TestCase
         ])
         ->assertOk()
         ->assertJson([
-            'name'       => 'Test Game Updated V2.0',
-            'slug'       => Str::slug('Test Game Updated V2.0'),
-            'game_state' => GameState::getDefault()->value,
-            'game_type'  => GameType::REGULAR_SEASON->value,
+            'tournament_id'      => null,
+            'name'               => 'Test Game Updated V2.0',
+            'slug'               => Str::slug('Test Game Updated V2.0'),
+            'short'              => 'TGU1',
+            'description'        => 'A test game 1',
+            'sport'              => Sport::BASKETBALL->value,
+            'game_state'         => GameState::getDefault()->value,
+            'duration_type'      => GameDuration::SPAN->value,
+            'game_type'          => GameType::REGULAR_SEASON->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
+            'min_entry'          => 5,
+            'max_entry'          => 20,
+            'entry_contestants'  => 8,
+            'max_entry_value'    => 105.5,
+            'entry_price'        => 2.00,
+            'initial_prize_pool' => 10000.00,
+            'current_prize_pool' => null,
         ]);
 
         $this->assertDatabaseHas('games', [
@@ -244,6 +301,7 @@ class GameControllerTest extends TestCase
             'game_state'         => GameState::getDefault()->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::REGULAR_SEASON->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -265,6 +323,7 @@ class GameControllerTest extends TestCase
             'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -302,13 +361,17 @@ class GameControllerTest extends TestCase
 
         Carbon::setTestNow(Carbon::now());
 
+        $tournament = Tournament::factory()->create();
+
         $preOpenGame = Game::factory()->create([
+            'tournament_id'      => $tournament->id,
             'name'               => 'Best Game of The Year',
             'short'              => 'BGY',
             'description'        => 'The best game of the year',
             'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -324,6 +387,7 @@ class GameControllerTest extends TestCase
         $this->put('/api/games/'.$preOpenGame->id.'/state/'.GameState::OPEN_REGISTRATION->value)
         ->assertOk()
         ->assertJson([
+            'tournament_id'      => $tournament->id,
             'name'               => 'Best Game of The Year',
             'short'              => 'BGY',
             'description'        => 'The best game of the year',
@@ -331,6 +395,7 @@ class GameControllerTest extends TestCase
             'game_state'         => GameState::OPEN_REGISTRATION->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -342,6 +407,7 @@ class GameControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseMissing('games', [
+            'tournament_id'      => $tournament->id,
             'name'               => 'Best Game of The Year',
             'short'              => 'BGY',
             'description'        => 'The best game of the year',
@@ -349,6 +415,7 @@ class GameControllerTest extends TestCase
             'game_state'         => GameState::getDefault()->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -360,6 +427,7 @@ class GameControllerTest extends TestCase
         ]);
 
         $this->assertDatabaseHas('games', [
+            'tournament_id'      => $tournament->id,
             'name'               => 'Best Game of The Year',
             'short'              => 'BGY',
             'description'        => 'The best game of the year',
@@ -367,6 +435,7 @@ class GameControllerTest extends TestCase
             'game_state'         => GameState::OPEN_REGISTRATION->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -398,6 +467,7 @@ class GameControllerTest extends TestCase
             'sport'              => Sport::BASKETBALL->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -421,6 +491,7 @@ class GameControllerTest extends TestCase
             'game_state'         => GameState::getDefault()->value,
             'duration_type'      => GameDuration::SPAN->value,
             'game_type'          => GameType::FINALS->value,
+            'contestant_type'    => ContestantType::TEAM_MEMBER->value,
             'min_entry'          => 5,
             'max_entry'          => 20,
             'entry_contestants'  => 8,
@@ -449,6 +520,135 @@ class GameControllerTest extends TestCase
             ->assertForbidden();
     }
 
+    public function testSyncStartlist(): void
+    {
+        Passport::actingAs($this->admin);
+
+        $memberCount = 3;
+
+        $game    = Game::factory()->create(['contestant_type' => ContestantType::TEAM_MEMBER]);
+        $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM]);
+        $members = Contestant::factory($memberCount)->create([
+            'parent_id'       => $team->id,
+            'contestant_type' => ContestantType::TEAM_MEMBER,
+        ]);
+        $individual = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
+        $memberIds  = $members->pluck('id')->toArray();
+
+        // Assert that all member type are allowed if they are assigned to the same contestant type game
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => $memberIds,
+        ])
+        ->assertOk();
+
+        // Assert that assigning contestant with different type from game's contestant type should fail
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [$team->id],
+        ])
+        ->assertUnprocessable();
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [$individual->id],
+        ])
+        ->assertUnprocessable();
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [$team->id, $individual->id],
+        ])
+
+        // Assert that assigning array of valid contestants mixed with at least a single invalid contestant should fail
+        ->assertUnprocessable();
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => array_merge($memberIds, [$team->id, $individual->id]),
+        ])
+        ->assertUnprocessable();
+
+        // Assert that the only synced contestants are the members
+        $this->assertCount($memberCount, $game->contestants);
+    }
+
+    public function testCreateUserEntry(): void
+    {
+        Passport::actingAs($this->user);
+
+        $memberCount = 3;
+
+        $contestantType = ContestantType::TEAM_MEMBER;
+        $sport          = Sport::BASKETBALL;
+
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id'   => Tournament::factory()->create()->id,
+                'contestant_type' => $contestantType,
+                'game_state'      => GameState::OPEN_REGISTRATION,
+                'sport'           => $sport,
+            ])
+        );
+        $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM, 'sport' => $sport]);
+        $members = Contestant::factory($memberCount)->create([
+            'parent_id'       => $team->id,
+            'contestant_type' => $contestantType,
+            'sport'           => $sport,
+        ])->pluck('id');
+
+        $game->contestants()->sync($members);
+
+        $this->post('/api/games/'.$game->id.'/entries', [
+            'name'                 => 'Entry 1',
+            'contestants'          => $members->toArray(),
+            'license_at_creation'  => License::MALTA_EUR->value,
+            'currency_at_creation' => Currency::EUR->value,
+        ])
+        ->assertOk();
+
+        $this->assertCount(1, $this->user->games);
+        $this->assertDatabaseHas('entries', [
+            'user_id'              => $this->user->id,
+            'game_id'              => $game->id,
+            'name'                 => 'Entry 1',
+            'total_points'         => null,
+            'points_history'       => null,
+            'extra_predictions'    => null,
+            'license_at_creation'  => License::MALTA_EUR->value,
+            'currency_at_creation' => Currency::EUR->value,
+        ]);
+    }
+
+    public function testCreateUserEntryForPublicGameShouldFail(): void
+    {
+        Passport::actingAs($this->user);
+
+        $memberCount = 3;
+
+        $contestantType = ContestantType::TEAM_MEMBER;
+        $sport          = Sport::BASKETBALL;
+
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id'   => Tournament::factory()->create()->id,
+                'contestant_type' => $contestantType,
+                'game_state'      => GameState::PRE_LIVE,
+                'sport'           => $sport,
+            ])
+        );
+        $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM, 'sport' => $sport]);
+        $members = Contestant::factory($memberCount)->create([
+            'parent_id'       => $team->id,
+            'contestant_type' => $contestantType,
+            'sport'           => $sport,
+        ])->pluck('id');
+
+        $game->contestants()->sync($members);
+
+        $this->post('/api/games/'.$game->id.'/entries', [
+            'name'                 => 'Entry 1',
+            'contestants'          => $members->toArray(),
+            'license_at_creation'  => License::MALTA_EUR->value,
+            'currency_at_creation' => Currency::EUR->value,
+        ])
+        ->assertForbidden();
+
+        $this->assertCount(0, $this->user->games);
+    }
+
     private function getAssertableJsonStructure(): array
     {
         return [
@@ -461,6 +661,7 @@ class GameControllerTest extends TestCase
             'game_state',
             'duration_type',
             'game_type',
+            'contestant_type',
             'min_entry',
             'max_entry',
             'entry_contestants',

@@ -8,7 +8,6 @@ use App\Enum\Sport;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -79,10 +78,5 @@ class Contestant extends Model
     public function members(): HasMany
     {
         return $this->hasMany(Contestant::class, 'parent_id');
-    }
-
-    public function tournaments(): BelongsToMany
-    {
-        return $this->belongsToMany(Tournament::class);
     }
 }
