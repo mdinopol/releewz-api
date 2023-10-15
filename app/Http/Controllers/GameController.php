@@ -21,12 +21,18 @@ class GameController extends Controller
             ->withCount([
                 'users',
             ])
+            ->with(['tournament'])
             ->paginate(10);
     }
 
     public function live(): LengthAwarePaginator
     {
-        return Game::live()->paginate(10);
+        return Game::live()
+            ->withCount([
+                'users',
+            ])
+            ->with(['tournament'])
+            ->paginate(10);
     }
 
     public function store(UpsertGameRequest $request): Game
