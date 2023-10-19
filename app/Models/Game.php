@@ -128,16 +128,6 @@ class Game extends Model
         return $query->where('game_state', $gameState);
     }
 
-    public function scopeInRegistration(Builder $query): Builder
-    {
-        return $query->where('game_state', GameState::OPEN_REGISTRATION);
-    }
-
-    public function scopeLive(Builder $query): Builder
-    {
-        return $query->where('game_state', GameState::LIVE);
-    }
-
     public function tournament(): BelongsTo
     {
         return $this->belongsTo(Tournament::class);

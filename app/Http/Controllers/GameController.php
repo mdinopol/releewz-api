@@ -80,7 +80,7 @@ class GameController extends Controller
 
     public function myEntries(Request $request): LengthAwarePaginator
     {
-        return $request->user()->games()->live()->paginate(10);
+        return $request->user()->games()->state(GameState::LIVE)->paginate(10);
     }
 
     public function updateGameState(GameService $gameService, Game $game, GameState $gameState): Game
