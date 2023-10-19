@@ -15,19 +15,9 @@ use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
-    public function index(): LengthAwarePaginator
+    public function index(GameState $gameState): LengthAwarePaginator
     {
-        return Game::inRegistration()
-            ->withCount([
-                'users',
-            ])
-            ->with(['tournament'])
-            ->paginate(10);
-    }
-
-    public function live(): LengthAwarePaginator
-    {
-        return Game::live()
+        return Game::state($gameState)
             ->withCount([
                 'users',
             ])

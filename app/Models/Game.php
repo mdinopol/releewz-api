@@ -123,6 +123,11 @@ class Game extends Model
         'achievement_template',
     ];
 
+    public function scopeState(Builder $query, GameState $gameState): Builder
+    {
+        return $query->where('game_state', $gameState);
+    }
+
     public function scopeInRegistration(Builder $query): Builder
     {
         return $query->where('game_state', GameState::OPEN_REGISTRATION);

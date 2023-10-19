@@ -101,40 +101,7 @@ class GameControllerTest extends TestCase
             ])
         );
 
-        $this->get('/api/games')
-            ->assertOk()
-            ->assertJsonStructure($this->paginatedStructure(
-                $this->getAssertableJsonStructure()
-            ));
-    }
-
-    public function testListLive(): void
-    {
-        Game::withoutEvents(
-            fn () => Game::factory()->create([
-                'tournament_id'      => null,
-                'name'               => 'Test Open Registration Game 1',
-                'short'              => 'TORG1',
-                'description'        => 'A test open registration game 1',
-                'sport'              => Sport::BASKETBALL->value,
-                'game_state'         => GameState::LIVE->value,
-                'duration_type'      => GameDuration::SPAN->value,
-                'game_type'          => GameType::FINALS->value,
-                'contestant_type'    => ContestantType::TEAM_MEMBER->value,
-                'min_entry'          => 5,
-                'max_entry'          => 20,
-                'entry_contestants'  => 8,
-                'max_entry_value'    => 105.5,
-                'entry_price'        => 2.00,
-                'initial_prize_pool' => 10000.00,
-                'current_prize_pool' => null,
-                'start_date'         => Carbon::now(),
-                'end_date'           => Carbon::tomorrow()->addYear(),
-                'point_template'     => null,
-            ])
-        );
-
-        $this->get('/api/games/live')
+        $this->get('/api/games/state/'.GameState::OPEN_REGISTRATION->value)
             ->assertOk()
             ->assertJsonStructure($this->paginatedStructure(
                 $this->getAssertableJsonStructure()
