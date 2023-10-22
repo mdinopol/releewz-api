@@ -13,11 +13,11 @@ Route::controller(GameController::class)->group(function () {
 
         Route::put('/{game}/state/{gameState}', 'updateGameState');
         Route::post('/{game}/startlist', 'syncStartlist');
-        // Route::delete('/{game}/startlist', 'syncStartlist')->where('game', '[0-9]+');
     });
+
+    Route::get('/entries/state/{gameState}', 'myEntries');
 
     Route::prefix('{game}/entries')->group(function () {
         Route::post('/', 'createUserEntry');
-        Route::get('/', 'myEntries');
     });
 });

@@ -114,7 +114,7 @@ class GameControllerTest extends TestCase
             ->assertOk()
             ->assertJsonStructure(array_merge(
                 $this->getAssertableJsonStructure(),
-                ['users_count']
+                ['users']
             ));
     }
 

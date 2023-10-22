@@ -32,9 +32,8 @@ class GameController extends Controller
 
     public function show(Game $game): Game
     {
-        return $game->loadCount([
+        return $game->load([
             'users',
-        ])->load([
             'tournament',
             'bouts',
             'contestants',
@@ -78,9 +77,9 @@ class GameController extends Controller
         );
     }
 
-    public function myEntries(Request $request): LengthAwarePaginator
+    public function myEntries(Request $request, GameState $gameState): LengthAwarePaginator
     {
-        return $request->user()->games()->state(GameState::LIVE)->paginate(10);
+        return $request->user()->games()->state($gameState)->paginate(10);
     }
 
     public function updateGameState(GameService $gameService, Game $game, GameState $gameState): Game
