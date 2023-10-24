@@ -128,10 +128,13 @@ class Game extends Model
         return $query->where('game_state', $gameState);
     }
 
-    public function scopeFilters(Builder $query, GameState $gameState, ?Sport $sport = null): Builder {
+    public function scopeFilters(Builder $query, GameState $gameState, Sport $sport = null): Builder
+    {
         $filter = $query->where('game_state', $gameState);
 
-        if (!$sport) return $filter;
+        if (!$sport) {
+            return $filter;
+        }
 
         return $filter->where('sport', $sport);
     }
