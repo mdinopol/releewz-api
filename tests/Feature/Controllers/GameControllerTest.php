@@ -101,7 +101,7 @@ class GameControllerTest extends TestCase
             ])
         );
 
-        $this->get('/api/games/state/'.GameState::OPEN_REGISTRATION->value)
+        $this->get('/api/games/state/'.GameState::OPEN_REGISTRATION->value.'/sport/'.Sport::BASKETBALL->value)
             ->assertOk()
             ->assertJsonStructure($this->paginatedStructure(
                 $this->getAssertableJsonStructure()

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enum\GameState;
+use App\Enum\Sport;
 use App\Http\Requests\CreateEntryRequest;
 use App\Http\Requests\SyncStartlistRequest;
 use App\Http\Requests\UpsertGameRequest;
@@ -15,9 +16,9 @@ use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
-    public function index(GameState $gameState): LengthAwarePaginator
+    public function index(GameState $gameState, ?string $sport = null): LengthAwarePaginator
     {
-        return Game::state($gameState)
+        return Game::filters($gameState, Sport::tryFrom($sport))
             ->withCount([
                 'users',
             ])

@@ -40,7 +40,7 @@ Route::prefix('tournaments')
 Route::prefix('games')
     ->controller(GameController::class)
     ->group(function () {
-        Route::get('/state/{gameState}', 'index');
+        Route::get('/state/{gameState}/sport/{sportName?}', 'index');
         Route::get('/{game}', 'show')->where('game', '[0-9]+');
     });
 
