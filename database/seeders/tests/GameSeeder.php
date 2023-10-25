@@ -14,7 +14,7 @@ class GameSeeder extends Seeder
     public function run(): void
     {
         $sports = Sport::active();
-        
+
         foreach ($sports as $sport) {
             $tournament = Tournament::factory()->create();
 
@@ -24,7 +24,6 @@ class GameSeeder extends Seeder
                 'sport'         => $sport,
             ]);
             app(GameService::class)->updateGameState($forOpenRegistration, GameState::OPEN_REGISTRATION);
-
 
             // LIVE
             $forLive = Game::factory()->create([
