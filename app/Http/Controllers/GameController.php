@@ -19,6 +19,7 @@ class GameController extends Controller
     public function index(GameState $gameState, string $sport = null): LengthAwarePaginator
     {
         return Game::filters($gameState, Sport::tryFrom($sport))
+            ->latest('start_date')
             ->withCount([
                 'users',
             ])

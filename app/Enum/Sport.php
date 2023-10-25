@@ -24,4 +24,15 @@ enum Sport: string
     {
         return config('scoretemplates.'.$this->value) ?? [];
     }
+
+    public static function active(): array
+    {
+        return [
+            self::BASKETBALL,
+            self::SOCCER,
+            self::TENNIS,
+            self::DARTS,
+            self::AMERICAN_FOOTBALL,
+        ];
+    }
 }
