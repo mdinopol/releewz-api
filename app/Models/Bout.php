@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Bout.
+ * 
+ * This model can be thought of as the game's "Event(s)".
+ * For SPAN Type games, Bout name could be dates(e.g., 11 October, 15 October, and so on...).
+ * For DAILY games, Bout name could be the game's name itself.
  *
  * @property int                                                                $id
  * @property int                                                                $game_id
