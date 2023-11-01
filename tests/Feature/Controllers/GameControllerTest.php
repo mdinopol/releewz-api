@@ -108,9 +108,20 @@ class GameControllerTest extends TestCase
             ));
     }
 
-    public function testShow(): void
+    public function testShowById(): void
     {
-        $this->get('/api/games/'.$this->liveGame->id)
+        $this->get('/api/games/i/'.$this->liveGame->id)
+            ->assertOk()
+            ->assertJsonStructure(array_merge(
+                $this->getAssertableJsonStructure(),
+                ['users']
+            ));
+    }
+
+    public function testShowBySlug(): void
+    {
+        // $this->get('/api/games/'.$this->liveGame->id)
+        $this->get('/api/games/s/'.$this->liveGame->slug)
             ->assertOk()
             ->assertJsonStructure(array_merge(
                 $this->getAssertableJsonStructure(),

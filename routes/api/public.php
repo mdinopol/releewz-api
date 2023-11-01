@@ -41,7 +41,9 @@ Route::prefix('games')
     ->controller(GameController::class)
     ->group(function () {
         Route::get('/state/{gameState}/sport/{sportName?}', 'index');
-        Route::get('/{game}', 'show')->where('game', '[0-9]+');
+        // Route::get('/{game}', 'show')->where('game', '[0-9]+'); // By id
+        Route::get('/i/{game:id}', 'show');
+        Route::get('/s/{game:slug}', 'show'); // By slug
     });
 
 /*
