@@ -167,7 +167,7 @@ class Game extends Model
     {
         return $this->belongsToMany(Contestant::class)
             ->withTimestamps()
-            ->withPivot('abandoned');
+            ->withPivot(['abandoned', 'value']);
     }
 
     public function getAchievementTemplateAttribute(): array
