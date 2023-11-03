@@ -25,7 +25,7 @@ class GameService
     }
 
     /**
-     * @param Game $game
+     * @param Game             $game
      * @param Collection|array $contestants
      */
     public function syncStartlist($game, $contestants): void
