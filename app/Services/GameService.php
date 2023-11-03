@@ -23,4 +23,13 @@ class GameService
 
         return $game->fresh();
     }
+
+    /**
+     * @param Game $game
+     * @param Collection|array $contestants
+     */
+    public function syncStartlist($game, $contestants): void
+    {
+        $game->contestants()->sync($contestants);
+    }
 }

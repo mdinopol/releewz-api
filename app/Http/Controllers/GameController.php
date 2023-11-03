@@ -92,10 +92,10 @@ class GameController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function syncStartlist(SyncStartlistRequest $request, Game $game): void
+    public function syncStartlist(GameService $gameService, SyncStartlistRequest $request, Game $game): void
     {
         $this->authorize('modify', $game);
 
-        $game->contestants()->sync($request->validated()['contestants']);
+        $gameService->syncStartlist($game, $request->validated()['contestants']);
     }
 }
