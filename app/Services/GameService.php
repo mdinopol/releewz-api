@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Enum\GameState;
 use App\Models\Game;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class GameService
