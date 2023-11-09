@@ -511,10 +511,10 @@ class GameControllerTest extends TestCase
             'contestant_type' => ContestantType::TEAM_MEMBER,
             'sport'           => Sport::BASKETBALL->value,
         ]);
-        $individual = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
-        $membersWithValues  = array_map(fn ($id) => [
-            'id' => $id,
-            'value' => fake()->randomFloat('2', 10, 50)
+        $individual        = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
+        $membersWithValues = array_map(fn ($id) => [
+            'id'    => $id,
+            'value' => fake()->randomFloat('2', 10, 50),
         ], $members->pluck('id')->toArray());
 
         // Assert that all member type are allowed if they are assigned to the same contestant type game
