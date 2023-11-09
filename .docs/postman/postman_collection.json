@@ -293,7 +293,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"parent_id\": 2,\n    \"name\": \"Anthony Davis\",\n    \"alias\": \"Unibrow\",\n    \"country_code\": \"us\",\n    \"contestant_type\": \"team_member\",\n    \"sport\": \"basketball\",\n    \"active\": true,\n    \"image_path\": \"test_image_path\"\n}",
+							"raw": "{\n    \"parent_id\": 1,\n    \"name\": \"Austin Reaves\",\n    \"alias\": \"AR1\",\n    \"country_code\": \"us\",\n    \"contestant_type\": \"team_member\",\n    \"sport\": \"basketball\",\n    \"active\": true,\n    \"image_path\": \"test_image_path\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -463,38 +463,112 @@
 					"name": "Public",
 					"item": [
 						{
-							"name": "Show",
+							"name": "Show By ID",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/games/1",
+									"raw": "{{base_url}}/api/games/i/57",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"games",
-										"1"
+										"i",
+										"57"
 									]
 								}
 							},
 							"response": []
 						},
 						{
-							"name": "List In Registrations",
+							"name": "Show By Slug",
 							"request": {
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/games/",
+									"raw": "{{base_url}}/api/games/s/60-molestiae-ea-blanditiis-voluptas-dolor",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"games",
-										""
+										"s",
+										"60-molestiae-ea-blanditiis-voluptas-dolor"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/state/0/sport/null?page=1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"state",
+										"0",
+										"sport",
+										"null"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Startlist",
+					"item": [
+						{
+							"name": "Sync Startlist",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"contestants\": [\n        {\n            \"id\": 52,\n            \"value\": 20\n        },\n        {\n            \"id\": 50,\n            \"value\": 36\n        }\n    ]\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/57/startlist",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"57",
+										"startlist"
 									]
 								}
 							},
@@ -519,7 +593,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Finals 2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
+							"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Finals 2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"contestant_type\": \"team_member\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -631,16 +705,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/games/1/state/1",
+							"raw": "{{base_url}}/api/games/3/state/3",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"games",
-								"1",
+								"3",
 								"state",
-								"1"
+								"3"
 							]
 						}
 					},
@@ -794,45 +868,6 @@
 								"api",
 								"tournaments",
 								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Add Starters",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"contestants\": {\"2\": {\"value\": 10.5}, \"1\": {\"value\": 12}, \"3\": {\"value\": 16.5}, \"4\": {\"value\": 15}}\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/api/tournaments/1/starters",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"tournaments",
-								"1",
-								"starters"
 							]
 						}
 					},
@@ -1012,7 +1047,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Entry 1\",\n    \"contestants\": [1,2,3,4,5,6,7,8],\n    \"license_at_creation\": \"malta_eur\",\n    \"currency_at_creation\": \"eur\"\n}",
+							"raw": "{\n    \"name\": \"Entry 3\",\n    \"contestants\": [52],\n    \"license_at_creation\": \"malta_eur\",\n    \"currency_at_creation\": \"eur\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1020,15 +1055,53 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/api/games/1/entries",
+							"raw": "{{base_url}}/api/games/57/entries",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"api",
 								"games",
-								"1",
+								"57",
 								"entries"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mine",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/games/entries/state/1/?page=1",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"games",
+								"entries",
+								"state",
+								"1",
+								""
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
 							]
 						}
 					},
@@ -1181,6 +1254,39 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "<?xml version=\n\"1.0\" encoding=\n\"utf-8\"?>\n<PlatformRequest>\n<Credentials>\n<Username>E27708-14BE2499-9A92-4949-A061-1B1CBE57FA9D</Username>\n<Password>Grd$PbO4zn$w6mt</Password>\n</Credentials>\n<CustomerReference>ABC123456789</CustomerReference>\n<Identity>\n<FirstName>Maria Dana Fatima</FirstName>\n<LastName>Dinopol</LastName>\n<Street>123 Main St</Street>\n<City>Louisville</City>\n<State>KY</State>\n<ZipCode>21201</ZipCode>\n<DateOfBirth>2019-01-31</DateOfBirth>\n</Identity>\n</PlatformRequest>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://blueassure.evssolutions.com/WebServices/Integrated/Main/V300/AssureId",
+					"protocol": "https",
+					"host": [
+						"blueassure",
+						"evssolutions",
+						"com"
+					],
+					"path": [
+						"WebServices",
+						"Integrated",
+						"Main",
+						"V300",
+						"AssureId"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
