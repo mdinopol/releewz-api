@@ -94,7 +94,7 @@ class GameSeeder extends Seeder
             'contestant_type' => $contestantType,
             'sport'           => $sport,
         ])->pluck('id');
-        
+
         $budgets = [];
 
         foreach ($contestants as $contestant) {

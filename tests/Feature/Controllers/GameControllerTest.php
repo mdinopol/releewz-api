@@ -645,7 +645,7 @@ class GameControllerTest extends TestCase
                 'contestant_type' => $contestantType,
                 'game_state'      => GameState::OPEN_REGISTRATION,
                 'sport'           => $sport,
-                'max_entry_value' => 1
+                'max_entry_value' => 1,
             ])
         );
         $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM, 'sport' => $sport]);

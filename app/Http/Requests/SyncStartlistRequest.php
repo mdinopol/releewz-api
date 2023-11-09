@@ -19,14 +19,15 @@ class SyncStartlistRequest extends FormRequest
             $rules['contestants.*.id'] = [
                 'required',
                 Rule::exists('contestants', 'id')
-                    ->where(fn (Builder $query) => $query
+                    ->where(
+                        fn (Builder $query) => $query
                         ->where('sport', $this->game->sport->value)
                         ->where('contestant_type', $this->game->contestant_type)
                         ->when(
                             $this->game->contestant_type === ContestantType::TEAM_MEMBER,
                             fn (Builder $when) => $when->whereNotNull('parent_id')
                         )
-                    )
+                    ),
             ];
             $rules['contestants.*.value'] = ['numeric'];
         }

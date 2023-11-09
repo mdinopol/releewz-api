@@ -27,12 +27,12 @@ class GameService
     public function syncStartlist(Game $game, array $contestants = []): void
     {
         $startlist = [];
-        
+
         if (count($contestants) > 0) {
             foreach ($contestants as $contestant) {
-                $startlist[$contestant['id']] = ['value' => isset($contestant['value']) ? $contestant['value'] : null];
+                $startlist[$contestant['id']] = ['value' => $contestant['value'] ?? null];
             }
-    
+
             unset($contestants);
         }
 

@@ -33,13 +33,6 @@ class CreateEntryRequest extends FormRequest
         return $rules;
     }
 
-    protected function prepareForValidation(): void
-    {
-        $this->merge([
-            'name' => htmlspecialchars($this->name),
-        ]);
-    }
-
     public function after(): array
     {
         return [
@@ -52,10 +45,17 @@ class CreateEntryRequest extends FormRequest
                 if ($requestTotalValue > ($valueLimit = $this->game->max_entry_value)) {
                     $validator->errors()->add(
                         'contestants',
-                        "Contestants' total value exceeded entry's value limit of ".$valueLimit."."
+                        "Contestants' total value exceeded entry's value limit of ".$valueLimit.'.'
                     );
                 }
-            }
+            },
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'name' => htmlspecialchars($this->name),
+        ]);
     }
 }
