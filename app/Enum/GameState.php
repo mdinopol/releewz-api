@@ -21,7 +21,6 @@ enum GameState: int
     public function isImmutable(): bool
     {
         return in_array($this, [
-            self::OPEN_REGISTRATION,
             self::PRE_LIVE,
             self::LIVE,
             self::FINISH,

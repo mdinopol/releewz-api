@@ -96,6 +96,6 @@ class GameController extends Controller
     {
         $this->authorize('modify', $game);
 
-        $gameService->syncStartlist($game, $request->validated()['contestants']);
+        $gameService->syncStartlist($game, $request->validated(['contestants']) ?? []);
     }
 }

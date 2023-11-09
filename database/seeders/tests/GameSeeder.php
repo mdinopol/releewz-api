@@ -10,7 +10,6 @@ use App\Models\Contestant;
 use App\Models\Game;
 use App\Models\Tournament;
 use App\Services\GameService;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 
 class GameSeeder extends Seeder
@@ -24,7 +23,7 @@ class GameSeeder extends Seeder
 
             // Create game variations for every contestant types
             foreach (ContestantType::cases() as $contestantType) {
-                $contestants = $this->contestantFactory($contestantType, $sport);
+                $budgets = $this->budgets($contestantType, $sport);
 
                 // OPEN REGISTRATION
                 $forOpenRegistrationSpan = Game::factory()->create([
@@ -42,8 +41,8 @@ class GameSeeder extends Seeder
                     'contestant_type' => $contestantType,
                 ]);
                 // Sync startlist
-                app(GameService::class)->syncStartlist($forOpenRegistrationSpan, $contestants);
-                app(GameService::class)->syncStartlist($forOpenRegistrationDaily, $contestants);
+                app(GameService::class)->syncStartlist($forOpenRegistrationSpan, $budgets);
+                app(GameService::class)->syncStartlist($forOpenRegistrationDaily, $budgets);
 
                 // Update game state
                 app(GameService::class)->updateGameState($forOpenRegistrationSpan, GameState::OPEN_REGISTRATION);
@@ -65,8 +64,8 @@ class GameSeeder extends Seeder
                     'contestant_type' => $contestantType,
                 ]);
                 // Sync startlist
-                app(GameService::class)->syncStartlist($forLiveSpan, $contestants);
-                app(GameService::class)->syncStartlist($forLiveDaily, $contestants);
+                app(GameService::class)->syncStartlist($forLiveSpan, $budgets);
+                app(GameService::class)->syncStartlist($forLiveDaily, $budgets);
 
                 // Update game state
                 app(GameService::class)->updateGameState($forLiveSpan, GameState::LIVE);
@@ -75,23 +74,33 @@ class GameSeeder extends Seeder
         }
     }
 
-    private function contestantFactory(ContestantType $contestantType, Sport $sport): Collection
+    private function budgets(ContestantType $contestantType, Sport $sport): array
     {
+        $contestants = [];
+
         if ($contestantType === ContestantType::TEAM_MEMBER) {
             $team = Contestant::factory()->create([
                 'contestant_type' => ContestantType::TEAM,
                 'sport'           => $sport,
             ]);
 
-            return Contestant::factory(20)->create([
+            $contestants = Contestant::factory(20)->create([
                 'parent_id'       => $team,
                 'contestant_type' => ContestantType::TEAM_MEMBER,
-            ]);
+            ])->pluck('id');
         }
 
-        return Contestant::factory(20)->create([
+        $contestants = Contestant::factory(20)->create([
             'contestant_type' => $contestantType,
             'sport'           => $sport,
-        ]);
+        ])->pluck('id');
+        
+        $budgets = [];
+
+        foreach ($contestants as $contestant) {
+            $budgets[$contestant] = ['id' => $contestant, 'value' => fake()->randomFloat('2', 10, 50)];
+        }
+
+        return $budgets;
     }
 }
