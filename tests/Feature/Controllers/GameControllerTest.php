@@ -498,53 +498,54 @@ class GameControllerTest extends TestCase
             ->assertForbidden();
     }
 
-    // public function testSyncStartlist(): void
-    // {
-    //     Passport::actingAs($this->admin);
+    public function testSyncStartlist(): void
+    {
+        Passport::actingAs($this->admin);
 
-    //     $memberCount = 3;
+        $memberCount = 3;
 
-    //     $game    = Game::factory()->create(['contestant_type' => ContestantType::TEAM_MEMBER]);
-    //     $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM]);
-    //     $members = Contestant::factory($memberCount)->create([
-    //         'parent_id'       => $team->id,
-    //         'contestant_type' => ContestantType::TEAM_MEMBER,
-    //     ]);
-    //     $individual = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
-    //     $membersWithValues  = array_map(fn ($id) => [
-    //         'id' => $id,
-    //         'value' => fake()->numberBetween(1, $game->max_entry_value)
-    //     ], $members->pluck('id')->toArray());
+        $game    = Game::factory()->create(['contestant_type' => ContestantType::TEAM_MEMBER, 'sport' => Sport::BASKETBALL->value]);
+        $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM]);
+        $members = Contestant::factory($memberCount)->create([
+            'parent_id'       => $team->id,
+            'contestant_type' => ContestantType::TEAM_MEMBER,
+            'sport'           => Sport::BASKETBALL->value,
+        ]);
+        $individual = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
+        $membersWithValues  = array_map(fn ($id) => [
+            'id' => $id,
+            'value' => fake()->randomFloat('2', 10, 50)
+        ], $members->pluck('id')->toArray());
 
-    //     // Assert that all member type are allowed if they are assigned to the same contestant type game
-    //     $this->post('/api/games/'.$game->id.'/startlist', [
-    //         'contestants' => $membersWithValues,
-    //     ])
-    //     ->assertOk();
+        // Assert that all member type are allowed if they are assigned to the same contestant type game
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => $membersWithValues,
+        ])
+        ->assertOk();
 
-    //     // Assert that assigning contestant with different type from game's contestant type should fail
-    //     $this->post('/api/games/'.$game->id.'/startlist', [
-    //         'contestants' => [['id' => $team->id]],
-    //     ])
-    //     ->assertUnprocessable();
-    //     $this->post('/api/games/'.$game->id.'/startlist', [
-    //         'contestants' => [['id' => $individual->id]],
-    //     ])
-    //     ->assertUnprocessable();
-    //     $this->post('/api/games/'.$game->id.'/startlist', [
-    //         'contestants' => [['id' => $team->id], ['id' => $individual->id]],
-    //     ])
-    //     ->assertUnprocessable();
+        // Assert that assigning contestant with different type from game's contestant type should fail
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [['id' => $team->id]],
+        ])
+        ->assertUnprocessable();
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [['id' => $individual->id]],
+        ])
+        ->assertUnprocessable();
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => [['id' => $team->id], ['id' => $individual->id]],
+        ])
+        ->assertUnprocessable();
 
-    //     // Assert that assigning array of valid contestants mixed with at least a single invalid contestant should fail
-    //     $this->post('/api/games/'.$game->id.'/startlist', [
-    //         'contestants' => array_merge($membersWithValues, [['id' => $team->id], ['id' => $individual->id]]),
-    //     ])
-    //     ->assertUnprocessable();
+        // Assert that assigning array of valid contestants mixed with at least a single invalid contestant should fail
+        $this->post('/api/games/'.$game->id.'/startlist', [
+            'contestants' => array_merge($membersWithValues, [['id' => $team->id], ['id' => $individual->id]]),
+        ])
+        ->assertUnprocessable();
 
-    //     // Assert that the only synced contestants are the members
-    //     // $this->assertCount($memberCount, $game->contestants);
-    // }
+        // Assert that the only synced contestants are the members
+        $this->assertCount($memberCount, $game->contestants);
+    }
 
     public function testCreateUserEntry(): void
     {
