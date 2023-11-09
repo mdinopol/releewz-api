@@ -98,7 +98,7 @@ class GameSeeder extends Seeder
         $budgets = [];
 
         foreach ($contestants as $contestant) {
-            $budgets[$contestant] = ['id' => $contestant, 'value' => fake()->randomFloat('2', 10, 50)];
+            $budgets[] = ['id' => $contestant, 'value' => fake()->randomFloat('2', 10, 50)];
         }
 
         return $budgets;
