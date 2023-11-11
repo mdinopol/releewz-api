@@ -19,7 +19,7 @@ class CreateEntryRequest extends FormRequest
             'required',
             'string',
             'min:3',
-            'max:10',
+            'max:20',
             Rule::unique('entries', 'name')->where('game_id', $this->game->id),
         ];
         $rules['contestants'] = [

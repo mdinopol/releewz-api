@@ -23,7 +23,7 @@ class GameSeeder extends Seeder
 
             // Create game variations for every contestant types
             foreach (ContestantType::cases() as $contestantType) {
-                $budgets = $this->budgets($contestantType, $sport);
+                $startlist = $this->makeStartlist($contestantType, $sport);
 
                 // OPEN REGISTRATION
                 $forOpenRegistrationSpan = Game::factory()->create([
@@ -41,8 +41,8 @@ class GameSeeder extends Seeder
                     'contestant_type' => $contestantType,
                 ]);
                 // Sync startlist
-                app(GameService::class)->syncStartlist($forOpenRegistrationSpan, $budgets);
-                app(GameService::class)->syncStartlist($forOpenRegistrationDaily, $budgets);
+                app(GameService::class)->syncStartlist($forOpenRegistrationSpan, $startlist);
+                app(GameService::class)->syncStartlist($forOpenRegistrationDaily, $startlist);
 
                 // Update game state
                 app(GameService::class)->updateGameState($forOpenRegistrationSpan, GameState::OPEN_REGISTRATION);
@@ -64,8 +64,8 @@ class GameSeeder extends Seeder
                     'contestant_type' => $contestantType,
                 ]);
                 // Sync startlist
-                app(GameService::class)->syncStartlist($forLiveSpan, $budgets);
-                app(GameService::class)->syncStartlist($forLiveDaily, $budgets);
+                app(GameService::class)->syncStartlist($forLiveSpan, $startlist);
+                app(GameService::class)->syncStartlist($forLiveDaily, $startlist);
 
                 // Update game state
                 app(GameService::class)->updateGameState($forLiveSpan, GameState::LIVE);
@@ -74,7 +74,7 @@ class GameSeeder extends Seeder
         }
     }
 
-    private function budgets(ContestantType $contestantType, Sport $sport): array
+    private function makeStartlist(ContestantType $contestantType, Sport $sport): array
     {
         $contestants = [];
 
@@ -95,12 +95,12 @@ class GameSeeder extends Seeder
             'sport'           => $sport,
         ])->pluck('id');
 
-        $budgets = [];
+        $startlist = [];
 
         foreach ($contestants as $contestant) {
-            $budgets[] = ['id' => $contestant, 'value' => fake()->randomFloat('2', 10, 50)];
+            $startlist[] = ['id' => $contestant, 'value' => fake()->randomFloat('2', 10, 50)];
         }
 
-        return $budgets;
+        return $startlist;
     }
 }
