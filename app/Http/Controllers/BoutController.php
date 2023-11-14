@@ -21,7 +21,7 @@ class BoutController extends Controller
     public function show(Bout $bout): Bout
     {
         return $bout->load([
-            'matchups'
+            'matchups',
         ]);
     }
 

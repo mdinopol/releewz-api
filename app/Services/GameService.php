@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Data\PointTemplate;
 use App\Enum\GameState;
-use App\Enum\Sport;
 use App\Models\Game;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 

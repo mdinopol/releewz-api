@@ -7,8 +7,11 @@ use App\Models\Game;
 class PointTemplate
 {
     public Game $game;
+
     public array $decisions;
+
     public array $fillables;
+
     public array $extras = [];
 
     public function __construct(Game $game, array $decisions, array $fillables, array $extras = [])

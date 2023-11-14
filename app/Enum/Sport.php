@@ -29,7 +29,7 @@ enum Sport: string
     {
         $sports = [];
 
-        foreach(array_keys(config('sportachievements')) as $sport) {
+        foreach (array_keys(config('sportachievements')) as $sport) {
             $sports[] = self::tryFrom($sport);
         }
 

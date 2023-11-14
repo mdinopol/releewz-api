@@ -37,7 +37,7 @@ return [
                 Achievement::FOUL->value     => null,
             ],
             'range' => [
-                Achievement::FIELD_GOAL->value  => [
+                Achievement::FIELD_GOAL->value => [
                     ['min' => 0, 'max' => 43],
                     ['min' => 44, 'max' => 46],
                     ['min' => 47, 'max' => 50],
@@ -48,7 +48,7 @@ return [
                     ['min' => 37, 'max' => 39],
                     ['min' => 40, 'max' => PHP_INT_MAX],
                 ],
-                Achievement::FREE_THROW->value  => [
+                Achievement::FREE_THROW->value => [
                     ['min' => 0, 'max' => 70],
                     ['min' => 71, 'max' => 75],
                     ['min' => 76, 'max' => 81],
@@ -115,7 +115,7 @@ return [
                 Achievement::TIE_BREAKER_WON->value => null,
             ],
             'range' => [
-                Achievement::FIRST_SERVE->value     => [
+                Achievement::FIRST_SERVE->value => [
                     ['min' => 5, 'max' => 50],
                     ['min' => 51, 'max' => 60],
                     ['min' => 61, 'max' => 70],
@@ -129,13 +129,13 @@ return [
                     ['min' => 31, 'max' => 40],
                     ['min' => 41, 'max' => PHP_INT_MAX],
                 ],
-                Achievement::BREAK_POINT->value     => [
+                Achievement::BREAK_POINT->value => [
                     ['min' => 5, 'max' => 25],
                     ['min' => 26, 'max' => 50],
                     ['min' => 51, 'max' => 75],
                     ['min' => 76, 'max' => 100],
                 ],
-                Achievement::POINTS_IN_ROW->value   => [
+                Achievement::POINTS_IN_ROW->value => [
                     ['min' => 5, 'max' => 9],
                     ['min' => 10, 'max' => PHP_INT_MAX],
                 ],
