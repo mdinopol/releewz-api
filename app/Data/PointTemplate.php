@@ -24,7 +24,7 @@ class PointTemplate
 
     public function isValid(): bool
     {
-        $rawTemplate = $this->game->sportsport->template();
+        $rawTemplate = $this->game->sport->template();
 
         if (!$this->game->sport->active()) {
             return false;
