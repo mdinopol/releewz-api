@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\PointTemplate;
 use App\Enum\GameState;
 use App\Enum\Sport;
 use App\Http\Requests\CreateEntryRequest;
+use App\Http\Requests\SetPointTemplateRequest;
 use App\Http\Requests\SyncStartlistRequest;
 use App\Http\Requests\UpsertGameRequest;
 use App\Models\Game;
@@ -81,7 +83,7 @@ class GameController extends Controller
 
     public function myEntries(Request $request, GameState $gameState): LengthAwarePaginator
     {
-        return $request->user()->games()->state($gameState)->paginate(10);
+        return $request->user()->games()->filters($gameState)->paginate(10);
     }
 
     public function updateGameState(GameService $gameService, Game $game, GameState $gameState): Game
@@ -97,5 +99,21 @@ class GameController extends Controller
         $this->authorize('modify', $game);
 
         $gameService->syncStartlist($game, $request->validated(['contestants']) ?? []);
+    }
+
+    public function setPointTemplate(GameService $gameService, Game $game, SetPointTemplateRequest $request): void
+    {
+        $this->authorize('modify', $game);
+
+        $template = $request->validated()['template'];
+
+        $gameService->setPointTemplate(
+            new PointTemplate(
+                $game,
+                $template['decisions'],
+                $template['fillables'],
+                $template['extras']
+            )
+        );
     }
 }

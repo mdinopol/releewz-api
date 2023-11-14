@@ -430,7 +430,7 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->put('/api/games/'.$this->liveGame->id.'/state/'.GameState::OPEN_REGISTRATION->value)
-        ->assertForbidden();
+        ->assertUnprocessable();
     }
 
     public function testDelete(): void

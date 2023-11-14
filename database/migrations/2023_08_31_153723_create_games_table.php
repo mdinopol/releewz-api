@@ -33,7 +33,7 @@ return new class() extends Migration {
             $table->decimal('current_prize_pool', 19)->nullable();
             $table->dateTimeTz('start_date');
             $table->dateTimeTz('end_date');
-            $table->jsonb('point_template')->nullable();
+            $table->jsonb('point_template')->nullable(); // Achievement point equivalent mapping
             $table->timestamps();
         });
     }

@@ -123,11 +123,6 @@ class Game extends Model
         'achievement_template',
     ];
 
-    public function scopeState(Builder $query, GameState $gameState): Builder
-    {
-        return $query->where('game_state', $gameState);
-    }
-
     public function scopeFilters(Builder $query, GameState $gameState, Sport $sport = null): Builder
     {
         $filter = $query->where('game_state', $gameState);

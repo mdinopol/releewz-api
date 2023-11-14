@@ -20,7 +20,9 @@ class BoutController extends Controller
 
     public function show(Bout $bout): Bout
     {
-        return $bout;
+        return $bout->load([
+            'matchups'
+        ]);
     }
 
     public function update(UpsertBoutRequest $request, Bout $bout): Bout

@@ -27,7 +27,6 @@ enum Achievement: string
     | -----------------------------
     */
     case FIELD_GOAL         = 'field_goal';
-    case TWO_POINT          = 'two_point';
     case THREE_POINT        = 'three_point';
     case FREE_THROW         = 'free_throw';
     case REBOUND            = 'rebound';

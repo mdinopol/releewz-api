@@ -91,8 +91,9 @@ class BoutControllerTest extends TestCase
         $this->get('/api/bouts/'.$this->bout->id)
             ->assertOk()
             ->assertJson([
-                'game_id' => $this->game->id,
-                'name'    => 'Test Bout 1',
+                'game_id'  => $this->game->id,
+                'name'     => 'Test Bout 1',
+                'matchups' => [],
             ]);
     }
 
