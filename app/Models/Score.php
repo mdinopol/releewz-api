@@ -7,20 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Models\Score.
+ * App\Models\Score
  *
- * @property int                             $id
- * @property int                             $matchup_id
- * @property Achievement                     $achievement
- * @property float                           $home_score
- * @property float                           $home_points
- * @property float                           $away_score
- * @property float                           $away_points
- * @property array|null                      $history
+ * @property int $id
+ * @property int $mattch_id
+ * @property Achievement $achievement
+ * @property float|null $home_score
+ * @property float|null $home_points
+ * @property float|null $away_score
+ * @property float|null $away_points
+ * @property array|null $history
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property \App\Models\Matchup|null        $matchup
- *
+ * @method static \Database\Factories\ScoreFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Score newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Score newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Score query()
@@ -32,9 +31,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereHomePoints($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereHomeScore($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Score whereMatchupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Score whereMattchId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Score extends Model
@@ -42,7 +40,7 @@ class Score extends Model
     use HasFactory;
 
     protected $fillable = [
-        'matchup_id',
+        'mattch_id',
         'achievement',
         'home_score',
         'home_points',

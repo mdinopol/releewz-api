@@ -16,11 +16,11 @@ class UpsertScoreRequest extends FormRequest
     {
         $rules = [];
 
-        $rules['matchup_id']  = ['required', 'exists:matchups,id'];
+        $rules['mattch_id']  = ['required', 'exists:mattches,id'];
         $rules['achievement'] = [
             'required', new Enum(Achievement::class),
             Rule::unique('scores', 'achievement')
-                ->where('matchup_id', $this->input('matchup_id') ?? $this->score->matchup_id),
+                ->where('mattch_id', $this->input('mattch_id') ?? $this->score->mattch_id),
         ];
         $rules['home_score']  = ['nullable', 'numeric'];
         $rules['home_points'] = ['nullable', 'numeric'];

@@ -33,12 +33,6 @@ Route::middleware([
     Route::prefix('games')
         ->group(base_path('routes/api/games.php'));
 
-    Route::prefix('bouts')
-        ->group(base_path('routes/api/bouts.php'));
-
-    Route::prefix('matchups')
-        ->group(base_path('routes/api/matchups.php'));
-
     Route::prefix('scores')
         ->group(base_path('routes/api/scores.php'));
 

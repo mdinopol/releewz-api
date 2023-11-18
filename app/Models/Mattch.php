@@ -6,6 +6,34 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * App\Models\Mattch
+ *
+ * @property int $id
+ * @property int $tournament_id
+ * @property int $home_id
+ * @property int $away_id
+ * @property \Illuminate\Support\Carbon $start_date
+ * @property \Illuminate\Support\Carbon $end_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Contestant|null $away
+ * @property-read \App\Models\Contestant|null $home
+ * @property-read \App\Models\Tournament $tournament
+ * @method static \Database\Factories\MattchFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereAwayId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereHomeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereTournamentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Mattch extends Model
 {
     use HasFactory;

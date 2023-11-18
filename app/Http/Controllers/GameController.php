@@ -39,7 +39,6 @@ class GameController extends Controller
         return $game->load([
             'users',
             'tournament',
-            'bouts',
             'contestants',
         ]);
     }
