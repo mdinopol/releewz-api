@@ -41,4 +41,7 @@ Route::middleware([
 
     Route::prefix('scores')
         ->group(base_path('routes/api/scores.php'));
+
+    Route::prefix('eventts')
+        ->group(base_path('routes/api/eventts.php'));
 });
