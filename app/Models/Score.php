@@ -19,6 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property array|null                      $history
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ *
  * @method static \Database\Factories\ScoreFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Score newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Score newQuery()
@@ -33,6 +34,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereMattchId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Score whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Score extends Model

@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \App\Models\Contestant|null     $away
  * @property \App\Models\Contestant|null     $home
  * @property \App\Models\Tournament          $tournament
+ *
  * @method static \Database\Factories\MattchFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newQuery()
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereTournamentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Mattch extends Model
