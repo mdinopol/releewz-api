@@ -29,10 +29,10 @@ class UpsertMattchRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                $input  = $validator->safe(['tournament_id', 'home_id', 'away_id']);
+                $input      = $validator->safe(['tournament_id', 'home_id', 'away_id']);
                 $tournament = $input['tournament_id'] ?? $this->mattch->tournament_id;
-                $home = $input['home_id'] ?? $this->mattch->home_id;
-                $away = $input['away_id'] ?? $this->mattch->away_id;
+                $home       = $input['home_id'] ?? $this->mattch->home_id;
+                $away       = $input['away_id'] ?? $this->mattch->away_id;
 
                 if (Mattch::where([
                     'tournament_id' => $tournament,

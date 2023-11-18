@@ -208,10 +208,10 @@ class MattchControllerTest extends TestCase
 
         $mattch = Mattch::factory()->create([
             'tournament_id' => $this->tournament->id,
-            'home_id'    => $this->home->id,
-            'away_id'    => $this->away->id,
-            'start_date' => now(),
-            'end_date'   => now()->addHour(),
+            'home_id'       => $this->home->id,
+            'away_id'       => $this->away->id,
+            'start_date'    => now(),
+            'end_date'      => now()->addHour(),
         ]);
 
         $this->put('/api/mattches/'.$mattch->id, [

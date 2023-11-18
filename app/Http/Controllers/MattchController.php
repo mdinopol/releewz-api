@@ -13,13 +13,11 @@ class MattchController extends Controller
         return Mattch::all();
     }
 
-    
     public function store(UpsertMattchRequest $request): Mattch
     {
         return Mattch::create($request->validated());
     }
 
-    
     public function show(Mattch $mattch): Mattch
     {
         return $mattch->load([
@@ -29,7 +27,6 @@ class MattchController extends Controller
         ]);
     }
 
-    
     public function update(UpsertMattchRequest $request, Mattch $mattch): Mattch
     {
         $mattch->update($request->validated());
@@ -37,7 +34,6 @@ class MattchController extends Controller
         return $mattch->fresh();
     }
 
-    
     public function destroy(Mattch $mattch): array
     {
         $mattch->delete();
