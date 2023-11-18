@@ -26,7 +26,7 @@ class PointTemplate
     {
         $rawTemplate = $this->game->sport->template();
 
-        if (!$this->game->sport->active()) {
+        if (!$this->game->sport->isActive()) {
             return false;
         }
 

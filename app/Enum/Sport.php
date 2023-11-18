@@ -25,7 +25,10 @@ enum Sport: string
         return config('sportachievements.'.$this->value) ?? [];
     }
 
-    public static function active(): array
+    /**
+     * @return Sport[]
+     */
+    public static function active()
     {
         $sports = [];
 
@@ -34,5 +37,10 @@ enum Sport: string
         }
 
         return $sports;
+    }
+
+    public function isActive(): bool
+    {
+        return in_array($this, self::active());
     }
 }

@@ -679,6 +679,64 @@ class GameControllerTest extends TestCase
         ]);
     }
 
+    public function testSetGamePointTemplate(): void
+    {
+        Passport::actingAs($this->admin);
+
+        $sport = Sport::active()[0];
+        $template = $sport->template();
+
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id'   => Tournament::factory()->create()->id,
+                'game_state'      => GameState::OPEN_REGISTRATION,
+                'sport'           => $sport->value,
+            ])
+        );
+
+        $filledTemplate = [];
+
+        // Decision-based achievement
+        foreach ($template['decisions'] as $key => $value) {
+            $filledTemplate['decisions'][$key] = rand(1, 100);
+        }
+
+        // Fillable achievement (basic)
+        foreach ($template['fillables']['basic'] as $key => $value) {
+            $filledTemplate['fillables']['basic'][$key] = rand(1, 100);
+        }
+
+        // Fillable achievement (range)
+        foreach ($template['fillables']['range'] as $key => $value) {
+            foreach ($value as $range => $value) {
+                $filledTemplate['fillables']['range'][$key][$range] = array_merge($value, ['value' => rand(1, 100)]);
+            }
+        }
+
+        // Extra achievements
+        foreach ($template['extras'] as $key => $value) {
+            $filledTemplate['extras'][$key] = rand(1, 100);
+        }
+
+        // Assert that normal setting of point template succeeds
+        $this->post('/api/games/'.$game->id.'/point-template', [
+            'template' => $filledTemplate,
+        ])
+        ->assertOk()
+        ->assertJson([
+            'sport'          => $sport->value,
+            'game_state'     => GameState::OPEN_REGISTRATION->value,
+            'point_template' => $filledTemplate,
+        ]);
+
+        // Assert that even 1 rouge achievement added to the template will fail
+        $filledTemplate['decisions']['test'] = 10;
+        $this->post('/api/games/'.$game->id.'/point-template', [
+            'template' => $filledTemplate,
+        ])
+        ->assertUnprocessable();
+    }
+
     private function getAssertableJsonStructure(): array
     {
         return [

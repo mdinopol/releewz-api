@@ -101,13 +101,13 @@ class GameController extends Controller
         $gameService->syncStartlist($game, $request->validated(['contestants']) ?? []);
     }
 
-    public function setPointTemplate(GameService $gameService, Game $game, SetPointTemplateRequest $request): void
+    public function setPointTemplate(GameService $gameService, Game $game, SetPointTemplateRequest $request): Game
     {
         $this->authorize('modify', $game);
 
         $template = $request->validated()['template'];
 
-        $gameService->setPointTemplate(
+        return $gameService->setPointTemplate(
             new PointTemplate(
                 $game,
                 $template['decisions'],

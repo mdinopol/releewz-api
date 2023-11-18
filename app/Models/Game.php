@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float|null                                                      $current_prize_pool
  * @property \Illuminate\Support\Carbon                                      $start_date
  * @property \Illuminate\Support\Carbon                                      $end_date
- * @property mixed|null                                                      $points_template
+ * @property mixed|null                                                      $point_template
  * @property \Illuminate\Support\Carbon|null                                 $created_at
  * @property \Illuminate\Support\Carbon|null                                 $updated_at
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Bout> $bouts

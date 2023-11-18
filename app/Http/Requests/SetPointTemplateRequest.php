@@ -8,10 +8,12 @@ class SetPointTemplateRequest extends FormRequest
 {
     public function rules(): array
     {
-        $rules['template']           = ['required', 'json'];
-        $rules['template.decisions'] = ['required', 'json'];
-        $rules['template.fillables'] = ['required', 'json'];
-        $rules['template.extras']    = ['required', 'json'];
+        $rules['template']                 = ['required'];
+        $rules['template.decisions']       = ['required'];
+        $rules['template.fillables']       = ['required'];
+        $rules['template.fillables.basic'] = ['required'];
+        $rules['template.fillables.range'] = ['required'];
+        $rules['template.extras']          = ['nullable'];
 
         return $rules;
     }

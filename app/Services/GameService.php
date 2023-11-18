@@ -43,12 +43,15 @@ class GameService
     public function setPointTemplate(PointTemplate $filledTemplate): Game
     {
         if (!$filledTemplate->isValid()) {
-            abort(HttpResponse::HTTP_UNPROCESSABLE_ENTITY, 'Unable to set template.');
+            abort(
+                HttpResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'Unable to set point template. It may be that the sport is not offered yet, or the achievement template is incorrect.'
+            );
         }
 
         $game = $filledTemplate->game;
 
-        $game->points_template = $filledTemplate->format();
+        $game->point_template = $filledTemplate->format();
         $game->save();
 
         return $game->fresh();
