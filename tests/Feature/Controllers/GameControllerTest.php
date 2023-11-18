@@ -683,14 +683,14 @@ class GameControllerTest extends TestCase
     {
         Passport::actingAs($this->admin);
 
-        $sport = Sport::active()[0];
+        $sport    = Sport::active()[0];
         $template = $sport->template();
 
         $game = Game::withoutEvents(
             fn () => Game::factory()->create([
-                'tournament_id'   => Tournament::factory()->create()->id,
-                'game_state'      => GameState::OPEN_REGISTRATION,
-                'sport'           => $sport->value,
+                'tournament_id' => Tournament::factory()->create()->id,
+                'game_state'    => GameState::OPEN_REGISTRATION,
+                'sport'         => $sport->value,
             ])
         );
 
