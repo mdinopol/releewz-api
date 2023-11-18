@@ -466,9 +466,15 @@
 							"name": "Show By ID",
 							"request": {
 								"method": "GET",
-								"header": [],
+								"header": [
+									{
+										"key": "Cache-Control",
+										"value": "no-store",
+										"type": "text"
+									}
+								],
 								"url": {
-									"raw": "{{base_url}}/api/games/i/57",
+									"raw": "{{base_url}}/api/games/i/9",
 									"host": [
 										"{{base_url}}"
 									],
@@ -476,7 +482,7 @@
 										"api",
 										"games",
 										"i",
-										"57"
+										"9"
 									]
 								}
 							},
@@ -508,7 +514,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{base_url}}/api/games/state/0/sport/null?page=1",
+									"raw": "{{base_url}}/api/games/state/1/sport/null?page=2",
 									"host": [
 										"{{base_url}}"
 									],
@@ -516,14 +522,14 @@
 										"api",
 										"games",
 										"state",
-										"0",
+										"1",
 										"sport",
 										"null"
 									],
 									"query": [
 										{
 											"key": "page",
-											"value": "1"
+											"value": "2"
 										}
 									]
 								}
@@ -533,10 +539,98 @@
 					]
 				},
 				{
-					"name": "Startlist",
+					"name": "Admin Actions",
 					"item": [
 						{
-							"name": "Sync Startlist",
+							"name": "Startlist",
+							"item": [
+								{
+									"name": "Sync Startlist",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"contestants\": [\n        {\n            \"id\": 52,\n            \"value\": 20\n        },\n        {\n            \"id\": 50,\n            \"value\": 36\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/games/57/startlist",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"games",
+												"57",
+												"startlist"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Point Template",
+							"item": [
+								{
+									"name": "Set Point Template",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{access_token}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"template\": {\n        \"decisions\": {\n            \"win\": 250\n        },\n        \"fillables\": {\n            \"basic\": {\n                \"score\": 1,\n                \"rebound\": 5,\n                \"assist\": 10,\n                \"steal\": 20,\n                \"block\": 5,\n                \"turnover\": -10,\n                \"foul\": -3\n            },\n            \"range\": {\n                \"field_goal\": [\n                    {\n                        \"min\": 0,\n                        \"max\": 43,\n                        \"value\": 50\n                    },\n                    {\n                        \"min\": 44,\n                        \"max\": 46,\n                        \"value\": 70\n                    },\n                    {\n                        \"min\": 47,\n                        \"max\": 50,\n                        \"value\": 90\n                    }\n                ],\n                \"three_point\": [\n                    {\n                        \"min\": 0,\n                        \"max\": 34,\n                        \"value\": 30\n                    },\n                    {\n                        \"min\": 35,\n                        \"max\": 36,\n                        \"value\": 50\n                    },\n                    {\n                        \"min\": 37,\n                        \"max\": 39,\n                        \"value\": 70\n                    },\n                    {\n                        \"min\": 40,\n                        \"max\": 9223372036854775807,\n                        \"value\": 100\n                    }\n                ],\n                \"free_throw\": [\n                    {\n                        \"min\": 0,\n                        \"max\": 70,\n                        \"value\": 20\n                    },\n                    {\n                        \"min\": 71,\n                        \"max\": 75,\n                        \"value\": 30\n                    },\n                    {\n                        \"min\": 76,\n                        \"max\": 81,\n                        \"value\": 40\n                    },\n                    {\n                        \"min\": 82,\n                        \"max\": 9223372036854775807,\n                        \"value\": 50\n                    }\n                ]\n            }\n        },\n        \"extras\": {\n            \"champion\": 100,\n            \"most_valuable_player\": 100,\n            \"rookie_of_the_year\": 100,\n            \"defensive_player_of_the_year\": 100,\n            \"most_improved_player_of_the_year\": 50\n        }\n    }\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{base_url}}/api/games/9/point-template",
+											"host": [
+												"{{base_url}}"
+											],
+											"path": [
+												"api",
+												"games",
+												"9",
+												"point-template"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Store",
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -552,7 +646,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"contestants\": [\n        {\n            \"id\": 52,\n            \"value\": 20\n        },\n        {\n            \"id\": 50,\n            \"value\": 36\n        }\n    ]\n}",
+									"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Finals 2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"contestant_type\": \"team_member\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -560,165 +654,126 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/api/games/57/startlist",
+									"raw": "{{base_url}}/api/games",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update State",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/3/state/3",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"api",
 										"games",
-										"57",
-										"startlist"
+										"3",
+										"state",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"NBA 2023-2024\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/api/games/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/games/1",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"api",
+										"games",
+										"1"
 									]
 								}
 							},
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Store",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "\n{\n    \"tournament_id\": null,\n    \"name\": \"NBA Finals 2024\",\n    \"short\": \"NBA2K24\",\n    \"description\": \"The NBA Regular season of 2023/2024\",\n    \"sport\": \"basketball\",\n    \"duration_type\": \"span\",\n    \"game_type\": \"finals\",\n    \"contestant_type\": \"team_member\",\n    \"min_entry\": 5,\n    \"max_entry\": 20,\n    \"entry_contestants\": 8,\n    \"max_entry_value\": 100.5,\n    \"entry_price\": 2.5,\n    \"initial_prize_pool\": 200,\n    \"current_prize_pool\": 200,\n    \"start_date\": \"2023-09-27\",\n    \"end_date\": \"2024-09-01\",\n    \"point_template\": null\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/api/games",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"games"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"NBA 2023-2024\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/api/games/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"games",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/api/games/1",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"games",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update State",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{access_token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{base_url}}/api/games/3/state/3",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"api",
-								"games",
-								"3",
-								"state",
-								"3"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -938,7 +993,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "\n{\n    \"game_id\": 1,\n    \"name\": \"Test Bout\"\n}",
+							"raw": "\n{\n    \"game_id\": 57,\n    \"name\": \"Test Bout\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
