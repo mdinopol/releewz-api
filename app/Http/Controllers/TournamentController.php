@@ -20,7 +20,10 @@ class TournamentController extends Controller
 
     public function show(Tournament $tournament): Tournament
     {
-        return $tournament;
+        return $tournament->load([
+            'games',
+            'mattches',
+        ]);
     }
 
     public function update(UpsertTournamentRequest $request, Tournament $tournament): Tournament

@@ -18,7 +18,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Support\Carbon|null                                 $updated_at
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game> $games
  * @property int|null                                                        $games_count
- *
  * @method static \Database\Factories\TournamentFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament newQuery()
@@ -30,7 +29,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereUpdatedAt($value)
- *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mattch> $mattches
+ * @property-read int|null $mattches_count
  * @mixin \Eloquent
  */
 class Tournament extends Model
@@ -52,5 +52,10 @@ class Tournament extends Model
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function mattches(): HasMany
+    {
+        return $this->hasMany(Mattch::class);
     }
 }

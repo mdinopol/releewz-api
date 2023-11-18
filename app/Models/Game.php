@@ -46,7 +46,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property \App\Models\Tournament|null                                           $tournament
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>       $users
  * @property int|null                                                              $users_count
- *
  * @method static \Database\Factories\GameFactory factory($count = null, $state = [])
  * @method static Builder|Game                    filters(\App\Enum\GameState $gameState, ?\App\Enum\Sport $sport = null)
  * @method static Builder|Game                    newModelQuery()
@@ -75,7 +74,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static Builder|Game                    whereStartDate($value)
  * @method static Builder|Game                    whereTournamentId($value)
  * @method static Builder|Game                    whereUpdatedAt($value)
- *
  * @mixin \Eloquent
  */
 class Game extends Model

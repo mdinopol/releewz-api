@@ -76,6 +76,8 @@ class TournamentControllerTest extends TestCase
                 'description' => 'Test description',
                 'start_date'  => $this->startDate->jsonSerialize(),
                 'end_date'    => $this->endDate->jsonSerialize(),
+                'games'       => [],
+                'mattches'    => [],
             ]);
     }
 
