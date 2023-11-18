@@ -24,7 +24,7 @@ class GameFactory extends Factory
     {
         return [
             'tournament_id'      => null,
-            'name'               => fake()->unique()->title(),
+            'name'               => fake()->unique()->word(),
             'short'              => \Str::random(5),
             'slug'               => fake()->unique()->slug(),
             'description'        => fake()->sentence(),
@@ -40,7 +40,7 @@ class GameFactory extends Factory
             'entry_price'        => fake()->randomFloat('2', 1, 10),
             'initial_prize_pool' => fake()->randomFloat('2', 50),
             'current_prize_pool' => fake()->randomFloat('2', 50),
-            'start_date'         => Carbon::now(),
+            'start_date'         => Carbon::now()->addWeek(),
             'end_date'           => Carbon::now()->addYear(),
             'point_template'     => null,
         ];

@@ -101,53 +101,31 @@ class GameControllerTest extends TestCase
             ])
         );
 
-        $this->get('/api/games')
+        $this->get('/api/games/state/'.GameState::OPEN_REGISTRATION->value.'/sport/'.Sport::BASKETBALL->value)
             ->assertOk()
             ->assertJsonStructure($this->paginatedStructure(
                 $this->getAssertableJsonStructure()
             ));
     }
 
-    public function testListLive(): void
+    public function testShowById(): void
     {
-        Game::withoutEvents(
-            fn () => Game::factory()->create([
-                'tournament_id'      => null,
-                'name'               => 'Test Open Registration Game 1',
-                'short'              => 'TORG1',
-                'description'        => 'A test open registration game 1',
-                'sport'              => Sport::BASKETBALL->value,
-                'game_state'         => GameState::LIVE->value,
-                'duration_type'      => GameDuration::SPAN->value,
-                'game_type'          => GameType::FINALS->value,
-                'contestant_type'    => ContestantType::TEAM_MEMBER->value,
-                'min_entry'          => 5,
-                'max_entry'          => 20,
-                'entry_contestants'  => 8,
-                'max_entry_value'    => 105.5,
-                'entry_price'        => 2.00,
-                'initial_prize_pool' => 10000.00,
-                'current_prize_pool' => null,
-                'start_date'         => Carbon::now(),
-                'end_date'           => Carbon::tomorrow()->addYear(),
-                'point_template'     => null,
-            ])
-        );
-
-        $this->get('/api/games/live')
-            ->assertOk()
-            ->assertJsonStructure($this->paginatedStructure(
-                $this->getAssertableJsonStructure()
-            ));
-    }
-
-    public function testShow(): void
-    {
-        $this->get('/api/games/'.$this->liveGame->id)
+        $this->get('/api/games/i/'.$this->liveGame->id)
             ->assertOk()
             ->assertJsonStructure(array_merge(
                 $this->getAssertableJsonStructure(),
-                ['users_count']
+                ['users']
+            ));
+    }
+
+    public function testShowBySlug(): void
+    {
+        // $this->get('/api/games/'.$this->liveGame->id)
+        $this->get('/api/games/s/'.$this->liveGame->slug)
+            ->assertOk()
+            ->assertJsonStructure(array_merge(
+                $this->getAssertableJsonStructure(),
+                ['users']
             ));
     }
 
@@ -452,7 +430,7 @@ class GameControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $this->put('/api/games/'.$this->liveGame->id.'/state/'.GameState::OPEN_REGISTRATION->value)
-        ->assertForbidden();
+        ->assertUnprocessable();
     }
 
     public function testDelete(): void
@@ -526,38 +504,42 @@ class GameControllerTest extends TestCase
 
         $memberCount = 3;
 
-        $game    = Game::factory()->create(['contestant_type' => ContestantType::TEAM_MEMBER]);
+        $game    = Game::factory()->create(['contestant_type' => ContestantType::TEAM_MEMBER, 'sport' => Sport::BASKETBALL->value]);
         $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM]);
         $members = Contestant::factory($memberCount)->create([
             'parent_id'       => $team->id,
             'contestant_type' => ContestantType::TEAM_MEMBER,
+            'sport'           => Sport::BASKETBALL->value,
         ]);
-        $individual = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
-        $memberIds  = $members->pluck('id')->toArray();
+        $individual        = Contestant::factory()->create(['contestant_type' => ContestantType::INDIVIDUAL]);
+        $membersWithValues = array_map(fn ($id) => [
+            'id'    => $id,
+            'value' => fake()->randomFloat('2', 10, 50),
+        ], $members->pluck('id')->toArray());
 
         // Assert that all member type are allowed if they are assigned to the same contestant type game
         $this->post('/api/games/'.$game->id.'/startlist', [
-            'contestants' => $memberIds,
+            'contestants' => $membersWithValues,
         ])
         ->assertOk();
 
         // Assert that assigning contestant with different type from game's contestant type should fail
         $this->post('/api/games/'.$game->id.'/startlist', [
-            'contestants' => [$team->id],
+            'contestants' => [['id' => $team->id]],
         ])
         ->assertUnprocessable();
         $this->post('/api/games/'.$game->id.'/startlist', [
-            'contestants' => [$individual->id],
+            'contestants' => [['id' => $individual->id]],
         ])
         ->assertUnprocessable();
         $this->post('/api/games/'.$game->id.'/startlist', [
-            'contestants' => [$team->id, $individual->id],
+            'contestants' => [['id' => $team->id], ['id' => $individual->id]],
         ])
+        ->assertUnprocessable();
 
         // Assert that assigning array of valid contestants mixed with at least a single invalid contestant should fail
-        ->assertUnprocessable();
         $this->post('/api/games/'.$game->id.'/startlist', [
-            'contestants' => array_merge($memberIds, [$team->id, $individual->id]),
+            'contestants' => array_merge($membersWithValues, [['id' => $team->id], ['id' => $individual->id]]),
         ])
         ->assertUnprocessable();
 
@@ -647,6 +629,112 @@ class GameControllerTest extends TestCase
         ->assertForbidden();
 
         $this->assertCount(0, $this->user->games);
+    }
+
+    public function testCreateUserEntryExceedingValueLimitShouldFail(): void
+    {
+        Passport::actingAs($this->user);
+
+        $memberCount = 3;
+
+        $contestantType = ContestantType::TEAM_MEMBER;
+        $sport          = Sport::BASKETBALL;
+
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id'   => Tournament::factory()->create()->id,
+                'contestant_type' => $contestantType,
+                'game_state'      => GameState::OPEN_REGISTRATION,
+                'sport'           => $sport,
+                'max_entry_value' => 1,
+            ])
+        );
+        $team    = Contestant::factory()->create(['contestant_type' => ContestantType::TEAM, 'sport' => $sport]);
+        $members = Contestant::factory($memberCount)->create([
+            'parent_id'       => $team->id,
+            'contestant_type' => $contestantType,
+            'sport'           => $sport,
+        ])->pluck('id');
+
+        $game->contestants()->sync($members);
+
+        $this->post('/api/games/'.$game->id.'/entries', [
+            'name'                 => 'Entry 1',
+            'contestants'          => $members->toArray(),
+            'license_at_creation'  => License::MALTA_EUR->value,
+            'currency_at_creation' => Currency::EUR->value,
+        ])
+        ->assertOk();
+
+        $this->assertCount(1, $this->user->games);
+        $this->assertDatabaseHas('entries', [
+            'user_id'              => $this->user->id,
+            'game_id'              => $game->id,
+            'name'                 => 'Entry 1',
+            'total_points'         => null,
+            'points_history'       => null,
+            'extra_predictions'    => null,
+            'license_at_creation'  => License::MALTA_EUR->value,
+            'currency_at_creation' => Currency::EUR->value,
+        ]);
+    }
+
+    public function testSetGamePointTemplate(): void
+    {
+        Passport::actingAs($this->admin);
+
+        $sport    = Sport::active()[0];
+        $template = $sport->template();
+
+        $game = Game::withoutEvents(
+            fn () => Game::factory()->create([
+                'tournament_id' => Tournament::factory()->create()->id,
+                'game_state'    => GameState::OPEN_REGISTRATION,
+                'sport'         => $sport->value,
+            ])
+        );
+
+        $filledTemplate = [];
+
+        // Decision-based achievement
+        foreach ($template['decisions'] as $key => $value) {
+            $filledTemplate['decisions'][$key] = rand(1, 100);
+        }
+
+        // Fillable achievement (basic)
+        foreach ($template['fillables']['basic'] as $key => $value) {
+            $filledTemplate['fillables']['basic'][$key] = rand(1, 100);
+        }
+
+        // Fillable achievement (range)
+        foreach ($template['fillables']['range'] as $key => $value) {
+            foreach ($value as $range => $value) {
+                $filledTemplate['fillables']['range'][$key][$range] = array_merge($value, ['value' => rand(1, 100)]);
+            }
+        }
+
+        // Extra achievements
+        foreach ($template['extras'] as $key => $value) {
+            $filledTemplate['extras'][$key] = rand(1, 100);
+        }
+
+        // Assert that normal setting of point template succeeds
+        $this->post('/api/games/'.$game->id.'/point-template', [
+            'template' => $filledTemplate,
+        ])
+        ->assertOk()
+        ->assertJson([
+            'sport'          => $sport->value,
+            'game_state'     => GameState::OPEN_REGISTRATION->value,
+            'point_template' => $filledTemplate,
+        ]);
+
+        // Assert that even 1 rouge achievement added to the template will fail
+        $filledTemplate['decisions']['test'] = 10;
+        $this->post('/api/games/'.$game->id.'/point-template', [
+            'template' => $filledTemplate,
+        ])
+        ->assertUnprocessable();
     }
 
     private function getAssertableJsonStructure(): array

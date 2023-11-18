@@ -7,6 +7,7 @@ use App\Enum\License;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Enum;
+use Illuminate\Validation\Validator;
 
 class CreateEntryRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class CreateEntryRequest extends FormRequest
             'required',
             'string',
             'min:3',
-            'max:10',
+            'max:20',
             Rule::unique('entries', 'name')->where('game_id', $this->game->id),
         ];
         $rules['contestants'] = [
@@ -30,6 +31,25 @@ class CreateEntryRequest extends FormRequest
         $rules['currency_at_creation'] = ['required', new Enum(Currency::class)];
 
         return $rules;
+    }
+
+    public function after(): array
+    {
+        return [
+            function (Validator $validator) {
+                $contestants = $validator->safe(['contestants'])['contestants'];
+
+                // Total value of selected contestants
+                $requestTotalValue = $this->game->contestants()->whereIn('contestant_id', $contestants)->sum('value');
+
+                if ($requestTotalValue > ($valueLimit = $this->game->max_entry_value)) {
+                    $validator->errors()->add(
+                        'contestants',
+                        "Contestants' total value exceeded entry's value limit of ".$valueLimit.'.'
+                    );
+                }
+            },
+        ];
     }
 
     protected function prepareForValidation(): void

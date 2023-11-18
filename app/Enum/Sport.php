@@ -22,6 +22,25 @@ enum Sport: string
 
     public function template(): array
     {
-        return config('scoretemplates.'.$this->value) ?? [];
+        return config('sportachievements.'.$this->value) ?? [];
+    }
+
+    /**
+     * @return Sport[]
+     */
+    public static function active()
+    {
+        $sports = [];
+
+        foreach (array_keys(config('sportachievements')) as $sport) {
+            $sports[] = self::tryFrom($sport);
+        }
+
+        return $sports;
+    }
+
+    public function isActive(): bool
+    {
+        return in_array($this, self::active());
     }
 }

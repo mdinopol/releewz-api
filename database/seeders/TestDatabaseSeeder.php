@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Tests\GameSeeder;
 use Illuminate\Database\Seeder;
 
 class TestDatabaseSeeder extends Seeder
@@ -12,6 +13,7 @@ class TestDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            GameSeeder::class,
         ]);
     }
 }

@@ -15,6 +15,7 @@ return new class() extends Migration {
             $table->foreignId('contestant_id');
             $table->foreignId('game_id')->constrained()->cascadeOnDelete();
             $table->boolean('abandoned')->default(false);
+            $table->decimal('value', 19)->nullable();
             $table->timestamps();
         });
     }

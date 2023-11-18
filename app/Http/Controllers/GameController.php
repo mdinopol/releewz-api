@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Data\PointTemplate;
 use App\Enum\GameState;
+use App\Enum\Sport;
 use App\Http\Requests\CreateEntryRequest;
+use App\Http\Requests\SetPointTemplateRequest;
 use App\Http\Requests\SyncStartlistRequest;
 use App\Http\Requests\UpsertGameRequest;
 use App\Models\Game;
@@ -15,18 +18,15 @@ use Illuminate\Support\Arr;
 
 class GameController extends Controller
 {
-    public function index(): LengthAwarePaginator
+    public function index(GameState $gameState, string $sport = null): LengthAwarePaginator
     {
-        return Game::inRegistration()
+        return Game::filters($gameState, Sport::tryFrom($sport))
+            ->latest('start_date')
             ->withCount([
                 'users',
             ])
+            ->with(['tournament'])
             ->paginate(10);
-    }
-
-    public function live(): LengthAwarePaginator
-    {
-        return Game::live()->paginate(10);
     }
 
     public function store(UpsertGameRequest $request): Game
@@ -36,9 +36,8 @@ class GameController extends Controller
 
     public function show(Game $game): Game
     {
-        return $game->loadCount([
+        return $game->load([
             'users',
-        ])->load([
             'tournament',
             'bouts',
             'contestants',
@@ -82,9 +81,9 @@ class GameController extends Controller
         );
     }
 
-    public function myEntries(Request $request): LengthAwarePaginator
+    public function myEntries(Request $request, GameState $gameState): LengthAwarePaginator
     {
-        return $request->user()->games()->live()->paginate(10);
+        return $request->user()->games()->filters($gameState)->paginate(10);
     }
 
     public function updateGameState(GameService $gameService, Game $game, GameState $gameState): Game
@@ -95,10 +94,26 @@ class GameController extends Controller
     /**
      * @throws AuthorizationException
      */
-    public function syncStartlist(SyncStartlistRequest $request, Game $game): void
+    public function syncStartlist(GameService $gameService, SyncStartlistRequest $request, Game $game): void
     {
         $this->authorize('modify', $game);
 
-        $game->contestants()->sync($request->validated()['contestants']);
+        $gameService->syncStartlist($game, $request->validated(['contestants']) ?? []);
+    }
+
+    public function setPointTemplate(GameService $gameService, Game $game, SetPointTemplateRequest $request): Game
+    {
+        $this->authorize('modify', $game);
+
+        $template = $request->validated()['template'];
+
+        return $gameService->setPointTemplate(
+            new PointTemplate(
+                $game,
+                $template['decisions'],
+                $template['fillables'],
+                $template['extras']
+            )
+        );
     }
 }

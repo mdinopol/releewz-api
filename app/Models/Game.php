@@ -37,7 +37,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property float|null                                                      $current_prize_pool
  * @property \Illuminate\Support\Carbon                                      $start_date
  * @property \Illuminate\Support\Carbon                                      $end_date
- * @property mixed|null                                                      $points_template
+ * @property mixed|null                                                      $point_template
  * @property \Illuminate\Support\Carbon|null                                 $created_at
  * @property \Illuminate\Support\Carbon|null                                 $updated_at
  * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Bout> $bouts
@@ -123,14 +123,15 @@ class Game extends Model
         'achievement_template',
     ];
 
-    public function scopeInRegistration(Builder $query): Builder
+    public function scopeFilters(Builder $query, GameState $gameState, Sport $sport = null): Builder
     {
-        return $query->where('game_state', GameState::OPEN_REGISTRATION);
-    }
+        $filter = $query->where('game_state', $gameState);
 
-    public function scopeLive(Builder $query): Builder
-    {
-        return $query->where('game_state', GameState::LIVE);
+        if (!$sport) {
+            return $filter;
+        }
+
+        return $filter->where('sport', $sport);
     }
 
     public function tournament(): BelongsTo
@@ -161,7 +162,7 @@ class Game extends Model
     {
         return $this->belongsToMany(Contestant::class)
             ->withTimestamps()
-            ->withPivot('abandoned');
+            ->withPivot(['abandoned', 'value']);
     }
 
     public function getAchievementTemplateAttribute(): array

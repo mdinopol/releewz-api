@@ -11,4 +11,11 @@ class GameObserver
     {
         $game->game_state = GameState::getDefault();
     }
+
+    public function created(Game $game): void
+    {
+        // Append game id to slug
+        $game->slug = $game->id.'-'.$game->slug;
+        $game->save();
+    }
 }

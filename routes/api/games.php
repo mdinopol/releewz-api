@@ -8,16 +8,20 @@ Route::controller(GameController::class)->group(function () {
     Route::middleware([rr(Role::ADMIN)])->group(function () {
         // Route::get('/myGames', 'mine');
         Route::post('/', 'store');
-        Route::put('/{game}', 'update')->where('game', '[0-9]+');
-        Route::delete('/{game}', 'destroy')->where('game', '[0-9]+');
 
-        Route::put('/{game}/state/{gameState}', 'updateGameState');
-        Route::post('/{game}/startlist', 'syncStartlist');
-        // Route::delete('/{game}/startlist', 'syncStartlist')->where('game', '[0-9]+');
+        Route::prefix('{game}')->group(function () {
+            Route::put('', 'update')->where('game', '[0-9]+');
+            Route::delete('', 'destroy')->where('game', '[0-9]+');
+
+            Route::put('/state/{gameState}', 'updateGameState');
+            Route::post('/startlist', 'syncStartlist');
+            Route::post('/point-template', 'setPointTemplate');
+        });
     });
+
+    Route::get('/entries/state/{gameState}', 'myEntries');
 
     Route::prefix('{game}/entries')->group(function () {
         Route::post('/', 'createUserEntry');
-        Route::get('/', 'myEntries');
     });
 });
