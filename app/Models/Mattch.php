@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Mattch.
@@ -20,7 +21,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \App\Models\Contestant|null     $away
  * @property \App\Models\Contestant|null     $home
  * @property \App\Models\Tournament          $tournament
- *
  * @method static \Database\Factories\MattchFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newQuery()
@@ -33,7 +33,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereTournamentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereUpdatedAt($value)
- *
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
+ * @property-read int|null $scores_count
  * @mixin \Eloquent
  */
 class Mattch extends Model
@@ -66,5 +67,10 @@ class Mattch extends Model
     public function away(): BelongsTo
     {
         return $this->belongsTo(Contestant::class, 'away_id');
+    }
+
+    public function scores(): HasMany
+    {
+        return $this->hasMany(Score::class);
     }
 }

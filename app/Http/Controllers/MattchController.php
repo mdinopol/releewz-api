@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GiveScoreRequest;
 use App\Http\Requests\UpsertMattchRequest;
 use App\Models\Mattch;
+use App\Services\MattchService;
 use Illuminate\Database\Eloquent\Collection;
 
 class MattchController extends Controller
@@ -39,5 +41,17 @@ class MattchController extends Controller
         $mattch->delete();
 
         return [];
+    }
+
+    public function giveScore(MattchService $mattchService, GiveScoreRequest $request, Mattch $mattch): Mattch
+    {
+        $mattchService->giveScore($mattch, $request->validated());
+
+        return $mattch->fresh([
+            'tournament',
+            'home',
+            'away',
+            'scores',
+        ]);
     }
 }

@@ -1349,6 +1349,45 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Give Score",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"score\": [\n    {\n        \"achievement\": \"field_goal\",\n        \"home\": 65,\n        \"away\": 52\n    },\n    {\n        \"achievement\": \"three_point\",\n        \"home\": 25,\n        \"away\": 28\n    }\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/mattches/1/give-score",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mattches",
+								"1",
+								"give-score"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

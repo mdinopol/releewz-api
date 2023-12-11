@@ -9,5 +9,7 @@ Route::controller(MattchController::class)->group(function () {
         Route::post('/', 'store');
         Route::put('/{mattch}', 'update')->where('mattch', '[0-9]+');
         Route::delete('/{mattch}', 'destroy')->where('mattch', '[0-9]+');
+
+        Route::post('/{mattch}/give-score', 'giveScore');
     });
 });

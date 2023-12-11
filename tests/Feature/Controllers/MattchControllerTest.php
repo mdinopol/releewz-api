@@ -2,13 +2,18 @@
 
 namespace Tests\Feature\Controllers;
 
+use App\Enum\Achievement;
 use App\Enum\Role;
 use App\Models\Contestant;
 use App\Models\Mattch;
+use App\Models\Score;
 use App\Models\Tournament;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 use Tests\TestCase;
 
 class MattchControllerTest extends TestCase
@@ -228,5 +233,114 @@ class MattchControllerTest extends TestCase
         ])->get();
 
         $this->assertCount(1, $existingMattch);
+    }
+
+    public function testGiveScore(): void
+    {
+        Passport::actingAs($this->admin);
+
+        $mattch = Mattch::factory()->create([
+            'tournament_id' => $this->tournament->id,
+            'home_id'       => $this->home->id,
+            'away_id'       => $this->away->id,
+            'start_date'    => now(),
+            'end_date'      => now()->addHour(),
+        ]);
+
+        // Assert that invalid achievement value should fail
+        $this->post('/api/mattches/'.$mattch->id.'/give-score', [
+            'score' => [
+                [
+                    'achievement' => Achievement::FIELD_GOAL->value.'_incorrect',
+                    'home'        => 20,
+                    'away'        => 25,
+                ],
+                [
+                    'achievement' => Achievement::THREE_POINT->value,
+                    'home'        => 20,
+                    'away'        => 25,
+                ],
+            ]
+        ])->assertUnprocessable();
+
+        // Success
+        $this->post('/api/mattches/'.$mattch->id.'/give-score', [
+            'score' => [
+                [
+                    'achievement' => Achievement::FIELD_GOAL->value,
+                    'home'        => 20,
+                    'away'        => 25,
+                ],
+                [
+                    'achievement' => Achievement::THREE_POINT->value,
+                    'home'        => 20,
+                    'away'        => 25,
+                ],
+            ]
+        ])
+        ->assertOk();
+
+        // Assert that history will be added after update
+        $score = Score::factory()->create([
+            'mattch_id'   => $mattch->id,
+            'achievement' => Achievement::REBOUND,
+            'home_score'  => 5,
+            'away_score'  => 3,
+        ]);
+
+        $response = $this->post('/api/mattches/'.$mattch->id.'/give-score', [
+            'score' => [
+                [
+                    'achievement' => Achievement::REBOUND->value,
+                    'home'        => 10,
+                    'away'        => 7,
+                ],
+            ]
+        ]);
+        
+        $response
+            ->assertOk()
+            ->assertJson([
+            'tournament_id' => $this->tournament->id,
+            'home_id'       => $this->home->id,
+            'away_id'       => $this->away->id,
+        ]);
+
+        $jsonResponse  = json_decode($response->getContent(), true);
+        $expectedScore = [
+            'id'          => $score->id,
+            'mattch_id'   => $mattch->id,
+            'achievement' => Achievement::REBOUND->value,
+            'home_score'  => 10,
+            'away_score'  => 7,
+            'history'     => [['home_score'  => 5, 'away_score'  => 3]]
+        ];
+
+        $found = false;
+        if (isset($jsonResponse['scores']) && is_array($jsonResponse['scores'])) {
+            foreach ($jsonResponse['scores'] as $score) {
+                if (
+                    $score['id'] === $expectedScore['id'] &&
+                    $score['mattch_id'] === $expectedScore['mattch_id'] &&
+                    $score['achievement'] === $expectedScore['achievement'] &&
+                    $score['home_score'] === $expectedScore['home_score'] &&
+                    $score['away_score'] === $expectedScore['away_score']
+                ) {
+                    if (isset($score['history']) && is_array($score['history'])) {
+                        foreach ($score['history'] as $history) {
+                            if (
+                                $history['home_score'] === $expectedScore['history'][0]['home_score'] &&
+                                $history['away_score'] === $expectedScore['history'][0]['away_score']
+                            ) {
+                                $found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        $this->assertTrue($found, 'Score not found.');
     }
 }

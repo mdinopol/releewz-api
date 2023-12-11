@@ -23,9 +23,7 @@ class UpsertScoreRequest extends FormRequest
                 ->where('mattch_id', $this->input('mattch_id') ?? $this->score->mattch_id),
         ];
         $rules['home_score']  = ['nullable', 'numeric'];
-        $rules['home_points'] = ['nullable', 'numeric'];
         $rules['away_score']  = ['nullable', 'numeric'];
-        $rules['away_points'] = ['nullable', 'numeric'];
 
         $this->setSometimeOnPut($rules);
 

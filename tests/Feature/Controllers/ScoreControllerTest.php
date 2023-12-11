@@ -60,27 +60,21 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ])
         ->assertCreated()
         ->assertJson([
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $this->assertDatabaseHas('scores', [
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
     }
 
@@ -93,18 +87,14 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $this->post('/api/scores', [
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 1,
-            'home_points' => 2,
             'away_score'  => 3,
-            'away_points' => 4,
         ])
         ->assertUnprocessable();
 
@@ -119,18 +109,14 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $this->assertDatabaseMissing('scores', [
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 1,
-            'home_points' => 2,
             'away_score'  => 3,
-            'away_points' => 4,
         ]);
     }
 
@@ -144,9 +130,7 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => $achievement->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ])
         ->assertUnauthorized();
     }
@@ -157,26 +141,20 @@ class ScoreControllerTest extends TestCase
 
         $previousValues = [
             'home_score'  => floatval($this->score->home_score),
-            'home_points' => floatval($this->score->home_points),
             'away_score'  => floatval($this->score->away_score),
-            'away_points' => floatval($this->score->away_points),
             'updated_at'  => $this->score->updated_at->jsonSerialize(),
         ];
 
         $this->put('/api/scores/'.$this->score->id, [
             'home_score'  => 10,
-            'home_points' => 50,
             'away_score'  => 5,
-            'away_points' => 25,
         ])
         ->assertOk()
         ->assertJson([
             'mattch_id'   => $this->score->mattch_id,
             'achievement' => $this->score->achievement->value,
             'home_score'  => 10,
-            'home_points' => 50,
             'away_score'  => 5,
-            'away_points' => 25,
             'history'     => [$previousValues],
         ]);
     }
@@ -189,18 +167,14 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => Achievement::ACES->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $score = Score::factory()->create([
             'mattch_id'   => $this->mattch->id,
             'achievement' => Achievement::ASSIST->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $this->put('/api/scores/'.$score->id, [
@@ -213,18 +187,14 @@ class ScoreControllerTest extends TestCase
             'mattch_id'   => $this->mattch->id,
             'achievement' => Achievement::ACES->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
 
         $this->assertDatabaseHas('scores', [
             'mattch_id'   => $this->mattch->id,
             'achievement' => Achievement::ASSIST->value,
             'home_score'  => 5,
-            'home_points' => 20,
             'away_score'  => 3,
-            'away_points' => 15,
         ]);
     }
 

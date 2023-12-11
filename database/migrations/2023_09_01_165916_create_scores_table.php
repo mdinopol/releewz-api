@@ -15,9 +15,7 @@ return new class() extends Migration {
             $table->foreignId('mattch_id');
             $table->string('achievement');
             $table->decimal('home_score')->nullable();
-            $table->decimal('home_points')->nullable();
             $table->decimal('away_score')->nullable();
-            $table->decimal('away_points')->nullable();
             $table->jsonb('history')->nullable();
             $table->timestamps();
 
