@@ -22,8 +22,8 @@ class UpsertScoreRequest extends FormRequest
             Rule::unique('scores', 'achievement')
                 ->where('mattch_id', $this->input('mattch_id') ?? $this->score->mattch_id),
         ];
-        $rules['home_score']  = ['nullable', 'numeric'];
-        $rules['away_score']  = ['nullable', 'numeric'];
+        $rules['home_score'] = ['nullable', 'numeric'];
+        $rules['away_score'] = ['nullable', 'numeric'];
 
         $this->setSometimeOnPut($rules);
 

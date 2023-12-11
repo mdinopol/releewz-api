@@ -11,9 +11,9 @@ class ScoreObserver
         $previousValues = $score->getOriginal();
         $history        = $score->history ?? [];
         $history[]      = [
-            'home_score'  => $previousValues['home_score'],
-            'away_score'  => $previousValues['away_score'],
-            'updated_at'  => $previousValues['updated_at'],
+            'home_score' => $previousValues['home_score'],
+            'away_score' => $previousValues['away_score'],
+            'updated_at' => $previousValues['updated_at'],
         ];
 
         $score->history = $history;

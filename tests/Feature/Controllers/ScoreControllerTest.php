@@ -140,14 +140,14 @@ class ScoreControllerTest extends TestCase
         Passport::actingAs($this->admin);
 
         $previousValues = [
-            'home_score'  => floatval($this->score->home_score),
-            'away_score'  => floatval($this->score->away_score),
-            'updated_at'  => $this->score->updated_at->jsonSerialize(),
+            'home_score' => floatval($this->score->home_score),
+            'away_score' => floatval($this->score->away_score),
+            'updated_at' => $this->score->updated_at->jsonSerialize(),
         ];
 
         $this->put('/api/scores/'.$this->score->id, [
-            'home_score'  => 10,
-            'away_score'  => 5,
+            'home_score' => 10,
+            'away_score' => 5,
         ])
         ->assertOk()
         ->assertJson([

@@ -13,7 +13,7 @@ class MattchService
             // Do not mass upsert to avoid bypassing Score model's update observer.
             Score::updateOrCreate(
                 ['mattch_id' => $mattch->id, 'achievement' => $result['achievement']],
-                ['home_score'  => $result['home'], 'away_score'  => $result['away']]
+                ['home_score' => $result['home'], 'away_score' => $result['away']]
             );
         }
     }

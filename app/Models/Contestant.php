@@ -27,6 +27,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property \Illuminate\Database\Eloquent\Collection<int, Contestant> $members
  * @property int|null                                                  $members_count
  * @property Contestant|null                                           $team
+ *
  * @method static \Database\Factories\ContestantFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant newQuery()
@@ -42,6 +43,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereSport($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Contestant extends Model

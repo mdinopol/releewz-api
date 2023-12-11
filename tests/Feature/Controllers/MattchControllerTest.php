@@ -9,11 +9,8 @@ use App\Models\Mattch;
 use App\Models\Score;
 use App\Models\Tournament;
 use App\Models\User;
-use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Testing\Fluent\AssertableJson;
 use Laravel\Passport\Passport;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 use Tests\TestCase;
 
 class MattchControllerTest extends TestCase
@@ -260,7 +257,7 @@ class MattchControllerTest extends TestCase
                     'home'        => 20,
                     'away'        => 25,
                 ],
-            ]
+            ],
         ])->assertUnprocessable();
 
         // Success
@@ -276,7 +273,7 @@ class MattchControllerTest extends TestCase
                     'home'        => 20,
                     'away'        => 25,
                 ],
-            ]
+            ],
         ])
         ->assertOk();
 
@@ -295,9 +292,9 @@ class MattchControllerTest extends TestCase
                     'home'        => 10,
                     'away'        => 7,
                 ],
-            ]
+            ],
         ]);
-        
+
         $response
             ->assertOk()
             ->assertJson([
@@ -313,24 +310,24 @@ class MattchControllerTest extends TestCase
             'achievement' => Achievement::REBOUND->value,
             'home_score'  => 10,
             'away_score'  => 7,
-            'history'     => [['home_score'  => 5, 'away_score'  => 3]]
+            'history'     => [['home_score' => 5, 'away_score' => 3]],
         ];
 
         $found = false;
         if (isset($jsonResponse['scores']) && is_array($jsonResponse['scores'])) {
             foreach ($jsonResponse['scores'] as $score) {
                 if (
-                    $score['id'] === $expectedScore['id'] &&
-                    $score['mattch_id'] === $expectedScore['mattch_id'] &&
-                    $score['achievement'] === $expectedScore['achievement'] &&
-                    $score['home_score'] === $expectedScore['home_score'] &&
-                    $score['away_score'] === $expectedScore['away_score']
+                    $score['id'] === $expectedScore['id']
+                    && $score['mattch_id'] === $expectedScore['mattch_id']
+                    && $score['achievement'] === $expectedScore['achievement']
+                    && $score['home_score'] === $expectedScore['home_score']
+                    && $score['away_score'] === $expectedScore['away_score']
                 ) {
                     if (isset($score['history']) && is_array($score['history'])) {
                         foreach ($score['history'] as $history) {
                             if (
-                                $history['home_score'] === $expectedScore['history'][0]['home_score'] &&
-                                $history['away_score'] === $expectedScore['history'][0]['away_score']
+                                $history['home_score'] === $expectedScore['history'][0]['home_score']
+                                && $history['away_score'] === $expectedScore['history'][0]['away_score']
                             ) {
                                 $found = true;
                                 break;
@@ -340,7 +337,7 @@ class MattchControllerTest extends TestCase
                 }
             }
         }
-        
+
         $this->assertTrue($found, 'Score not found.');
     }
 }
