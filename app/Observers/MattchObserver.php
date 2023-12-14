@@ -8,6 +8,5 @@ class MattchObserver
 {
     public function created(Mattch $mattch): void
     {
-        // 
     }
 }
