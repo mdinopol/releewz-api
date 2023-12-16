@@ -8,22 +8,23 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\Mattch
+ * App\Models\Mattch.
  *
- * @property int $id
- * @property int $tournament_id
- * @property int $home_id
- * @property int $away_id
- * @property \Illuminate\Support\Carbon $date
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Contestant|null $away
- * @property-read \App\Models\Contestant|null $home
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
- * @property-read int|null $scores_count
- * @property-read \App\Models\Skhedule|null $skhedule
- * @property-read \App\Models\Tournament $tournament
- * @method static \Database\Factories\MattchFactory factory($count = null, $state = [])
+ * @property int                                                              $id
+ * @property int                                                              $tournament_id
+ * @property int                                                              $home_id
+ * @property int                                                              $away_id
+ * @property \Illuminate\Support\Carbon                                       $date
+ * @property \Illuminate\Support\Carbon|null                                  $created_at
+ * @property \Illuminate\Support\Carbon|null                                  $updated_at
+ * @property \App\Models\Contestant|null                                      $away
+ * @property \App\Models\Contestant|null                                      $home
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Score> $scores
+ * @property int|null                                                         $scores_count
+ * @property \App\Models\Skhedule|null                                        $skhedule
+ * @property \App\Models\Tournament                                           $tournament
+ *
+ * @method static \Database\Factories\MattchFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch query()
@@ -34,6 +35,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereTournamentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Mattch whereUpdatedAt($value)
+ *
  * @mixin \Eloquent
  */
 class Mattch extends Model
