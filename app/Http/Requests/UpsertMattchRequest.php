@@ -17,7 +17,7 @@ class UpsertMattchRequest extends FormRequest
         $rules['tournament_id'] = ['required', 'integer', 'exists:tournaments,id'];
         $rules['home_id']       = ['required', 'integer', 'exists:contestants,id'];
         $rules['away_id']       = ['required', 'integer', 'exists:contestants,id'];
-        $rules['date']    = ['required', 'date', 'after_or_equal:today'];
+        $rules['date']          = ['required', 'date', 'after_or_equal:today'];
 
         $this->setSometimeOnPut($rules);
 

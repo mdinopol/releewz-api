@@ -91,7 +91,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now(),
+            'date'          => now(),
         ])
         ->assertCreated()
         ->assertJson([
@@ -116,7 +116,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now()->addCenturies(),
+            'date'          => now()->addCenturies(),
         ])
         ->assertUnprocessable();
     }
@@ -131,14 +131,14 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => $date,
+            'date'          => $date,
         ]);
 
         $this->post('/api/mattches', [
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => $date,
+            'date'          => $date,
         ])
         ->assertUnprocessable()
         ->assertInvalid(['tournament_id']);
@@ -147,7 +147,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'       => $date,
+            'date'          => $date,
         ])->get();
 
         $this->assertCount(1, $mattches);
@@ -161,7 +161,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now()->addHours(2),
+            'date'          => now()->addHours(2),
         ])
         ->assertUnauthorized();
     }
@@ -176,7 +176,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now(),
+            'date'          => now(),
         ]);
 
         $this->put('/api/mattches/'.$mattch->id, [
@@ -214,14 +214,14 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $home->id,
             'away_id'       => $away->id,
-            'date'    => now(),
+            'date'          => now(),
         ]);
 
         $mattch = Mattch::factory()->create([
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now(),
+            'date'          => now(),
         ]);
 
         $this->put('/api/mattches/'.$mattch->id, [
@@ -248,7 +248,7 @@ class MattchControllerTest extends TestCase
             'tournament_id' => $this->tournament->id,
             'home_id'       => $this->home->id,
             'away_id'       => $this->away->id,
-            'date'    => now(),
+            'date'          => now(),
         ]);
 
         // Assert that invalid achievement value should fail

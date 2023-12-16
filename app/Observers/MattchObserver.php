@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Mattch;
-use DB;
 use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class MattchObserver
@@ -39,11 +38,11 @@ class MattchObserver
             );
         }
 
-        DB::table('mattch_skhedule')->insert([
+        \DB::table('mattch_skhedule')->insert([
             'skhedule_id' => $skhedule->id,
-            'mattch_id' => $mattch->id,
-            'created_at' => now(),
-            'updated_at' => now(),
+            'mattch_id'   => $mattch->id,
+            'created_at'  => now(),
+            'updated_at'  => now(),
         ]);
     }
 }
