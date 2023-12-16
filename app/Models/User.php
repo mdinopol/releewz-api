@@ -33,6 +33,7 @@ use Laravel\Passport\HasApiTokens;
  * @property string|null                                                                                                   $adress_postal
  * @property string|null                                                                                                   $adress_line_one
  * @property string|null                                                                                                   $adress_line_two
+ * @property string|null                                                                                                   $image_path
  * @property string|null                                                                                                   $remember_token
  * @property \Illuminate\Support\Carbon|null                                                                               $created_at
  * @property \Illuminate\Support\Carbon|null                                                                               $updated_at
@@ -60,6 +61,7 @@ use Laravel\Passport\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereFirstName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereImagePath($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereLastName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereMiddleName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)

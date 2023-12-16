@@ -931,7 +931,7 @@
 			]
 		},
 		{
-			"name": "Bouts",
+			"name": "Bouts (Deprecated)",
 			"item": [
 				{
 					"name": "Public",
@@ -1269,7 +1269,7 @@
 			]
 		},
 		{
-			"name": "Matchups",
+			"name": "Matchups (Deprecated)",
 			"item": [
 				{
 					"name": "Store",
@@ -1303,6 +1303,87 @@
 							"path": [
 								"api",
 								"matchups"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mattches",
+			"item": [
+				{
+					"name": "Store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tournament_id\": 1,\n    \"home_id\": 2,\n    \"away_id\": 3,\n    \"start_date\": \"2024-05-01\",\n    \"end_date\": \"2024-12-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/mattches",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mattches"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Give Score",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"score\": [\n    {\n        \"achievement\": \"field_goal\",\n        \"home\": 65,\n        \"away\": 52\n    },\n    {\n        \"achievement\": \"three_point\",\n        \"home\": 25,\n        \"away\": 28\n    }\n]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/api/mattches/1/give-score",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"mattches",
+								"1",
+								"give-score"
 							]
 						}
 					},

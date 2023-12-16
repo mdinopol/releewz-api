@@ -4,9 +4,13 @@ namespace App\Providers;
 
 use App\Listeners\RevokeUserExistingToken;
 use App\Models\Game;
+use App\Models\Mattch;
 use App\Models\Score;
+use App\Models\Tournament;
 use App\Observers\GameObserver;
+use App\Observers\MattchObserver;
 use App\Observers\ScoreObserver;
+use App\Observers\TournamentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -35,8 +39,10 @@ class EventServiceProvider extends ServiceProvider
      * @var array<string, array<int, string>>
      */
     protected $observers = [
-        Game::class  => [GameObserver::class],
-        Score::class => [ScoreObserver::class],
+        Game::class       => [GameObserver::class],
+        Score::class      => [ScoreObserver::class],
+        Tournament::class => [TournamentObserver::class],
+        Mattch::class     => [MattchObserver::class],
     ];
 
     /**

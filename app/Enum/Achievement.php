@@ -8,7 +8,7 @@ enum Achievement: string
 {
     use EnumToArray;
 
-    // Match/Bout-specific
+    // Match-specific/Decision based
     case SCORE = 'score';
     case WIN   = 'win';
     case DRAW  = 'draw';

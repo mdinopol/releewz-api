@@ -13,45 +13,46 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * App\Models\Game.
  *
- * @property int                                                             $id
- * @property int|null                                                        $tournament_id
- * @property string                                                          $name
- * @property string|null                                                     $short
- * @property string                                                          $slug
- * @property string|null                                                     $description
- * @property Sport                                                           $sport
- * @property GameState                                                       $game_state
- * @property GameDuration                                                    $duration_type
- * @property GameType                                                        $game_type
- * @property int                                                             $min_entry
- * @property int                                                             $max_entry
- * @property int                                                             $entry_contestants
- * @property float                                                           $max_entry_value
- * @property float                                                           $entry_price
- * @property float|null                                                      $initial_prize_pool
- * @property float|null                                                      $current_prize_pool
- * @property \Illuminate\Support\Carbon                                      $start_date
- * @property \Illuminate\Support\Carbon                                      $end_date
- * @property mixed|null                                                      $point_template
- * @property \Illuminate\Support\Carbon|null                                 $created_at
- * @property \Illuminate\Support\Carbon|null                                 $updated_at
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Bout> $bouts
- * @property int|null                                                        $bouts_count
- * @property \App\Models\Tournament|null                                     $tournament
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
- * @property int|null                                                        $users_count
+ * @property int                                                                   $id
+ * @property int|null                                                              $tournament_id
+ * @property string                                                                $name
+ * @property string|null                                                           $short
+ * @property string                                                                $slug
+ * @property string|null                                                           $description
+ * @property Sport                                                                 $sport
+ * @property GameState                                                             $game_state
+ * @property GameDuration                                                          $duration_type
+ * @property GameType                                                              $game_type
+ * @property ContestantType                                                        $contestant_type
+ * @property int                                                                   $min_entry
+ * @property int                                                                   $max_entry
+ * @property int                                                                   $entry_contestants
+ * @property float                                                                 $max_entry_value
+ * @property float                                                                 $entry_price
+ * @property float|null                                                            $initial_prize_pool
+ * @property float|null                                                            $current_prize_pool
+ * @property \Illuminate\Support\Carbon                                            $start_date
+ * @property \Illuminate\Support\Carbon                                            $end_date
+ * @property array|null                                                            $point_template
+ * @property \Illuminate\Support\Carbon|null                                       $created_at
+ * @property \Illuminate\Support\Carbon|null                                       $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contestant> $contestants
+ * @property int|null                                                              $contestants_count
+ * @property array                                                                 $achievement_template
+ * @property \App\Models\Tournament|null                                           $tournament
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\User>       $users
+ * @property int|null                                                              $users_count
  *
  * @method static \Database\Factories\GameFactory factory($count = null, $state = [])
- * @method static Builder|Game                    inRegistration()
- * @method static Builder|Game                    live()
+ * @method static Builder|Game                    filters(\App\Enum\GameState $gameState, ?\App\Enum\Sport $sport = null)
  * @method static Builder|Game                    newModelQuery()
  * @method static Builder|Game                    newQuery()
  * @method static Builder|Game                    query()
+ * @method static Builder|Game                    whereContestantType($value)
  * @method static Builder|Game                    whereCreatedAt($value)
  * @method static Builder|Game                    whereCurrentPrizePool($value)
  * @method static Builder|Game                    whereDescription($value)
@@ -67,7 +68,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static Builder|Game                    whereMaxEntryValue($value)
  * @method static Builder|Game                    whereMinEntry($value)
  * @method static Builder|Game                    whereName($value)
- * @method static Builder|Game                    wherePointsTemplate($value)
+ * @method static Builder|Game                    wherePointTemplate($value)
  * @method static Builder|Game                    whereShort($value)
  * @method static Builder|Game                    whereSlug($value)
  * @method static Builder|Game                    whereSport($value)
@@ -137,11 +138,6 @@ class Game extends Model
     public function tournament(): BelongsTo
     {
         return $this->belongsTo(Tournament::class);
-    }
-
-    public function bouts(): HasMany
-    {
-        return $this->hasMany(Bout::class);
     }
 
     public function users(): BelongsToMany

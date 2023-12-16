@@ -9,17 +9,19 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * App\Models\Tournament.
  *
- * @property int                                                                   $id
- * @property string                                                                $name
- * @property string|null                                                           $description
- * @property \Illuminate\Support\Carbon                                            $start_date
- * @property \Illuminate\Support\Carbon                                            $end_date
- * @property \Illuminate\Support\Carbon|null                                       $created_at
- * @property \Illuminate\Support\Carbon|null                                       $updated_at
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Contestant> $contestants
- * @property int|null                                                              $contestants_count
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game>       $games
- * @property int|null                                                              $games_count
+ * @property int                                                                 $id
+ * @property string                                                              $name
+ * @property string|null                                                         $description
+ * @property \Illuminate\Support\Carbon                                          $start_date
+ * @property \Illuminate\Support\Carbon                                          $end_date
+ * @property \Illuminate\Support\Carbon|null                                     $created_at
+ * @property \Illuminate\Support\Carbon|null                                     $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game>     $games
+ * @property int|null                                                            $games_count
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mattch>   $mattches
+ * @property int|null                                                            $mattches_count
+ * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Skhedule> $skhedules
+ * @property int|null                                                            $skhedules_count
  *
  * @method static \Database\Factories\TournamentFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament newModelQuery()
@@ -54,5 +56,15 @@ class Tournament extends Model
     public function games(): HasMany
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function mattches(): HasMany
+    {
+        return $this->hasMany(Mattch::class);
+    }
+
+    public function skhedules(): HasMany
+    {
+        return $this->hasMany(Skhedule::class);
     }
 }

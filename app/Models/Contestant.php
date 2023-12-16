@@ -13,22 +13,20 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * App\Models\Contestant.
  *
- * @property int                                                                   $id
- * @property int|null                                                              $parent_id
- * @property string                                                                $name
- * @property string|null                                                           $alias
- * @property Country                                                               $country_code
- * @property ContestantType                                                        $contestant_type
- * @property Sport                                                                 $sport
- * @property bool                                                                  $active
- * @property string|null                                                           $image_path
- * @property \Illuminate\Support\Carbon|null                                       $created_at
- * @property \Illuminate\Support\Carbon|null                                       $updated_at
- * @property \Illuminate\Database\Eloquent\Collection<int, Contestant>             $members
- * @property int|null                                                              $members_count
- * @property Contestant|null                                                       $team
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tournament> $tournaments
- * @property int|null                                                              $tournaments_count
+ * @property int                                                       $id
+ * @property int|null                                                  $parent_id
+ * @property string                                                    $name
+ * @property string|null                                               $alias
+ * @property Country|null                                              $country_code
+ * @property ContestantType                                            $contestant_type
+ * @property Sport                                                     $sport
+ * @property bool                                                      $active
+ * @property string|null                                               $image_path
+ * @property \Illuminate\Support\Carbon|null                           $created_at
+ * @property \Illuminate\Support\Carbon|null                           $updated_at
+ * @property \Illuminate\Database\Eloquent\Collection<int, Contestant> $members
+ * @property int|null                                                  $members_count
+ * @property Contestant|null                                           $team
  *
  * @method static \Database\Factories\ContestantFactory            factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Contestant newModelQuery()

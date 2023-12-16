@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Enum\Achievement;
-use App\Models\Matchup;
+use App\Models\Mattch;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,12 +14,10 @@ class ScoreFactory extends Factory
     public function definition(): array
     {
         return [
-            'matchup_id'  => Matchup::factory(),
+            'mattch_id'   => Mattch::factory(),
             'achievement' => Achievement::random()->value,
             'home_score'  => fake()->numberBetween(1, 10),
-            'home_points' => fake()->numberBetween(10, 20),
             'away_score'  => fake()->numberBetween(1, 10),
-            'away_points' => fake()->numberBetween(10, 20),
         ];
     }
 }
