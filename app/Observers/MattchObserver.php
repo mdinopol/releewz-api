@@ -33,8 +33,8 @@ class MattchObserver
         if (!$skhedule) {
             $mattch->delete();
             abort(
-                'Dirty match schedule found. Removed match: ('.$mattch->id.').',
-                HttpResponse::HTTP_UNPROCESSABLE_ENTITY
+                HttpResponse::HTTP_UNPROCESSABLE_ENTITY,
+                'Dirty match schedule found. Removed match: ('.$mattch->id.').'
             );
         }
 
