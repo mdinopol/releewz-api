@@ -17,8 +17,7 @@ class UpsertMattchRequest extends FormRequest
         $rules['tournament_id'] = ['required', 'integer', 'exists:tournaments,id'];
         $rules['home_id']       = ['required', 'integer', 'exists:contestants,id'];
         $rules['away_id']       = ['required', 'integer', 'exists:contestants,id'];
-        $rules['start_date']    = ['required', 'date', 'after_or_equal:today'];
-        $rules['end_date']      = ['required', 'date', 'after_or_equal:start_date'];
+        $rules['date']    = ['required', 'date', 'after_or_equal:today'];
 
         $this->setSometimeOnPut($rules);
 
@@ -29,15 +28,17 @@ class UpsertMattchRequest extends FormRequest
     {
         return [
             function (Validator $validator) {
-                $input      = $validator->safe(['tournament_id', 'home_id', 'away_id']);
+                $input      = $validator->validated();
                 $tournament = $input['tournament_id'] ?? $this->mattch->tournament_id;
                 $home       = $input['home_id'] ?? $this->mattch->home_id;
                 $away       = $input['away_id'] ?? $this->mattch->away_id;
+                $date       = $input['date'] ?? $this->mattch->date;
 
                 if (Mattch::where([
                     'tournament_id' => $tournament,
                     'home_id'       => $home,
                     'away_id'       => $away,
+                    'date'          => $date,
                 ])->count() > 0) {
                     $validator->errors()->add(
                         'tournament_id',

@@ -22,8 +22,7 @@ class MattchFactory extends Factory
             'tournament_id' => Tournament::factory(),
             'home_id'       => Contestant::factory(),
             'away_id'       => Contestant::factory(),
-            'start_date'    => now()->addMinutes(2)->addSecond(),
-            'end_date'      => now()->addMinutes(2)->addHour(),
+            'date'          => now()->addMinutes(2)->addSecond(),
         ];
     }
 }

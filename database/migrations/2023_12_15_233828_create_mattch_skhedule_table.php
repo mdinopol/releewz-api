@@ -1,21 +1,22 @@
 <?php
 
+use App\Models\Mattch;
+use App\Models\Skhedule;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class() extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('mattches', function (Blueprint $table) {
+        Schema::create('mattch_skhedule', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('tournament_id')->constrained()->cascadeOnDelete();
-            $table->unsignedBigInteger('home_id');
-            $table->unsignedBigInteger('away_id');
-            $table->dateTimeTz('date');
+            $table->foreignIdFor(Mattch::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(Skhedule::class);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class() extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('mattches');
+        Schema::dropIfExists('mattch_skhedule');
     }
 };

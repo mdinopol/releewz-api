@@ -14,6 +14,7 @@ use App\Models\Contestant;
 use App\Models\Game;
 use App\Models\Tournament;
 use App\Models\User;
+use App\Services\GameService;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Str;
@@ -571,7 +572,9 @@ class GameControllerTest extends TestCase
             'sport'           => $sport,
         ])->pluck('id');
 
-        $game->contestants()->sync($members);
+        $contestantIds = $members->map(fn ($id) => ['id' => $id]);
+        app(GameService::class)->syncStartlist($game, $contestantIds->toArray());
+        // $game->contestants()->sync($members);
 
         $this->post('/api/games/'.$game->id.'/entries', [
             'name'                 => 'Entry 1',
@@ -618,7 +621,9 @@ class GameControllerTest extends TestCase
             'sport'           => $sport,
         ])->pluck('id');
 
-        $game->contestants()->sync($members);
+        $contestantIds = $members->map(fn ($id) => ['id' => $id]);
+        app(GameService::class)->syncStartlist($game, $contestantIds->toArray());
+        // $game->contestants()->sync($members);
 
         $this->post('/api/games/'.$game->id.'/entries', [
             'name'                 => 'Entry 1',
@@ -656,7 +661,9 @@ class GameControllerTest extends TestCase
             'sport'           => $sport,
         ])->pluck('id');
 
-        $game->contestants()->sync($members);
+        $contestantIds = $members->map(fn ($id) => ['id' => $id]);
+        app(GameService::class)->syncStartlist($game, $contestantIds->toArray());
+        // $game->contestants()->sync($members);
 
         $this->post('/api/games/'.$game->id.'/entries', [
             'name'                 => 'Entry 1',

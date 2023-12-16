@@ -61,4 +61,9 @@ class Tournament extends Model
     {
         return $this->hasMany(Mattch::class);
     }
+
+    public function skhedules(): HasMany
+    {
+        return $this->hasMany(Skhedule::class);
+    }
 }

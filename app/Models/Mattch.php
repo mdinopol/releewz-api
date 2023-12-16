@@ -48,13 +48,11 @@ class Mattch extends Model
         'tournament_id',
         'home_id',
         'away_id',
-        'start_date',
-        'end_date',
+        'date',
     ];
 
     protected $casts = [
-        'start_date' => 'datetime',
-        'end_date'   => 'datetime',
+        'date' => 'datetime',
     ];
 
     public function tournament(): BelongsTo
@@ -75,5 +73,10 @@ class Mattch extends Model
     public function scores(): HasMany
     {
         return $this->hasMany(Score::class);
+    }
+
+    public function skhedule(): BelongsTo
+    {
+        return $this->belongsTo(Skhedule::class);
     }
 }
