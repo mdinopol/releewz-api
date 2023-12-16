@@ -7,19 +7,22 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
- * App\Models\Tournament.
+ * App\Models\Tournament
  *
- * @property int                                                             $id
- * @property string                                                          $name
- * @property string|null                                                     $description
- * @property \Illuminate\Support\Carbon                                      $start_date
- * @property \Illuminate\Support\Carbon                                      $end_date
- * @property \Illuminate\Support\Carbon|null                                 $created_at
- * @property \Illuminate\Support\Carbon|null                                 $updated_at
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game> $games
- * @property int|null                                                        $games_count
- *
- * @method static \Database\Factories\TournamentFactory            factory($count = null, $state = [])
+ * @property int $id
+ * @property string $name
+ * @property string|null $description
+ * @property \Illuminate\Support\Carbon $start_date
+ * @property \Illuminate\Support\Carbon $end_date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Game> $games
+ * @property-read int|null $games_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mattch> $mattches
+ * @property-read int|null $mattches_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Skhedule> $skhedules
+ * @property-read int|null $skhedules_count
+ * @method static \Database\Factories\TournamentFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament query()
@@ -30,10 +33,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereStartDate($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Tournament whereUpdatedAt($value)
- *
- * @property \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mattch> $mattches
- * @property int|null                                                          $mattches_count
- *
  * @mixin \Eloquent
  */
 class Tournament extends Model

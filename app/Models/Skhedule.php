@@ -7,6 +7,29 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * App\Models\Skhedule
+ *
+ * @property int $id
+ * @property int $tournament_id
+ * @property string $name
+ * @property \Illuminate\Support\Carbon $date
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Mattch> $mattches
+ * @property-read int|null $mattches_count
+ * @property-read \App\Models\Tournament $tournament
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereTournamentId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Skhedule whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Skhedule extends Model
 {
     use HasFactory;
